@@ -11,7 +11,7 @@
 
 
 <meta property="og:title" content="PRAUS — Jogue valendo." />
-<meta property="og:description" content="Skill-based matchmaking brasileiro. Sua habilidade vira dinheiro, com árbitro ao vivo, escrow e PIX." />
+<meta property="og:description" content="Skill-based matchmaking brasileiro. Sua habilidade vira dinheiro, com escrow, KYC e PIX." />
 <meta property="og:type" content="website" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -69,8 +69,14 @@
 
     <form class="waitlist reveal" id="hero-form" data-source="hero" novalidate>
       <div class="waitlist__field">
-        <input type="email" name="email" inputmode="email" autocomplete="email"
-               placeholder="seu@email.com" aria-label="Seu e-mail" required />
+        <div class="waitlist__input-wrap">
+          <svg class="waitlist__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 6.5C3 5.67157 3.67157 5 4.5 5H19.5C20.3284 5 21 5.67157 21 6.5V17.5C21 18.3284 20.3284 19 19.5 19H4.5C3.67157 19 3 18.3284 3 17.5V6.5Z" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M4 6.5L12 13L20 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <input type="email" name="email" inputmode="email" autocomplete="email"
+                 placeholder="Digite o seu e-mail" aria-label="Seu e-mail" required />
+        </div>
         <button type="submit" class="btn btn--primary">
           GARANTIR MEU ACESSO <span class="btn__arrow" aria-hidden="true">→</span>
         </button>
@@ -86,11 +92,70 @@
   <a href="#como-funciona" class="hero__scroll mono-tag" aria-label="Rolar para o conteúdo">SCROLL ↓</a>
 </section>
 
-<!-- ============ 2. COMO FUNCIONA ============ -->
+<!-- ============ 2. VANTAGENS ============ -->
+<section class="section" id="vantagens">
+  <div class="wrap">
+    <div class="perks reveal">
+      <article class="perk card">
+        <svg class="perk__deco perk__deco--target" viewBox="0 0 200 200" aria-hidden="true">
+          <circle cx="100" cy="100" r="95" stroke="currentColor" stroke-width="2"/>
+          <circle cx="100" cy="100" r="62" stroke="currentColor" stroke-width="2"/>
+          <circle cx="100" cy="100" r="29" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <div class="perk__poster">
+          <span class="line line--sm">PLATAFORMA</span>
+          <span class="line line--xl">100<i>%</i></span>
+          <span class="line line--lg">SKILLBASED</span>
+        </div>
+        <p class="perk__caption">Não depende de ninguém além de você.</p>
+      </article>
+
+      <article class="perk perk--hot card">
+        <svg class="perk__deco perk__deco--ring" viewBox="0 0 200 200" aria-hidden="true">
+          <circle cx="100" cy="100" r="90" stroke="currentColor" stroke-width="16"/>
+        </svg>
+        <div class="perk__poster">
+          <span class="line line--sm">GANHE ATÉ</span>
+          <span class="line line--xl"><b class="perk__stat-num" data-count-to="100">0</b><i>%</i></span>
+          <span class="line line--lg">DE BÔNUS</span>
+        </div>
+        <p class="perk__caption">No seu primeiro depósito acima de R$ 50,00.</p>
+      </article>
+
+      <article class="perk card">
+        <svg class="perk__deco perk__deco--bump" viewBox="0 0 200 140" aria-hidden="true">
+          <path d="M18 70 L60 40 C68 34 80 36 85 45 L96 64" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M182 70 L140 40 C132 34 120 36 115 45 L104 64" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <circle cx="100" cy="66" r="7" fill="currentColor"/>
+        </svg>
+        <div class="perk__poster">
+          <span class="line line--sm">GANHE POR</span>
+          <span class="line line--lg">CADA AMIGO</span>
+          <span class="line line--xl2">INDICADO</span>
+        </div>
+        <p class="perk__caption">Recompensa por cada amigo que você trouxer pra PRAUS.</p>
+      </article>
+
+      <article class="perk card">
+        <svg class="perk__deco perk__deco--bolt" viewBox="0 0 200 200" aria-hidden="true">
+          <path d="M118 10 L40 120 L92 120 L82 190 L165 75 L112 75 Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <div class="perk__poster">
+          <span class="line line--sm">SAQUE DIRETO</span>
+          <span class="line line--lg">NA HORA</span>
+          <span class="line line--xl2">NO PIX</span>
+        </div>
+        <p class="perk__caption">Sem burocracia e com muita rapidez.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. COMO FUNCIONA ============ -->
 <section class="section section--alt" id="como-funciona">
   <div class="wrap">
     <header class="section__head reveal">
-      <span class="kicker mono-tag">01 / COMO FUNCIONA</span>
+      <span class="kicker mono-tag">02 / COMO FUNCIONA</span>
       <h2 class="section__title">TRÊS PASSOS E MENOS DE 1 MINUTO!.</h2>
     </header>
 
@@ -109,8 +174,8 @@
         <button class="flow__step" role="tab" aria-selected="false" aria-controls="screen-2" id="step-2" data-step="2">
           <span class="flow__step-num">02</span>
           <span class="flow__step-text">
-            <span class="flow__step-tt">Compete com árbitro ao vivo</span>
-            <span class="flow__step-desc">A partida roda com um árbitro humano acompanhando em tempo real. Quem joga melhor leva o pote.</span>
+            <span class="flow__step-tt">Compete com o pote em escrow</span>
+            <span class="flow__step-desc">O valor da partida fica retido em escrow enquanto você joga. Quem joga melhor leva o pote.</span>
           </span>
           <span class="flow__step-bar" aria-hidden="true"><i></i></span>
         </button>
@@ -161,7 +226,7 @@
             </div>
             <div class="screen__ref">
               <span class="screen__ref-dot" aria-hidden="true"></span>
-              <span class="screen__ref-txt">Árbitro PRAUS acompanhando ao vivo</span>
+              <span class="screen__ref-txt">Pote protegido em escrow</span>
             </div>
             <div class="screen__row">
               <span class="screen__label mono-tag">EM ESCROW</span>
@@ -187,11 +252,11 @@
   </div>
 </section>
 
-<!-- ============ 3. JOGOS ============ -->
+<!-- ============ 4. JOGOS ============ -->
 <section class="section" id="jogos">
   <div class="wrap">
     <header class="section__head reveal">
-      <span class="kicker mono-tag">02 / MODALIDADES</span>
+      <span class="kicker mono-tag">03 / MODALIDADES</span>
       <h2 class="section__title">COMECE A JOGAR VALENDO. </h2>
       <p class="section__lead">
         CS2 e Dota 2 ativos no beta. Valorant e Fortnite chegando. O
@@ -249,7 +314,7 @@
   </div>
 </section>
 
-<!-- ============ 4. RANKING ============ -->
+<!-- ============ 5. RANKING ============ -->
 <!-- Mesma função da seção de rankings do FACEIT: mostrar a escada competitiva
      e dar ao visitante um lugar concreto para se projetar. Como a PRAUS está
      em pré-launch, os dados são ilustrativos e a tabela é apresentada como
@@ -257,7 +322,7 @@
 <section class="section section--edge" id="ranking">
   <div class="wrap">
     <header class="section__head reveal">
-      <span class="kicker mono-tag">03 / RANKING</span>
+      <span class="kicker mono-tag">04 / RANKING</span>
       <h2 class="section__title">SUBA A ESCADA. PROVE SEU NÍVEL.</h2>
       <p class="section__lead">
         Cada partida validada move seu ELO. Escale as patentes sozinho ou com
@@ -335,11 +400,11 @@
   </div>
 </section>
 
-<!-- ============ 5. LANCES (teaser da PRAUS) ============ -->
+<!-- ============ 6. LANCES (teaser da PRAUS) ============ -->
 <section class="section section--alt" id="lances">
   <div class="wrap">
     <header class="section__head reveal">
-      <span class="kicker mono-tag">04 / TEASER</span>
+      <span class="kicker mono-tag">05 / TEASER</span>
       <h2 class="section__title">O CLUTCH QUE VALE O POTE.</h2>
       <p class="section__lead">
         A tensão de quem tem dinheiro na linha não se explica — se sente.
@@ -369,16 +434,16 @@
   </div>
 </section>
 
-<!-- ============ 6. SEGURANÇA / CREDIBILIDADE ============ -->
+<!-- ============ 7. SEGURANÇA / CREDIBILIDADE ============ -->
 <section class="section" id="seguranca">
   <div class="wrap">
     <header class="section__head reveal">
-      <span class="kicker mono-tag">05 / SEGURANÇA E INTEGRIDADE</span>
+      <span class="kicker mono-tag">06 / SEGURANÇA E INTEGRIDADE</span>
       <h2 class="section__title">O DINHEIRO É SEU. A ESTRUTURA TAMBÉM.</h2>
       <p class="section__lead">
         Competir vale a pena quando o resultado é justo e o pagamento é
-        garantido. KYC, escrow e arbitragem humana em cada partida — com
-        parceiros que dão lastro técnico e legal.
+        garantido. KYC e escrow em cada partida — com parceiros que dão
+        lastro técnico e legal.
       </p>
     </header>
 
@@ -391,15 +456,11 @@
         <span class="partner__name">Idwall</span>
         <span class="partner__role">KYC automático</span>
       </div>
-      <div class="partner">
-        <span class="partner__name">Árbitro PRAUS</span>
-        <span class="partner__role">Arbitragem humana ao vivo</span>
-      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 7. CTA FINAL ============ -->
+<!-- ============ 8. CTA FINAL ============ -->
 <section class="cta-final" id="waitlist">
   <div class="cta-final__glow" aria-hidden="true"></div>
   <div class="wrap cta-final__inner">
@@ -412,8 +473,14 @@
 
     <form class="waitlist waitlist--center reveal" id="footer-form" data-source="cta" novalidate>
       <div class="waitlist__field">
-        <input type="email" name="email" inputmode="email" autocomplete="email"
-               placeholder="seu@email.com" aria-label="Seu e-mail" required />
+        <div class="waitlist__input-wrap">
+          <svg class="waitlist__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 6.5C3 5.67157 3.67157 5 4.5 5H19.5C20.3284 5 21 5.67157 21 6.5V17.5C21 18.3284 20.3284 19 19.5 19H4.5C3.67157 19 3 18.3284 3 17.5V6.5Z" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M4 6.5L12 13L20 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <input type="email" name="email" inputmode="email" autocomplete="email"
+                 placeholder="Digite o seu e-mail" aria-label="Seu e-mail" required />
+        </div>
         <button type="submit" class="btn btn--primary">
           GARANTIR MEU ACESSO <span aria-hidden="true">→</span>
         </button>
@@ -427,20 +494,20 @@
   </div>
 </section>
 
-<!-- ============ 8. FAQ ============ -->
+<!-- ============ 9. FAQ ============ -->
 <!-- section--alt: com o CTA agora acima, o FAQ precisa contrastar com ele.
      Segue a mesma alternância de fundo que corre pela página inteira. -->
 <section class="section section--alt" id="faq">
   <div class="wrap wrap--narrow">
     <header class="section__head reveal">
-      <span class="kicker mono-tag">06 / PERGUNTAS DIRETAS</span>
+      <span class="kicker mono-tag">07 / PERGUNTAS DIRETAS</span>
       <h2 class="section__title">SEM RODEIO.</h2>
     </header>
 
     <div class="faq reveal">
       <details class="faq__item">
         <summary class="faq__q">Isso é aposta?</summary>
-        <p class="faq__a">Não. A PRAUS é skill-based matchmaking: o resultado vem da sua habilidade, não da sorte. Tudo roda dentro de uma estrutura legal completa, com regras claras e arbitragem em cada partida.</p>
+        <p class="faq__a">Não. A PRAUS é skill-based matchmaking: o resultado vem da sua habilidade, não da sorte. Tudo roda dentro de uma estrutura legal completa, com regras claras e resultado validado a cada partida.</p>
       </details>
       <details class="faq__item">
         <summary class="faq__q">É seguro colocar dinheiro?</summary>
@@ -448,7 +515,7 @@
       </details>
       <details class="faq__item">
         <summary class="faq__q">Como vocês evitam cheater?</summary>
-        <p class="faq__a">Cada partida tem um árbitro humano da PRAUS acompanhando ao vivo. Comportamento suspeito é avaliado na hora, e o pagamento só sai depois da validação do resultado.</p>
+        <p class="faq__a">Comportamento suspeito é analisado antes do pagamento sair, e o prize pool só é liberado depois da validação do resultado.</p>
       </details>
       <details class="faq__item">
         <summary class="faq__q">Quais jogos posso disputar?</summary>

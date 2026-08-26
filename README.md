@@ -1,6 +1,6 @@
 # PRAUS — Landing de captação de beta
 
-Landing page de pré-launch da **PRAUS**, infraestrutura de *skill-based matchmaking* para o gaming brasileiro. O jogador escolhe o jogo, encontra rival do seu nível, disputa o pote e recebe no PIX — com árbitro ao vivo em cada partida.
+Landing page de pré-launch da **PRAUS**, infraestrutura de *skill-based matchmaking* para o gaming brasileiro. O jogador escolhe o jogo, encontra rival do seu nível, disputa o pote e recebe no PIX — com KYC e escrow em cada partida.
 
 Objetivo único da página: **entrada na waitlist do beta** (captura de e-mail).
 
@@ -40,7 +40,7 @@ praus-landing/
 3. **Jogos** — CS2 e Dota 2 ativos; Valorant e Fortnite em breve
 4. **Ranking** — leaderboard de jogadores e times *(dados ilustrativos até o beta)*
 5. **Lances** — clipe de campeonato de Valorant
-6. **Segurança** — KYC, escrow, árbitro ao vivo, parceiros
+6. **Segurança** — KYC, escrow, parceiros
 7. **CTA final** — `PRESS START. PLAY PRAUS.`
 8. **FAQ**
 

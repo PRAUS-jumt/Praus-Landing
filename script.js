@@ -167,11 +167,54 @@
   }
 
   /* Stagger leve dentro de grupos de cards */
-  document.querySelectorAll(".games, .partners").forEach(function (group) {
+  document.querySelectorAll(".games, .partners, .perks").forEach(function (group) {
     group.querySelectorAll(".reveal").forEach(function (el, i) {
       el.style.transitionDelay = (i % 4) * 70 + "ms";
     });
   });
+
+  /* Stagger dos próprios cards de vantagens (não têm .reveal individual —
+     o grupo inteiro entra junto, só o delay de cada card e de cada linha
+     do pôster varia, criando a cascata de entrada). */
+  document.querySelectorAll(".perks .perk").forEach(function (el, i) {
+    el.style.transitionDelay = i * 90 + "ms";
+    el.querySelectorAll(".line").forEach(function (line, l) {
+      line.style.transitionDelay = (i * 90 + l * 90) + "ms";
+    });
+  });
+
+  /* ---------- Vantagens: contagem do "100%" do bônus ---------- */
+  (function bonusCountUp() {
+    var perks = document.querySelector(".perks");
+    var stat = document.querySelector("[data-count-to]");
+    if (!perks || !stat) return;
+    var target = parseInt(stat.getAttribute("data-count-to"), 10) || 0;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function run() {
+      if (reduce) { stat.textContent = target; return; }
+      var start = null;
+      var duration = 900;
+      function tick(ts) {
+        if (start === null) start = ts;
+        var p = Math.min((ts - start) / duration, 1);
+        stat.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    if ("IntersectionObserver" in window) {
+      var ioStat = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { run(); ioStat.unobserve(entry.target); }
+        });
+      }, { threshold: 0.4 });
+      ioStat.observe(perks);
+    } else {
+      run();
+    }
+  })();
 
   /* ---------- Como funciona: stepper interativo ---------- */
   (function flowStepper() {

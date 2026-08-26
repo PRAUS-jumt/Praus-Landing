@@ -7,6 +7,14 @@ node_modules/
 server/.env
 *.log
 
+# Segredos e ajustes de máquina — nunca versionar
+# .env da raiz: credenciais do Postgres usadas pelo docker compose
+.env
+# override do compose: publica a 4100 no host para desenvolvimento. Em produção
+# a stack roda atrás do Caddy SEM porta publicada (ver docker-compose.yml), e o
+# compose carrega este arquivo automaticamente — versioná-lo exporia a porta lá.
+docker-compose.override.yml
+
 # Lixo de SO
 Thumbs.db
 ehthumbs.db
