@@ -34,7 +34,7 @@ Produto pré-lançamento (fase de captação de waitlist para o beta). Ranking e
 - Confiança/segurança é resolvida via KYC e escrow, não via arbitragem humana.
 - Anticheat: o mecanismo real ainda não foi confirmado pelo usuário. O FAQ atual usa linguagem genérica ("comportamento suspeito é analisado antes do pagamento sair") para não inventar um método específico — perguntar ao usuário antes de detalhar mais.
 - Sem alegações de clientes, números reais ou depoimentos — produto ainda não lançado.
-- **Bônus de primeiro depósito:** deposite R$ 50,00 e receba 100% de bônus, válido só no primeiro depósito. Confirmado pelo usuário em 2026-08-26 — implica que existe uma carteira/saldo na plataforma, não só entry fee por partida. Ainda não documentado em nenhum outro material além da seção "Vantagens" do site.
+- **Bônus de primeiro depósito:** deposite R$ 100,00 e receba 100% de bônus, válido só no primeiro depósito. **Confirmado pelo usuário em 2026-09-03, substituindo o valor de R$ 50,00 registrado em 2026-08-26.** A divergência foi pega por uma crítica de design: a página já dizia R$ 100,00 e este documento ainda dizia R$ 50,00. Implica que existe uma carteira/saldo na plataforma, não só entry fee por partida. Fora do site, ainda não documentado em nenhum outro material.
 - **Programa de indicação:** usuário ganha recompensa por cada amigo indicado. Mecânica exata (valor, condições) ainda não definida — texto atual é propositalmente genérico.
 
 ## Evidence on Hand
