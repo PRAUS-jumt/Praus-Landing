@@ -10,7 +10,7 @@
   --bg-2:  #1B1714;
   --bg-3:  #221D19;
   --line:  #2A231E;
-  --ink-3: #8A817A;
+  --ink-3: #948B83;  /* 4,99:1 na superfície mais clara (--bg-3); o #8A817A anterior dava 4,37 */
   --ink:   #F4EFEA;
 
   /* Laranja — a regra (brasa) */
@@ -20,21 +20,37 @@
 
   /* Semânticos */
   --win:  #B8E04A;
-  --loss: #E6322B;
+  --loss: #F55F52;  /* 5,28:1 no pior fundo; o #E6322B dava 4,35 */
   --info: #7CC9FF;
 
-  /* Tipografia — 8 papéis */
+  /* Tipografia — 7 papéis */
   --f-hero: 'Bebas Neue', sans-serif;
   --f-num:    'Bebas Neue', sans-serif;
+  /* Display de cartaz. A Bebas é uma condensada LEVE — existe num peso só, e
+     esse peso é fino: por mais que se aumente o corpo, a haste continua magra.
+     O cartaz de referência usa uma grotesca pesada, e é dela que vem a
+     sensação de densidade. A Anton é dessa classe e já vinha carregada no
+     <head> sem nunca ter sido usada. */
+  --f-poster: 'Anton', 'Bebas Neue', sans-serif;
   --f-italic: 'Newsreader', Georgia, serif;
   --f-money:  'Space Grotesk', sans-serif;
   --f-mono:   'JetBrains Mono', monospace;
   --f-tag:    'JetBrains Mono', monospace;
-  --f-ui:     'Inter Tight', sans-serif;
   --f-read:   'Manrope', sans-serif;
 
   --chamfer: 10px;
   --maxw: 1180px;
+
+  /* Movimento — duas curvas, nunca misturadas.
+     `ui` para o que muda de aparência (cor, borda, opacidade): rápido e neutro.
+     `move` para o que se desloca (transform): assenta devagar no fim, que é o
+     que dá sensação de peso. Trocar uma pela outra achata o conjunto. */
+  --ease-ui:   cubic-bezier(.4, 0, .2, 1);
+  --ease-move: cubic-bezier(.23, 1, .32, 1);
+  --t-fast: .15s;   /* estado imediato: hover de cor, foco */
+  --t-ui:   .28s;   /* troca de estado com leitura: borda, brilho, elevação */
+  --t-move: .45s;   /* deslocamento curto */
+  --t-slow: .7s;    /* entrada de bloco */
 }
 
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -52,7 +68,8 @@ body {
 img { max-width: 100%; display: block; }
 ul,ol { list-style: none; }
 a { color: inherit; text-decoration: none; }
-::selection { background: var(--orange); color: #000; }
+/* Sem override de ::selection: a seleção usa o azul nativo do navegador em
+   todo o site. O laranja da marca competia com o texto selecionado. */
 
 /* ---------- Barra de rolagem: só o polegar laranja, sem trilho ----------
    Os dois caminhos são exclusivos de propósito: o Chrome dá precedência a
@@ -123,22 +140,39 @@ em {
      gap acima ser o espaçamento real entre o letreiro e a marca */
   margin-right: -0.26em;
 }
-.wordmark__full { height: 1.45em; width: auto; display: block; }
+/* O PNG carrega ~7,7% de margem transparente na direita, então a caixa da
+   imagem termina depois da tinta. Com as caixas iguais dos dois lados, o vão
+   VISUAL saía 220px à esquerda contra 206px à direita — o botão é bloco
+   sólido e não tem essa folga. A margem negativa desconta exatamente essa
+   sobra. Em em, não px: assim acompanha o corpo do logo se ele mudar.
+   (Largura = 1.45em x 819/305 = 3,893em; 7,7% disso = 0,3em.) */
+.wordmark__full { height: 1.45em; width: auto; display: block; flex: none; }
 /* respiro vertical dá ao link da nav um alvo de toque confortável */
-.nav .wordmark { padding-block: 8px; }
+.nav .wordmark { padding-block: 8px; margin-right: -0.3em; }
 .wordmark--footer { font-size: 48px; }
 
 /* ---------- Botões (chanfros, mono uppercase) ---------- */
 .btn {
   border-radius: 10px;
   display: inline-flex; align-items: center; justify-content: center; gap: .5em;
-  font-family: var(--f-ui); font-size: 16px; font-weight: 650;
+  font-family: var(--f-read); font-size: 16px; font-weight: 700;
   letter-spacing: .08em; text-transform: uppercase;
   padding: 16px 26px; border: none; cursor: pointer; white-space: nowrap;
   border: none; 
   transition: background-color .15s ease, color .15s ease, transform .06s ease, box-shadow .15s ease;
 }
-.btn__arrow { display: inline-block; opacity: 0; max-width: 0; overflow: hidden; transform: translateX(-8px); transition: opacity .2s ease, max-width .2s ease, transform .2s ease; } .btn:hover .btn__arrow { opacity: 1; max-width: 20px; transform: translateX(4px); margin-left: 4px; }
+/* Botão menor em repouso; ao passar o mouse ele cresce e revela a seta.
+   Isto ANIMA LAYOUT (max-width/margin) e o detector sinaliza — é escolha
+   deliberada do dono do projeto, que prefere este comportamento ao espaço
+   reservado. Custo real: 20px de largura em hover, sem reflow de vizinhos
+   perceptível porque o botão é o último item da sua linha. */
+.btn__arrow {
+  display: inline-flex; align-items: center;
+  opacity: 0; max-width: 0; overflow: hidden; transform: translateX(-8px);
+  transition: opacity .2s ease, max-width .2s ease, transform .2s ease;
+}
+.btn__arrow svg { display: block; flex: none; }
+.btn:hover .btn__arrow { opacity: 1; max-width: 20px; transform: translateX(4px); margin-left: 4px; }
 .btn:active { transform: translateY(1px); }
 .btn--primary { background: var(--orange); color: #000; }
 .btn--primary:hover { background: var(--orange-hot); box-shadow: 0 0 28px rgba(255,122,0,.35); }
@@ -162,8 +196,15 @@ em {
   border-bottom: 1px solid transparent;
 }
 .nav.is-stuck { background: rgba(20,17,15,.85); backdrop-filter: blur(12px); border-bottom-color: var(--line); }
-.nav__inner { display: flex; align-items: center; gap: 26px; height: 64px; }
-.nav__menu { display: none; gap: 80px; margin-left: 55px; }
+/* Ritmo do menu: X entre a logo e o primeiro item, Y igual entre todos os
+   itens, e X de novo entre o último item e o botão. O truque é margin-inline:
+   auto no menu — com logo e botão nas pontas, o espaço livre se divide em
+   partes iguais dos dois lados, então os dois X são idênticos por construção
+   e continuam idênticos em qualquer largura de tela. O margin-left: auto que
+   havia no .nav__cta é o que quebrava isso: empurrava o botão para a borda e
+   deixava um vão arbitrário depois do FAQ. */
+.nav__inner { display: flex; align-items: center; gap: 0; height: 64px; }
+.nav__menu { display: none; gap: 104px; margin-inline: auto; }  /* Y=104 -> X=206, o dobro exato */
 .nav__menu a {
   font-family: var(--f-money); font-size: 15px; color: var(--ink-3); font-weight: 600; 
   transition: color .15s ease;  
@@ -171,7 +212,7 @@ em {
 }
 .nav__menu a::after { content: ''; position: absolute; left: 0; bottom: -6px; width: 100%; height: 2px; background: #EF8232; transform: scaleX(0); transform-origin: left; transition: transform .25s ease; } .nav__menu a:hover::after { transform: scaleX(1); }
 .nav__menu a:hover { color: var(--ink); }
-.nav__cta { margin-left: auto; }
+.nav__cta { flex: none; }
 @media (min-width: 880px) { .nav__menu { display: flex; } }
 
 /* ============================================================
@@ -204,11 +245,31 @@ em {
 .hero__inner { position: relative; z-index: 2; }
 
 .hero__title {
-  font-family: var(--f-hero); font-weight: 600; text-transform: uppercase;
+  /* Bebas Neue só existe em 400. Pedir 600 fazia o navegador fabricar um
+     negrito sintético — hastes engrossadas de forma desigual, contraforma
+     empastada. É o que dava a impressão de "fonte errada" na manchete. */
+  font-family: var(--f-hero); font-weight: 400; text-transform: uppercase;
   letter-spacing: -0.01em; line-height: 0.9;
   font-size: clamp(48px, 9.4vw, 116px); margin-bottom: 24px; max-width: 14ch;
   text-shadow: 0 4px 40px rgba(0,0,0,.5);
 }
+/* Linha de confiança do herói. Sobre vídeo a razão de contraste fixa não é
+   confiável, então segue o mesmo mecanismo já usado no subtítulo: cor clara
+   mais text-shadow. O tique é desenhado com duas bordas giradas — forma, não
+   glifo de fonte. O verde é o mesmo semântico de "validado" das telas. */
+.hero__sub:has(+ .hero__trust) { margin-bottom: 20px; }
+.hero__trust {
+  display: flex; flex-wrap: wrap; gap: 10px 24px; margin: 0 0 30px; padding: 0;
+  list-style: none; font-family: var(--f-money); font-size: 13.5px;
+  color: #e7e0d8; text-shadow: 0 2px 18px rgba(0,0,0,.55);
+}
+.hero__trust li { display: flex; align-items: center; gap: 9px; }
+.hero__trust li::before {
+  content: ""; flex: none; width: 9px; height: 5px;
+  border-left: 1.8px solid var(--win); border-bottom: 1.8px solid var(--win);
+  transform: rotate(-45deg) translateY(-2px);
+}
+
 .hero__sub {
   font-family: var(--f-money); font-size: clamp(16px, 2.2vw, 20px); line-height: 1.55;
   color: #e7e0d8; max-width: 54ch; margin-bottom: 34px;
@@ -220,6 +281,11 @@ em {
   color: var(--ink-3); animation: bob 2.4s ease-in-out infinite;
 }
 @keyframes bob { 0%,100%{transform:translate(-50%,0)} 50%{transform:translate(-50%,6px)} }
+/* A dica de rolagem é absoluta em bottom:22px, então não sabe que o conteúdo
+   do herói cresceu com a linha de confiança — no mobile ela passou a colidir
+   16px com o texto do formulário. Some nas telas estreitas: ali rolar é óbvio
+   e a dica disputava espaço com o próprio elemento de conversão. */
+@media (max-width: 700px) { .hero__scroll { display: none; } }
 
 /* ---------- Waitlist ---------- */
 /* Campo + botão formam uma única peça: contorno laranja com leve brilho ao
@@ -235,9 +301,7 @@ em {
   background: rgba(34,29,25,.92);
   transition: box-shadow .25s ease, border-color .25s ease;
 }
-.waitlist__field:focus-within {
-  box-shadow: 0 0 0 3px rgba(255,122,0,.2), 0 0 34px rgba(255,122,0,.5);
-}
+
 @media (min-width: 520px) { .waitlist__field { flex-direction: row; } }
 .waitlist__input-wrap { position: relative; flex: 1; min-width: 0; }
 .waitlist__icon {
@@ -246,13 +310,10 @@ em {
 }
 .waitlist input[type="email"] {
   width: 100%;
-  font-family: var(--f-ui); font-size: 16px; color: var(--ink);
+  font-family: var(--f-read); font-size: 16px; color: var(--ink);
   background: rgba(34,29,25,.92); border: none; padding: 16px 18px 16px 46px;
   border-radius: 0; }
 .waitlist input::placeholder { color: var(--ink-3); }
-/* Aqui dentro a seleção fica azul padrão do navegador, não o laranja global
-   do site — texto sendo digitado/colado não deve se camuflar no destaque. */
-.waitlist input::selection { background: Highlight; color: HighlightText; }
 .waitlist input:focus { outline: none; }
 .waitlist__input-wrap:focus-within .waitlist__icon { color: var(--orange); }
 /* Raio igual dos dois lados do botão — sem isso só a ponta direita (a que
@@ -268,11 +329,11 @@ em {
   border-color: var(--line);
   box-shadow: none;
 }
-.waitlist__micro { font-family: var(--f-ui); font-size: 13px; color: var(--ink-3); margin-top: 14px; }
+.waitlist__micro { font-family: var(--f-read); font-size: 13px; color: var(--ink-3); margin-top: 14px; }
 .waitlist--center .waitlist__micro { text-align: center; }
-.waitlist__success { font-family: var(--f-ui); font-size: 15px; font-weight: 600; color: var(--win); margin-top: 16px; }
+.waitlist__success { font-family: var(--f-read); font-size: 15px; font-weight: 600; color: var(--win); margin-top: 16px; }
 .waitlist--center .waitlist__success { text-align: center; }
-.waitlist__error { font-family: var(--f-ui); font-size: 14px; font-weight: 500; color: var(--loss); margin-top: 12px; }
+.waitlist__error { font-family: var(--f-read); font-size: 14px; font-weight: 500; color: var(--loss); margin-top: 12px; }
 .waitlist--center .waitlist__error { text-align: center; }
 /* [hidden] do UA perde para o display:flex acima — sem isto o formulário
    continua na tela depois do envio, com a mensagem de sucesso ao lado. */
@@ -314,112 +375,91 @@ em {
 }
 
 /* ============================================================
-   VANTAGENS
+   VANTAGENS — cartazes (portados de "Cards Promo v3")
    ============================================================ */
-.perks { display: grid; gap: 16px; grid-template-columns: 1fr; }
-@media (min-width: 620px) { .perks { grid-template-columns: repeat(2,1fr); } }
-@media (min-width: 1000px) { .perks { grid-template-columns: repeat(4,1fr); } }
+.promos { display: grid; gap: 14px; grid-template-columns: repeat(2,1fr); }
+@media (min-width: 700px)  { .promos { gap: 20px; } }
+@media (min-width: 1040px) { .promos { gap: 28px; grid-template-columns: repeat(4,1fr); } }
 
-.perk {
+/* Original: 400x760, raio 36, padding 56/32/52. Convertido para % do card
+   (padding e raio, que não podem usar cqw por serem do próprio container) e
+   cqw para tudo que está dentro. */
+.promo {
   position: relative; overflow: hidden;
-  padding: 32px 26px; display: flex; flex-direction: column; justify-content: space-between;
-  aspect-ratio: 3 / 3.9;
-  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
-}
-.perk:hover { transform: translateY(-4px); border-color: rgba(255,122,0,.4); }
-
-/* ---- Gráfico decorativo gigante ao fundo — a marca de cada card ---- */
-.perk__deco {
-  position: absolute; z-index: 0; color: var(--orange); opacity: .14;
-  pointer-events: none; fill: none;
-}
-.perk__deco--target {
-  width: 280px; height: 280px; right: -50px; top: 52%;
-  animation: decoSpinCenter 60s linear infinite;
-}
-.perk__deco--ring {
-  width: 300px; height: 300px; left: -60px; top: 55%;
-  color: #1a1005; opacity: .2; animation: decoSpinCenter 70s linear infinite reverse;
-}
-.perk__deco--bump { width: 82%; top: 14%; left: 50%; transform: translateX(-50%); opacity: .6; animation: decoBump 2.6s ease-in-out infinite; }
-.perk__deco--bolt {
-  width: 230px; height: 230px; right: -30px; top: 54%; transform: translateY(-50%) rotate(-6deg);
-  opacity: .17; animation: decoPulse 2.4s ease-in-out infinite;
-}
-@keyframes decoSpinCenter {
-  from { transform: translateY(-50%) rotate(0deg); }
-  to { transform: translateY(-50%) rotate(360deg); }
-}
-@keyframes decoPulse { 0%,100% { opacity: .14; } 50% { opacity: .3; } }
-@keyframes decoBump {
-  0%, 100% { transform: translateX(-50%); }
-  45% { transform: translateX(-50%) scale(.98); }
-  50% { transform: translateX(-50%) scale(1.05); }
-  55% { transform: translateX(-50%) scale(.98); }
+  aspect-ratio: 400 / 760; border-radius: 9%;
+  padding: 14% 8% 13%;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  background: linear-gradient(180deg, #FF6B31 0%, #FF5A1F 55%, #F24F16 100%);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.22), 0 40px 80px -30px rgba(255,90,31,.45);
+  container-type: inline-size;
 }
 
-/* ---- Composição em pôster: as linhas se espalham pela altura do card,
-   em vez de se aglomerarem no topo. ---- */
-.perk__poster { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; justify-content: space-evenly; }
-.line {
-  font-family: var(--f-hero); font-weight: 400; text-transform: uppercase;
-  color: var(--ink); transform-origin: left bottom;
-  opacity: 0; transform: translateY(20px); filter: blur(2px);
-  transition: opacity .5s cubic-bezier(.16,1,.3,1), transform .5s cubic-bezier(.16,1,.3,1), filter .5s cubic-bezier(.16,1,.3,1);
+.promo__tt {
+  position: relative; flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: calc(var(--gap) * 1cqw);
+  font-family: var(--f-hero); color: #fff; line-height: .82;
 }
-.perks.in .line { opacity: 1; transform: none; filter: blur(0); }
-.line--sm { font-size: clamp(14px, 1.7vw, 16px); letter-spacing: .04em; color: var(--ink-3); }
+.promo__tt--topo { flex: none; justify-content: flex-start; padding-top: 2.38cqw; }
+.pl {
+  font-weight: 400; font-size: calc(var(--fs) * 1cqw);
+  letter-spacing: var(--ls, normal); line-height: var(--lh, .82);
+}
+.pl--tinta { color: #0A0A0B; }
 
-/* Os numerais gigantes revelam com uma cortina (clip-path), não com fade. */
-.line--lg, .line--xl, .line--xl2 { transform: none; filter: none; }
-.line--lg {
-  font-size: clamp(28px, 3.6vw, 36px); line-height: 1; letter-spacing: -0.02em;
-  clip-path: inset(0 100% 0 0); transition: clip-path .7s cubic-bezier(.16,1,.3,1), opacity .3s ease;
-}
-.perks.in .line--lg { clip-path: inset(0 0 0 0); }
-.line--xl {
-  font-size: clamp(66px, 10vw, 96px); line-height: .88; letter-spacing: -0.03em; color: var(--orange);
-  display: flex; align-items: baseline;
-  clip-path: inset(0 100% 0 0); transition: clip-path .8s cubic-bezier(.16,1,.3,1), opacity .3s ease;
-}
-.perks.in .line--xl { clip-path: inset(0 0 0 0); }
-.line--xl i { font-style: normal; font-size: .46em; margin-left: 2px; opacity: .92; }
-.line--xl2 {
-  font-size: clamp(36px, 4.6vw, 46px); line-height: .96; letter-spacing: -0.02em; color: var(--orange);
-  clip-path: inset(0 100% 0 0); transition: clip-path .8s cubic-bezier(.16,1,.3,1), opacity .3s ease;
-}
-.perks.in .line--xl2 { clip-path: inset(0 0 0 0); }
-.perk:hover .line--xl,
-.perk:hover .line--xl2 { transform: scale(1.03); transition: transform .3s ease; }
-
-.perk__caption {
-  position: relative; z-index: 1; padding-top: 18px;
-  font-family: var(--f-read); font-size: 13.5px; color: var(--ink-3); line-height: 1.5;
+.promo__sub {
+  position: relative; margin: 0; color: #fff;
+  font-family: var(--f-money); font-weight: 500;
+  font-size: max(11px, 7.14cqw); line-height: 1.3;
+  text-wrap: balance; max-width: calc(var(--mw) * 1cqw);
 }
 
-/* ---- Card em destaque: bônus recebe tratamento sólido, como o CTA ---- */
-.perk--hot {
-  background: linear-gradient(160deg, var(--orange), var(--orange-deep));
-  border-color: var(--orange);
+/* ---- Card 01: três faixas giradas ---- */
+.promo__faixa {
+  position: absolute; left: 50%; top: 44%;
+  width: 327.38cqw; height: 56.55cqw; margin: -28.27cqw 0 0 -163.69cqw;
+  border-radius: 999px; background: #0A0A0B; transform: rotate(-56deg);
 }
-.perk--hot .line { color: #1a1005; }
-.perk--hot .line--sm { color: rgba(26,16,5,.7); }
-.perk--hot .line--xl,
-.perk--hot .line--xl2 { color: #1a1005; }
-.perk--hot .perk__caption { color: rgba(26,16,5,.75); }
-.perk__stat-num { font-family: var(--f-hero); }
+.promo__faixa--cima, .promo__faixa--baixo {
+  background: none; border: 0.6cqw solid rgba(10,10,11,.5); box-sizing: border-box;
+}
+.promo__faixa--cima  { transform: rotate(-56deg) translateY(-77.38cqw); }
+.promo__faixa--baixo { transform: rotate(-56deg) translateY(77.38cqw); }
 
-@media (max-width: 619px) {
-  .perk { aspect-ratio: auto; min-height: 380px; }
+/* ---- Card 03: aro central e bolhas nos cantos ---- */
+.promo__aro {
+  position: absolute; left: 50%; top: 44%;
+  width: 98.21cqw; aspect-ratio: 1; margin: -49.11cqw 0 0 -49.11cqw;
+  border-radius: 50%; border: 0.6cqw solid rgba(10,10,11,.5); box-sizing: border-box;
 }
+.promo__bolha { position: absolute; width: 44.64cqw; aspect-ratio: 1; border-radius: 50%; background: #0A0A0B; }
+.promo__bolha--vazada { background: none; border: 0.6cqw solid rgba(10,10,11,.5); box-sizing: border-box; }
+.promo__bolha--tl  { left: -17.86cqw; top: -17.86cqw; }
+.promo__bolha--br  { right: -17.86cqw; bottom: -17.86cqw; }
+.promo__bolha--tl2 { left: -11.90cqw; top: -11.90cqw; }
+.promo__bolha--br2 { right: -11.90cqw; bottom: -11.90cqw; }
 
-@media (prefers-reduced-motion: reduce) {
-  .perk__deco { animation: none; }
-  .line, .line--xl, .line--xl2 {
-    opacity: 1; transform: none; filter: none; clip-path: inset(0 0 0 0);
-    transition: none; animation: none;
-  }
+/* ---- Card 02: três círculos concêntricos ---- */
+.promo__orb {
+  position: absolute; left: 50%; top: 40%; aspect-ratio: 1;
+  border-radius: 50%; border: 0.6cqw solid rgba(10,10,11,.5); box-sizing: border-box;
 }
+.promo__orb--1 { width: 226.19cqw; margin: -113.10cqw 0 0 -113.10cqw; }
+.promo__orb--2 { width: 178.57cqw; margin: -89.29cqw 0 0 -89.29cqw; }
+.promo__orb--3 { width: 130.95cqw; margin: -65.48cqw 0 0 -65.48cqw; }
+
+/* ---- Card 04: trilhos inclinados ---- */
+.promo__trilhos {
+  position: relative; flex: 1; width: calc(100% + 19.05cqw);
+  margin: 9.52cqw -9.52cqw 8.33cqw; overflow: hidden;
+}
+.promo__trilho {
+  position: absolute; left: -59.52cqw; top: 50%;
+  width: 238.10cqw; height: 11.90cqw; transform: rotate(-14deg);
+}
+.promo__trilho--a { margin-top: -18.45cqw; background: #0A0A0B; }
+.promo__trilho--b { margin-top: -5.95cqw; border: 0.6cqw solid rgba(10,10,11,.55); box-sizing: border-box; }
+.promo__trilho--c { margin-top: 6.55cqw; background: #0A0A0B; }
 
 /* ============================================================
    2. DIFERENCIAIS
@@ -482,7 +522,42 @@ em {
    ============================================================ */
 /* Stepper interativo com prévia da tela */
 .flow { display: grid; gap: 18px; grid-template-columns: 1fr; align-items: start; }
-@media (min-width: 920px) { .flow { grid-template-columns: 0.92fr 1.08fr; gap: 28px; } }
+@media (min-width: 920px) {
+  .flow { grid-template-columns: 0.92fr 1.08fr; gap: 28px 28px; }
+  /* Com três filhos num grid de duas colunas o fluxo natural jogaria os
+     pontinhos para a coluna da direita. Posicionamento explícito: etapas e
+     pontinhos empilhados à esquerda, painel ocupando as duas linhas. */
+  .flow__steps   { grid-column: 1; grid-row: 1; }
+  .flow__dots    { grid-column: 1; grid-row: 2; }
+  .flow__screens { grid-column: 2; grid-row: 1 / span 2; }
+}
+
+/* --- Indicador de progresso ---
+   Mesmo conceito da barra que saiu, agora dividido por etapa: três trilhos de
+   largura fixa, e o da etapa ativa se preenche ao longo do intervalo. Largura
+   fixa de propósito — animar largura obrigaria o navegador a refazer o layout
+   a cada quadro; aqui só o preenchimento interno anda, via scaleX na GPU. */
+.flow__dots { display: flex; gap: 7px; align-items: center; }
+.flow__dot {
+  position: relative; overflow: hidden;
+  width: 30px; height: 4px; border-radius: 999px;
+  background: var(--line);
+  transition: background-color var(--t-ui) var(--ease-ui);
+}
+.flow__dot i {
+  position: absolute; inset: 0; display: block; background: var(--orange);
+  transform: scaleX(0); transform-origin: left;
+}
+.flow__dot.is-active i { animation: dotFill var(--fill, 6000ms) linear forwards; }
+@keyframes dotFill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+/* Etapas já vistas ficam marcadas, sem competir com a ativa. */
+.flow__dot.is-done i { transform: scaleX(1); opacity: .35; animation: none; }
+/* Sem avanço automático (movimento reduzido ou visitante assumiu o painel),
+   o trilho vira marcador de posição em vez de contagem regressiva. */
+.flow--parado .flow__dot.is-active i { animation: none; transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) {
+  .flow__dot.is-active i { animation: none; transform: scaleX(1); }
+}
 
 /* --- Passos (controles) --- */
 .flow__steps { display: flex; flex-direction: column; gap: 12px; }
@@ -501,22 +576,29 @@ em {
   color: var(--ink-3); letter-spacing: .02em; transition: color .2s ease;
 }
 .flow__step.is-active .flow__step-num { color: var(--orange); }
+/* Fonte principal dos painéis: Bebas Neue. Ela é toda em caixa-alta e mais
+   estreita que a Manrope, então precisa de corpo maior para o mesmo peso
+   ótico — 16,5px em Bebas ficaria miúdo. */
 .flow__step-tt {
-  display: block; font-family: var(--f-ui); font-weight: 600; font-size: 16.5px;
-  color: var(--ink); line-height: 1.25;
+  display: block; font-family: var(--f-hero); font-weight: 400; font-size: 21px;
+  letter-spacing: .015em; color: var(--ink); line-height: 1.12;
 }
+/* Fonte secundária dos painéis: Space Grotesk (a mesma do subtítulo do herói). */
+/* Abria animando max-height E margin-top. Além do custo de layout, o
+   max-height fixo de 90px era um teto arbitrário: texto mais longo ou fonte
+   maior no navegador ficaria cortado. Com linha de grid em fr a altura é a
+   real do conteúdo, sem teto. O respiro de 6px virou padding do filho, para
+   colapsar junto. */
 .flow__step-desc {
-  display: block; font-family: var(--f-read); font-size: 13.5px; color: var(--ink-3);
-  line-height: 1.5; margin-top: 6px; max-height: 0; opacity: 0; overflow: hidden;
-  transition: max-height .3s ease, opacity .3s ease, margin-top .3s ease;
+  display: grid; grid-template-rows: 0fr; opacity: 0;
+  font-family: var(--f-money); font-size: 13.5px; color: var(--ink-3); line-height: 1.5;
+  transition: grid-template-rows var(--t-ui) var(--ease-ui), opacity var(--t-ui) var(--ease-ui);
 }
-.flow__step.is-active .flow__step-desc { max-height: 90px; opacity: 1; }
-.flow__step-bar {
-  grid-column: 1 / -1; height: 2px; margin-top: 14px; background: var(--line); display: block;
-}
-.flow__step-bar i { display: block; height: 100%; width: 0; background: var(--orange); }
-.flow__step.is-active .flow__step-bar i { animation: stepFill var(--fill,4800ms) linear forwards; }
-@keyframes stepFill { from { width: 0; } to { width: 100%; } }
+/* Sem padding aqui: padding entra no cálculo da faixa mesmo com min-height 0,
+   e vazava 6px nas etapas fechadas. A separação ótica já vem do meio-leading
+   do line-height 1.5. */
+.flow__step-desc > span { overflow: hidden; min-height: 0; }
+.flow__step.is-active .flow__step-desc { grid-template-rows: 1fr; opacity: 1; }
 
 /* --- Telas (prévia do produto) --- */
 .flow__screens { position: relative; }
@@ -539,22 +621,47 @@ em {
 .screen__body { padding: 24px; display: flex; flex-direction: column; gap: 14px; min-height: 268px; }
 .screen__body--center { align-items: center; justify-content: center; text-align: center; gap: 10px; }
 .screen__label { color: var(--ink-3); }
-.screen__money { font-family: var(--f-money); font-weight: 600; font-size: 24px; color: var(--orange); font-variant-numeric: tabular-nums; }
-.screen__money--xl { font-size: clamp(40px,8vw,56px); line-height: 1; }
+.screen__money { font-family: var(--f-hero); font-weight: 400; font-size: 34px; letter-spacing: .01em; color: var(--orange); font-variant-numeric: tabular-nums; line-height: 1; }
 .screen__row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 4px; }
+
+/* Apoio dos painéis na secundária. Seletor com a tela na frente para vencer
+   `.mono-tag`, que é quem impõe a JetBrains Mono no HTML. */
+.screen .mono-tag,
+.screen__label,
+.screen__cta,
+.screen__timer,
+.chip { font-family: var(--f-money); }
 
 /* chips */
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip {
-  --c: 6px; font-family: var(--f-mono); font-size: 12px; font-weight: 700; letter-spacing: .05em;
-  color: var(--ink); background: var(--bg-2); border: 1px solid var(--line); padding: 9px 14px; cursor: default;
+  --c: 6px; font-size: 12px; font-weight: 700; letter-spacing: .05em;
+  color: var(--ink); background: var(--bg-2); border: 1px solid var(--line); padding: 9px 14px;
   border-radius: var(--c);
+  /* deixaram de ser enfeite: são selecionáveis, então precisam de affordance
+     e dos estados que qualquer controle deve ter */
+  cursor: pointer;
+  transition: background-color var(--t-fast) var(--ease-ui),
+              border-color var(--t-fast) var(--ease-ui),
+              color var(--t-fast) var(--ease-ui),
+              transform .08s var(--ease-ui);
 }
+.chip:hover { border-color: rgba(255,122,0,.55); background: var(--bg-3); }
+.chip:active { transform: translateY(1px); }
+.chip:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
 .chip--on { background: var(--orange); color: #000; border-color: var(--orange); }
+.chip--on:hover { background: var(--orange-hot); border-color: var(--orange-hot); }
 .screen__cta {
-  --c: 8px; margin-top: auto; text-align: center; font-family: var(--f-mono); font-weight: 700;
+  --c: 8px; margin-top: auto; font-family: var(--f-mono); font-weight: 700;
   font-size: 14px; letter-spacing: .08em; color: #000; background: var(--orange); padding: 15px;
-  border-radius: var(--c); } 
+  border-radius: var(--c); text-decoration: none;
+  display: flex; align-items: center; justify-content: center; gap: .5em;
+  transition: background-color var(--t-fast) var(--ease-ui);
+}
+.screen__cta:hover { background: var(--orange-hot); }
+.screen__cta:active { background: var(--orange-deep); }
+.screen__cta:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
 
 /* tela 2 — placar */
 .screen__score { display: flex; align-items: center; justify-content: center; gap: 22px; padding: 8px 0 4px; }
@@ -568,167 +675,244 @@ em {
 .screen__timer { color: var(--ink-3); margin-top: auto; }
 .screen__timer b { color: var(--ink); font-weight: 700; }
 
-/* tela 3 — pago */
-.screen__check {
-  width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center;
-  font-size: 32px; color: #000; background: var(--win); margin-bottom: 4px;
-  box-shadow: 0 0 30px rgba(184,224,74,.4);
+/* tela 3 — vitória (portada de "Tela de Vitória.html") */
+/* O arquivo é um painel de 1200x720. As medidas em px viraram proporção da
+   largura (cqw) SOBRE A BASE DE 1200 do arquivo — converti antes contra 336
+   por engano e tudo saiu no dobro. Onde o proporcional ficaria ilegível no
+   painel menor (título e valor), entra um piso em px. --vit reconciliado com o --win do site (#B8E04A); antes era o #B8FF39
+   que o --win do site; fica escopado a esta tela para não brigar com o resto. */
+.screen--vit { --vit: #B8E04A; container-type: inline-size; }
+.screen--vit .screen__win { color: var(--vit); }
+
+.vit {
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 5cqw 4cqw 5.5cqw; text-align: center;
+  background: linear-gradient(180deg, #1A1816 0%, #141210 100%);
 }
-.screen__win-tt { font-family: var(--f-hero); font-size: 28px; letter-spacing: .02em; color: var(--ink); }
-.screen__pix { color: var(--win); letter-spacing: .14em; }
-.screen__elo { color: var(--ink-3); }
+.vit__brilho {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 46% 60% at 50% 42%, rgba(184,224,74,.13), rgba(184,224,74,0) 70%);
+}
+.vit__fio {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, rgba(184,224,74,0), rgba(184,224,74,.5), rgba(184,224,74,0));
+}
+
+/* Medalha: halo pulsante, disco e troféu — três camadas, como no arquivo. */
+.vit__medalha {
+  position: relative; width: 9.33cqw; aspect-ratio: 1; flex: none;
+  display: flex; align-items: center; justify-content: center;
+  animation: vitPop .7s cubic-bezier(.2,.8,.2,1) both;
+}
+.vit__halo {
+  position: absolute; inset: -22%; border-radius: 50%;
+  background: radial-gradient(circle, rgba(184,224,74,.35), rgba(184,224,74,0) 68%);
+  animation: vitPulsa 3s ease-in-out infinite;
+}
+.vit__disco {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: #1E1C19; border: 1px solid rgba(184,224,74,.45);
+  box-shadow: 0 0 36px rgba(184,224,74,.25), inset 0 1px 0 rgba(255,255,255,.05);
+}
+.vit__trofeu {
+  position: relative; width: 48%; height: auto; color: var(--vit);
+  filter: drop-shadow(0 0 12px rgba(184,224,74,.6));
+}
+
+.vit__tt {
+  position: relative; margin: 2.5cqw 0 0;
+  font-family: var(--f-hero); font-weight: 400; font-size: max(38px, 11.33cqw);
+  line-height: 1; letter-spacing: .06em; text-indent: .06em; color: #F7F3EC;
+  text-shadow: 0 0 40px rgba(184,224,74,.18), 0 2px 0 rgba(0,0,0,.4);
+  animation: vitSobe .6s .2s ease-out both;
+}
+
+.vit__placa {
+  position: relative; margin-top: 2.83cqw;
+  display: flex; align-items: center; justify-content: center; gap: 1.17cqw;
+  padding: 1.17cqw 3.67cqw; border-radius: 14px;
+  border: 1.5px solid rgba(184,224,74,.55);
+  background: linear-gradient(180deg, rgba(184,224,74,.10), rgba(184,224,74,.03));
+  box-shadow: 0 0 40px rgba(184,224,74,.22), inset 0 0 24px rgba(184,224,74,.06);
+  font-family: var(--f-hero); font-size: max(26px, 7.33cqw); line-height: 1;
+  letter-spacing: .02em; color: var(--vit);
+  text-shadow: 0 0 22px rgba(184,224,74,.5);
+  animation: vitSobe .6s .45s ease-out both;
+}
+.vit__valor { font-variant-numeric: tabular-nums; }
+
+.vit__elo {
+  position: relative; margin-top: 2.17cqw;
+  display: flex; align-items: center; gap: 1cqw;
+  font-family: var(--f-money); font-size: max(11px, 1.33cqw); font-weight: 600;
+  letter-spacing: .24em; text-transform: uppercase; color: #9A948B;
+  animation: vitSobe .6s .7s ease-out both;
+}
+.vit__ponto { width: 4px; height: 4px; border-radius: 50%; background: var(--vit); flex: none; }
+.vit__patente { color: #E3B341; }
+
+@keyframes vitPop   { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
+@keyframes vitSobe  { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes vitPulsa { 0%,100% { opacity: .55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.07); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .vit__medalha, .vit__halo, .vit__tt, .vit__placa, .vit__elo { animation: none; }
+}
 
 /* ============================================================
    4. JOGOS
    ============================================================ */
 .games { display: grid; gap: 16px; grid-template-columns: repeat(2,1fr); }
 @media (min-width: 900px) { .games { grid-template-columns: repeat(4,1fr); } }
-.game { padding: 0; overflow: hidden; transition: transform .2s ease, border-color .2s ease; }
-.game:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--accent) 60%, var(--line)); }
+
+/* Contorno por STATUS, não por marca do jogo. Antes cada card trazia um
+   --accent inline com a cor do título (laranja CS2, vermelho Dota, vermelho
+   Valorant, azul Fortnite) — quatro cores que não diziam nada sobre poder
+   jogar ou não. Agora: laranja da marca = jogável agora; azul-aço frio =
+   ainda não. Dois sinais, legíveis sem legenda. */
+.game {
+  padding: 0; overflow: hidden; border-radius: 16px;
+  transition: transform var(--t-ui) var(--ease-move),
+              border-color var(--t-ui) var(--ease-ui),
+              box-shadow var(--t-ui) var(--ease-ui);
+}
+.game:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255,122,0,.6);
+  box-shadow: 0 16px 36px -20px rgba(255,122,0,.6);
+}
+.game--soon:hover {
+  border-color: rgba(134,162,184,.55);
+  box-shadow: 0 16px 36px -20px rgba(134,162,184,.45);
+}
+
 .game__cover { position: relative; aspect-ratio: 3/4; overflow: hidden; background: var(--bg-3); }
-.game__cover img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+.game__cover img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--t-slow) var(--ease-move); }
 .game:hover .game__cover img { transform: scale(1.05); }
 .game__cover::after {
   content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 55%, rgba(13,11,10,.85) 100%);
+  background: linear-gradient(180deg, transparent 48%, rgba(20,17,15,.72) 78%, var(--bg-2) 100%);
 }
+
+/* O selo passa a ser pílula com desfoque de fundo. Não é vidro decorativo:
+   ele pousa sobre capa fotográfica de brilho imprevisível — na capa laranja
+   do CS2 a caixa escura antiga ficava ilegível. O desfoque garante o
+   contraste em qualquer capa. */
 .badge {
   position: absolute; top: 12px; left: 12px; z-index: 2;
-  display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--f-tag); font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
-  font-weight: 500; padding: 6px 10px; background: rgba(13,11,10,.7); border: 1px solid var(--line);
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--f-tag); font-size: 11px; letter-spacing: .12em;
+  text-transform: uppercase; font-weight: 700; line-height: 1;
+  padding: 7px 12px; border-radius: 999px;
+  -webkit-backdrop-filter: blur(12px) saturate(.75);
+  backdrop-filter: blur(12px) saturate(.75);
+  box-shadow: 0 3px 14px -6px rgba(0,0,0,.8);
 }
-.badge--live { color: var(--orange); border-color: rgba(255,122,0,.45); }
+.badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; flex: none; }
+
+/* ATIVO tem presença: preenchido e pulsando. */
+.badge--live {
+  color: #FFCFA0; background: rgba(120,44,0,.88); border: 1px solid rgba(255,122,0,.65);
+}
 .badge--live::before {
-  content: ""; width: 7px; height: 7px; background: var(--orange); border-radius: 50%;
-  box-shadow: 0 0 8px var(--orange); animation: pulse 1.6s infinite;
+  background: var(--orange); box-shadow: 0 0 9px var(--orange);
+  animation: pulse 1.6s var(--ease-ui) infinite;
 }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
-.badge--soon { color: var(--ink-3); }
-.game__meta { padding: 16px 18px 20px; }
-.game__name {
-  font-family: var(--f-hero); font-weight: 400; font-size: clamp(18px,2.2vw,24px);
-  text-transform: uppercase; letter-spacing: -0.01em; line-height: 1; margin-bottom: 7px;
+
+/* EM BREVE recua: contorno frio e ponto VAZADO — anel em vez de disco.
+   A diferença de preenchimento carrega o sentido sem precisar de ícone. */
+.badge--soon {
+  color: #A8C0D2; background: rgba(20,25,31,.88); border: 1px solid rgba(134,162,184,.42);
 }
-.game__mode { color: var(--ink-3); }
+.badge--soon::before { border: 1.5px solid #A8C0D2; opacity: .9; }
+
+.game__meta { padding: 15px 17px 18px; }
+/* Bebas é condensada: tracking negativo em corpo pequeno fecha os vãos e
+   embola as letras. Aqui vai levemente positivo. */
+.game__name {
+  font-family: var(--f-hero); font-weight: 400; font-size: clamp(19px,2.3vw,25px);
+  text-transform: uppercase; letter-spacing: .015em; line-height: 1; margin-bottom: 8px;
+  color: var(--ink);
+}
+/* Tracking medido, não escolhido no olho: "5V5 · COMPETITIVO" é o rótulo mais
+   longo e a coluna mais estreita dá 122px. A .15em pedia 127,5px e quebrava em
+   duas linhas só nesse card, desalinhando a caixa em relação aos vizinhos. */
+.game__mode { color: var(--ink-3); font-size: 11px; letter-spacing: .02em; }
+@media (max-width: 400px) { .game__mode { letter-spacing: 0; } }
 
 /* Em breve — capa real, levemente esmaecida para os ATIVO se destacarem */
-.game--soon .game__cover img { filter: saturate(.9) brightness(.86); }
-.game--soon:hover .game__cover img { filter: saturate(1) brightness(.96); }
-.game--soon .game__name { color: var(--ink-3); }
+.game--soon .game__cover img { filter: saturate(.72) brightness(.8); }
+.game--soon:hover .game__cover img { filter: saturate(.95) brightness(.94); }
+.game--soon .game__name { color: #B6C6D2; }
+.game--soon .game__mode { color: #7B8FA0; }
 
-/* ============================================================
-   4b. RANKING (leaderboard)
-   ============================================================ */
-/* #jogos e #ranking têm o mesmo fundo; a divisória faz a separação —
-   mesmo recurso que .cta-final já usa. */
+@media (prefers-reduced-motion: reduce) {
+  .badge--live::before { animation: none; }
+}
+
+/* Divisória entre seções de mesmo fundo — mesmo recurso que .cta-final usa. */
 .section--edge { border-top: 1px solid var(--line); }
 
-.rank {
-  background: linear-gradient(180deg, var(--bg-3), var(--bg));
-  border: 1px solid var(--line); overflow: hidden;
-  box-shadow: 0 0 50px rgba(0,0,0,.35);
-  border-radius: 10px;
-}
-.rank__bar {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  padding: 13px 18px; background: rgba(13,11,10,.5);
-  border-bottom: 1px solid var(--line); color: var(--ink-3); letter-spacing: .14em;
-}
 
 /* ---- Abas Jogadores / Times ---- */
-.rank__tabs { display: flex; border-bottom: 1px solid var(--line); }
-.rank__tab {
-  flex: 1; position: relative; background: transparent; border: 0; cursor: pointer;
-  font-family: var(--f-mono); font-size: 12px; font-weight: 700; letter-spacing: .12em;
-  color: var(--ink-3); padding: 15px 12px;
-  transition: color .15s ease, background-color .15s ease;
-}
-.rank__tab:hover { color: var(--ink); }
-.rank__tab.is-active { color: var(--ink); background: rgba(255,122,0,.06); }
-.rank__tab.is-active::after {
-  content: ""; position: absolute; inset: auto 0 -1px 0; height: 2px; background: var(--orange);
-}
 /* [hidden] do UA perde para qualquer display de autor — declarar explicitamente */
-.rank__panel[hidden] { display: none; }
 
 /* ---- Tabela ---- */
-.rank__table { width: 100%; border-collapse: collapse; }
-.rank__cap {
-  caption-side: bottom; text-align: left; color: var(--ink-3);
-  padding: 13px 18px; border-top: 1px solid var(--line); letter-spacing: .1em;
-}
-.rank__table th {
-  font-family: var(--f-tag); font-size: 10px; font-weight: 500; letter-spacing: .16em;
-  text-transform: uppercase; color: var(--ink-3); text-align: left;
-  padding: 12px 18px; border-bottom: 1px solid var(--line); white-space: nowrap;
-}
-.rank__table td { padding: 12px 18px; border-bottom: 1px solid rgba(42,35,30,.5); }
-.rank__table tbody tr:last-child td { border-bottom: 0; }
-.rank__table tbody tr { transition: background-color .15s ease; }
-.rank__table tbody tr:hover { background: rgba(255,122,0,.05); }
 
-.rank__pos {
-  font-family: var(--f-num); font-size: 21px; color: var(--ink-3);
-  width: 1%; white-space: nowrap; font-variant-numeric: tabular-nums;
-}
-.rank__table tbody tr:nth-child(-n+3) .rank__pos { color: var(--orange); }
-.rank__nick { font-family: var(--f-ui); font-weight: 600; font-size: 15px; color: var(--ink); }
-.rank__tier {
-  font-family: var(--f-tag); font-size: 10px; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--ink-3); white-space: nowrap;
-}
-.rank__table th:last-child, .rank__elo { text-align: right; }
-.rank__elo {
-  font-family: var(--f-money); font-weight: 600; font-size: 16px;
-  color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap;
-}
 
 /* ---- Faixa "sua posição" ---- */
-.rank__you {
-  display: flex; flex-direction: column; align-items: flex-start; gap: 14px;
-  padding: 18px; border-top: 1px solid var(--line); background: rgba(13,11,10,.4);
-}
-.rank__you-txt { font-family: var(--f-read); font-size: 14px; color: var(--ink-3); }
 @media (min-width: 620px) {
-  .rank__you { flex-direction: row; align-items: center; justify-content: space-between; gap: 20px; }
 }
 /* telas estreitas: a patente sai para o ELO nunca ser espremido */
 @media (max-width: 520px) {
-  .rank__table th:nth-child(3), .rank__table td:nth-child(3) { display: none; }
-  .rank__table th, .rank__table td, .rank__cap, .rank__bar { padding-inline: 13px; }
 }
 
 /* ============================================================
    5. LANCES (clipe)
    ============================================================ */
-.clip { max-width: 960px; margin-inline: auto; }
-.clip__frame {
-  --c: 12px; position: relative; aspect-ratio: 16/9; background: #000;
-  border: 1px solid var(--line); overflow: hidden;
-  clip-path: polygon(var(--c) 0,100% 0,100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,0 100%,0 var(--c));
-  box-shadow: 0 0 60px rgba(255,122,0,.12);
-}
-.clip__frame iframe,
-.clip__video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.clip__video { object-fit: cover; background: #000; display: block; }
-.clip__cap { margin-top: 14px; color: var(--ink-3); text-align: center; }
 
 /* ============================================================
    6. PARCEIROS
    ============================================================ */
-.partners { display: grid; gap: 14px; grid-template-columns: 1fr; max-width: 620px; }
-@media (min-width: 700px) { .partners { grid-template-columns: repeat(2,1fr); } }
-.partner {
-  background: var(--bg-2); border: 1px solid var(--line);
-  padding: 26px 24px; display: flex; flex-direction: column; gap: 6px;
-  border-radius: 10px;
-  transition: border-color .2s ease;
+/* ---------- Trilho de custódia (segurança) ---------- */
+/* Um elemento contínuo, não quatro caixas: a linha que liga as etapas É o
+   argumento — o dinheiro percorre um caminho, e cada ponto diz onde ele está.
+   No desktop o trilho é horizontal; no mobile, vertical. */
+.custodia { list-style: none; padding: 0; margin: 0; display: grid; gap: 26px; position: relative; }
+.custodia__etapa { position: relative; padding-left: 56px; }
+.custodia__mark {
+  position: absolute; left: 0; top: 0; width: 40px; height: 40px; border-radius: 50%;
+  display: grid; place-items: center; color: var(--orange);
+  background: var(--bg-2); border: 1px solid rgba(255,122,0,.35);
 }
-.section--alt .partner { background: var(--bg); }
-.partner:hover { border-color: rgba(255,122,0,.4); }
-.partner__name { font-family: var(--f-money); font-weight: 600; font-size: 22px; color: var(--ink); }
-.partner__role { font-family: var(--f-ui); font-size: 14px; color: var(--ink-3); }
+.custodia__mark svg { width: 21px; height: 21px; }
+/* O trilho: liga o marcador desta etapa ao da próxima. */
+.custodia__etapa:not(:last-child)::before {
+  content: ""; position: absolute; left: 20px; top: 44px; bottom: -30px;
+  width: 1px; background: linear-gradient(180deg, rgba(255,122,0,.4), rgba(255,122,0,.08));
+}
+.custodia__tt {
+  font-family: var(--f-hero); font-weight: 400; font-size: 22px; letter-spacing: .01em;
+  color: var(--ink); margin: 8px 0 5px; text-transform: uppercase;
+}
+.custodia__txt { font-family: var(--f-read); font-size: 14.5px; line-height: 1.5; color: var(--ink-3); margin: 0; }
+.custodia__quem {
+  display: inline-block; margin-top: 9px; color: var(--orange);
+  border: 1px solid rgba(255,122,0,.3); border-radius: 999px; padding: 3px 10px; letter-spacing: .12em;
+}
+
+@media (min-width: 860px) {
+  .custodia { grid-template-columns: repeat(4, 1fr); gap: 30px; }
+  .custodia__etapa { padding-left: 0; padding-top: 56px; }
+  .custodia__mark { top: 0; left: 0; }
+  .custodia__etapa:not(:last-child)::before {
+    left: 48px; right: -30px; top: 20px; bottom: auto; width: auto; height: 1px;
+    background: linear-gradient(90deg, rgba(255,122,0,.4), rgba(255,122,0,.08));
+  }
+  .custodia__tt { margin-top: 0; }
+}
 
 /* ============================================================
    7. NÚMEROS
@@ -752,7 +936,7 @@ em {
 .faq { display: flex; flex-direction: column; gap: 1px; background: var(--line); border: 1px solid var(--line); }
 .faq__item { background: var(--bg); }
 .faq__q {
-  font-family: var(--f-ui); font-weight: 600; font-size: 18px; padding: 22px 24px;
+  font-family: var(--f-read); font-weight: 600; font-size: 18px; padding: 22px 24px;
   cursor: pointer; list-style: none; display: flex; justify-content: space-between;
   align-items: center; gap: 16px; transition: color .15s ease;
 }
@@ -778,7 +962,7 @@ em {
 @media (min-width: 768px) { .cta-final { padding-block: 140px; } }
 .cta-final__glow {
   position: absolute; inset: 0;
-  background: radial-gradient(700px 380px at 50% 120%, rgba(255,122,0,.18), transparent 65%);
+  background: radial-gradient(1040px 560px at 50% 118%, rgba(255,122,0,.32), transparent 68%);
   pointer-events: none;
 }
 .cta-final__inner { position: relative; }
@@ -801,7 +985,7 @@ em {
   display: flex; flex-direction: column; align-items: flex-start; gap: 18px;
 }
 .footer__cta-txt {
-  font-family: var(--f-ui); font-size: 16.5px; font-weight: 500;
+  font-family: var(--f-read); font-size: 16.5px; font-weight: 500;
   color: var(--ink); line-height: 1.4; max-width: 40ch;
 }
 @media (min-width: 620px) {
@@ -813,7 +997,7 @@ em {
 .footer__tagline { color: var(--orange); letter-spacing: .16em; }
 .footer__links { display: flex; flex-wrap: wrap; gap: 22px; }
 .footer__link {
-  font-family: var(--f-ui); font-size: 14px; color: var(--ink-3);
+  font-family: var(--f-read); font-size: 14px; color: var(--ink-3);
   border-bottom: 1px solid transparent; transition: color .15s ease, border-color .15s ease;
 }
 .footer__link:hover { color: var(--ink); border-color: var(--orange); }
@@ -844,3 +1028,106 @@ em {
   .reveal { opacity: 1; transform: none; }
   .hero__vid--b { opacity: 0; }
 }
+
+
+/* ============================================================
+   ALVOS DE TOQUE — 44px sob ponteiro grosseiro
+   Medido: 12 de 22 elementos interativos ficavam abaixo de 44px no mobile,
+   todos falhando na ALTURA (chips 36, botões 41, links do rodapé 23).
+   A consulta é por (pointer: coarse) e não por largura: quem decide o
+   tamanho mínimo é o dedo, não o viewport.
+   ============================================================ */
+@media (pointer: coarse) {
+  .chip { min-height: 44px; }
+  .btn--sm { min-height: 44px; }
+  /* Área de toque estendida sem deslocar o sublinhado do hover. */
+  .footer__link, .hero__scroll { position: relative; }
+  .footer__link::after, .hero__scroll::after {
+    content: ""; position: absolute; inset: -13px -6px;
+  }
+}
+
+/* A ressalva de dados ilustrativos vivia só na legenda do rodapé da tabela, no
+   menor texto da seção, enquanto a tabela em si parece prova social convincente.
+   O PRODUCT.md proíbe fabricar prova social; a ressalva sobe para a barra. */
+
+
+/* ============================================================
+   PÁGINAS DE DOCUMENTO (termos / regras / privacidade)
+   ============================================================ */
+.doc { padding: 120px 0 90px; }
+.doc__wrap { max-width: 760px; }
+.doc__voltar { margin-bottom: 34px; }
+.doc__voltar a {
+  font-family: var(--f-read); font-size: 14px; color: var(--ink-3);
+  transition: color var(--t-fast) var(--ease-ui);
+}
+.doc__voltar a:hover { color: var(--orange); }
+.doc__titulo {
+  font-family: var(--f-hero); font-weight: 400; font-size: clamp(38px, 6vw, 64px);
+  line-height: .95; text-transform: uppercase; color: var(--ink); margin: 0 0 26px;
+}
+/* O aviso de minuta é o primeiro elemento do corpo, não nota de rodapé: quem
+   abre um documento legal precisa saber do status antes de ler o conteúdo. */
+.doc__minuta {
+  font-family: var(--f-read); font-size: 14.5px; line-height: 1.6; color: var(--ink);
+  border: 1px solid rgba(255,122,0,.35); border-radius: 12px;
+  background: rgba(255,122,0,.06); padding: 16px 18px; margin-bottom: 18px;
+}
+.doc__minuta strong { color: var(--orange); }
+.doc__meta { color: var(--ink-3); margin-bottom: 46px; }
+.doc__sec { margin-bottom: 38px; }
+.doc__h2 {
+  font-family: var(--f-hero); font-weight: 400; font-size: 26px; letter-spacing: .01em;
+  text-transform: uppercase; color: var(--ink); margin: 0 0 12px;
+}
+.doc p {
+  font-family: var(--f-read); font-size: 15.5px; line-height: 1.65; color: var(--ink-3);
+  margin: 0 0 12px; max-width: 68ch;
+}
+.doc p strong, .doc p em { color: var(--ink); }
+.doc__contato {
+  border-top: 1px solid var(--line); padding-top: 26px; margin-top: 46px;
+}
+.doc__contato a { color: var(--orange); }
+.doc__contato a:hover { text-decoration: underline; }
+.doc .footer { margin-top: 0; }
+
+/* ============================================================
+   MENU MOBILE
+   Os quatro destinos ficavam sem nenhuma UI alcançável abaixo de 880px, numa
+   página de ~7000px de altura. O FAQ é o apanhador de objeções e era o mais
+   caro de perder.
+   ============================================================ */
+.nav__abrir { display: none; }
+@media (max-width: 879px) {
+  .nav__abrir {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; flex: none; margin-left: 10px;
+    background: none; border: 1px solid var(--line); border-radius: 10px;
+    color: var(--ink); cursor: pointer;
+    transition: border-color var(--t-fast) var(--ease-ui);
+  }
+  .nav__abrir:hover { border-color: rgba(255,122,0,.5); }
+  .nav__abrir:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+  .nav__abrir svg { width: 20px; height: 20px; }
+  /* as duas barras viram X quando aberto — desenhadas, não glifo */
+  .nav__abrir .b1, .nav__abrir .b2 { transition: transform var(--t-ui) var(--ease-move); transform-origin: center; }
+  .nav__abrir[aria-expanded="true"] .b1 { transform: translateY(3.5px) rotate(45deg); }
+  .nav__abrir[aria-expanded="true"] .b2 { transform: translateY(-3.5px) rotate(-45deg); }
+
+  /* O painel é fixed e sobrepõe o conteúdo, então não precisa colapsar altura:
+     opacidade e transform bastam, e nenhuma propriedade de layout é animada. */
+  .nav__menu {
+    display: block !important; position: fixed; inset: 64px 0 auto 0;
+    background: rgba(20,17,15,.97); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    padding: 8px 20px 18px;
+    opacity: 0; pointer-events: none; transform: translateY(-8px);
+    transition: opacity var(--t-ui) var(--ease-ui), transform var(--t-ui) var(--ease-move);
+  }
+  .nav__menu.aberto { opacity: 1; pointer-events: auto; transform: none; }
+  .nav__menu a { display: block; padding: 14px 2px; border-bottom: 1px solid var(--line); }
+  .nav__menu a:last-child { border-bottom: 0; }
+}
+

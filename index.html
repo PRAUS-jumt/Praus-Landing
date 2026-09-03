@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head> <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<head> 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>PRAUS — Skill-based matchmaking. Jogue valendo.</title>
@@ -16,7 +16,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
 <link rel="stylesheet" href="styles.css" />
 </head>
@@ -28,21 +28,24 @@
     <a href="#top" class="wordmark">
       <img class="wordmark__full" src="assets/brand/praus-logo-full.png" alt="PRAUS"/>
     </a>
-    <nav class="nav__menu" aria-label="Principal">
+    <nav class="nav__menu" id="menu-principal" aria-label="Principal">
       <a href="#como-funciona">COMO FUNCIONA</a>
       <a href="#jogos">JOGOS</a>
-      <a href="#ranking">RANKING</a>
-      <a href="#lances">LANCES</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <a href="#waitlist" class="btn btn--sm btn--primary nav__cta">ENTRAR NA FILA <span class="btn__arrow" aria-hidden="true">→</span></a>
+    <a href="#waitlist" class="btn btn--sm btn--primary nav__cta" data-perto>ENTRAR NA FILA <span class="btn__arrow" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></a>
+      <button class="nav__abrir" type="button" aria-expanded="false" aria-controls="menu-principal" aria-label="Abrir menu">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <path class="b1" d="M3 7h14"/><path class="b2" d="M3 13h14"/>
+        </svg>
+      </button>
   </div>
 </header>
 
 <main>
 
 <!-- ============ 1. HERÓI (vídeo de fundo, sem fosco) ============ -->
-<section class="hero">
+<section class="hero" id="topo-form">
   <div class="hero__bg" aria-hidden="true">
     <video class="hero__vid hero__vid--a" autoplay muted loop playsinline preload="auto">
       <source src="assets/video/hero-1.mp4" type="video/mp4" />
@@ -67,6 +70,15 @@
       recebe diretamente no PIX.
     </p>
 
+    <!-- A objeção principal do público é "isso é golpe?". A prova ficava seis
+         seções abaixo do pedido de e-mail; esta linha antecipa o que já está
+         dito na seção de segurança e no FAQ, sem alegar nada novo. -->
+    <ul class="hero__trust reveal">
+      <li>Identidade verificada</li>
+      <li>Prêmio retido em conta-garantia</li>
+      <li>Saque no PIX</li>
+    </ul>
+
     <form class="waitlist reveal" id="hero-form" data-source="hero" novalidate>
       <div class="waitlist__field">
         <div class="waitlist__input-wrap">
@@ -78,7 +90,7 @@
                  placeholder="Digite o seu e-mail" aria-label="Seu e-mail" required />
         </div>
         <button type="submit" class="btn btn--primary">
-          GARANTIR MEU ACESSO <span class="btn__arrow" aria-hidden="true">→</span>
+          GARANTIR MEU ACESSO <span class="btn__arrow" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span>
         </button>
       </div>
       <p class="waitlist__micro">Entrada na fila do beta, sem custo. É só o e-mail.</p>
@@ -95,58 +107,65 @@
 <!-- ============ 2. VANTAGENS ============ -->
 <section class="section" id="vantagens">
   <div class="wrap">
-    <div class="perks reveal">
-      <article class="perk card">
-        <svg class="perk__deco perk__deco--target" viewBox="0 0 200 200" aria-hidden="true">
-          <circle cx="100" cy="100" r="95" stroke="currentColor" stroke-width="2"/>
-          <circle cx="100" cy="100" r="62" stroke="currentColor" stroke-width="2"/>
-          <circle cx="100" cy="100" r="29" stroke="currentColor" stroke-width="2"/>
-        </svg>
-        <div class="perk__poster">
-          <span class="line line--sm">PLATAFORMA</span>
-          <span class="line line--xl">100<i>%</i></span>
-          <span class="line line--lg">SKILLBASED</span>
+    <!-- Portado de "Cards Promo v3.dc.html". As medidas do arquivo são px sobre
+         um card de 400px; viraram cqw (1% da caixa de conteúdo, 336px) e % do
+         card, então cada proporção é a mesma em qualquer largura.
+         A ordem é a do arquivo: Skillbased, Convide, Bônus, Pix. -->
+    <div class="promos reveal">
+
+      <article class="promo">
+        <span class="promo__faixa" aria-hidden="true"></span>
+        <span class="promo__faixa promo__faixa--cima" aria-hidden="true"></span>
+        <span class="promo__faixa promo__faixa--baixo" aria-hidden="true"></span>
+        <div class="promo__tt" style="--gap:4.76">
+          <span class="pl" style="--fs:23.81; --ls:.03em">Plataforma</span>
+          <span class="pl" style="--fs:58.33; --ls:-.02em">100%</span>
+          <span class="pl" style="--fs:23.81; --ls:.03em">Skillbased</span>
         </div>
-        <p class="perk__caption">Não depende de ninguém além de você.</p>
+        <p class="promo__sub" style="--mw:83.33">O resultado final só depende de você.</p>
       </article>
 
-      <article class="perk perk--hot card">
-        <svg class="perk__deco perk__deco--ring" viewBox="0 0 200 200" aria-hidden="true">
-          <circle cx="100" cy="100" r="90" stroke="currentColor" stroke-width="16"/>
-        </svg>
-        <div class="perk__poster">
-          <span class="line line--sm">GANHE ATÉ</span>
-          <span class="line line--xl"><b class="perk__stat-num" data-count-to="100">0</b><i>%</i></span>
-          <span class="line line--lg">DE BÔNUS</span>
+      <article class="promo">
+        <span class="promo__aro" aria-hidden="true"></span>
+        <span class="promo__bolha promo__bolha--tl" aria-hidden="true"></span>
+        <span class="promo__bolha promo__bolha--br" aria-hidden="true"></span>
+        <span class="promo__bolha promo__bolha--tl2 promo__bolha--vazada" aria-hidden="true"></span>
+        <span class="promo__bolha promo__bolha--br2 promo__bolha--vazada" aria-hidden="true"></span>
+        <div class="promo__tt" style="--gap:3.57">
+          <span class="pl" style="--fs:32.14; --ls:.03em">Convide</span>
+          <span class="pl pl--tinta" style="--fs:65.48; --lh:.74">&amp;</span>
+          <span class="pl" style="--fs:32.14; --ls:.03em">Ganhe</span>
         </div>
-        <p class="perk__caption">No seu primeiro depósito acima de R$ 50,00.</p>
+        <p class="promo__sub" style="--mw:86.31">Recompensa por cada amigo que você trouxer para a plataforma.</p>
       </article>
 
-      <article class="perk card">
-        <svg class="perk__deco perk__deco--bump" viewBox="0 0 200 140" aria-hidden="true">
-          <path d="M18 70 L60 40 C68 34 80 36 85 45 L96 64" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <path d="M182 70 L140 40 C132 34 120 36 115 45 L104 64" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <circle cx="100" cy="66" r="7" fill="currentColor"/>
-        </svg>
-        <div class="perk__poster">
-          <span class="line line--sm">GANHE POR</span>
-          <span class="line line--lg">CADA AMIGO</span>
-          <span class="line line--xl2">INDICADO</span>
+      <article class="promo">
+        <span class="promo__orb promo__orb--1" aria-hidden="true"></span>
+        <span class="promo__orb promo__orb--2" aria-hidden="true"></span>
+        <span class="promo__orb promo__orb--3" aria-hidden="true"></span>
+        <div class="promo__tt" style="--gap:5.36">
+          <span class="pl pl--tinta" style="--fs:16.67; --ls:.08em">Ganhe até</span>
+          <span class="pl" style="--fs:52.38; --ls:-.02em">100%</span>
+          <span class="pl pl--tinta" style="--fs:16.67; --ls:.08em">de</span>
+          <span class="pl" style="--fs:42.86; --ls:.01em">Bônus</span>
         </div>
-        <p class="perk__caption">Recompensa por cada amigo que você trouxer pra PRAUS.</p>
+        <p class="promo__sub" style="--mw:74.40">No seu primeiro depósito de R$ 100,00</p>
       </article>
 
-      <article class="perk card">
-        <svg class="perk__deco perk__deco--bolt" viewBox="0 0 200 200" aria-hidden="true">
-          <path d="M118 10 L40 120 L92 120 L82 190 L165 75 L112 75 Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round" fill="none"/>
-        </svg>
-        <div class="perk__poster">
-          <span class="line line--sm">SAQUE DIRETO</span>
-          <span class="line line--lg">NA HORA</span>
-          <span class="line line--xl2">NO PIX</span>
+      <article class="promo">
+        <div class="promo__tt promo__tt--topo" style="--gap:4.17">
+          <span class="pl" style="--fs:36.90; --ls:.03em">Saque</span>
+          <span class="pl" style="--fs:21.43; --ls:.05em">Instantâneo</span>
+          <span class="pl" style="--fs:36.90; --ls:.03em">no Pix</span>
         </div>
-        <p class="perk__caption">Sem burocracia e com muita rapidez.</p>
+        <div class="promo__trilhos" aria-hidden="true">
+          <span class="promo__trilho promo__trilho--a"></span>
+          <span class="promo__trilho promo__trilho--b"></span>
+          <span class="promo__trilho promo__trilho--c"></span>
+        </div>
+        <p class="promo__sub" style="--mw:83.33">Receba o seu dinheiro na hora e sem burocracia.</p>
       </article>
+
     </div>
   </div>
 </section>
@@ -155,39 +174,44 @@
 <section class="section section--alt" id="como-funciona">
   <div class="wrap">
     <header class="section__head reveal">
-      <span class="kicker mono-tag">02 / COMO FUNCIONA</span>
-      <h2 class="section__title">TRÊS PASSOS E MENOS DE 1 MINUTO!.</h2>
+      <h2 class="section__title">APENAS 3 PASSOS</h2>
     </header>
 
-    <div class="flow reveal" data-autoplay="4800">
+    <div class="flow reveal" data-autoplay="6000">
       <!-- Passos (controles) -->
       <div class="flow__steps" role="tablist" aria-label="Como funciona">
         <button class="flow__step is-active" role="tab" aria-selected="true" aria-controls="screen-1" id="step-1" data-step="1">
           <span class="flow__step-num">01</span>
           <span class="flow__step-text">
-            <span class="flow__step-tt">Escolhe o jogo e o entry fee</span>
-            <span class="flow__step-desc">Define a modalidade e quanto coloca na linha. Entra na fila e o sistema acha rival do seu nível.</span>
+            <span class="flow__step-tt">Você escolhe o jogo e define o prêmio</span>
+            <span class="flow__step-desc"><span>Defina o seu jogo e o seu entry fee. Vamos lhe direcionar para um rival do seu nível.</span></span>
           </span>
-          <span class="flow__step-bar" aria-hidden="true"><i></i></span>
         </button>
 
         <button class="flow__step" role="tab" aria-selected="false" aria-controls="screen-2" id="step-2" data-step="2">
           <span class="flow__step-num">02</span>
           <span class="flow__step-text">
-            <span class="flow__step-tt">Compete com o pote em escrow</span>
-            <span class="flow__step-desc">O valor da partida fica retido em escrow enquanto você joga. Quem joga melhor leva o pote.</span>
+            <span class="flow__step-tt">Jogue a partida enquanto a recompensa fica retida</span>
+            <span class="flow__step-desc"><span>O valor da partida fica retido em escrow — uma conta-garantia neutra — enquanto você joga. Após a partida, seu saldo é instantaneamente atualizado.</span></span>
           </span>
-          <span class="flow__step-bar" aria-hidden="true"><i></i></span>
         </button>
 
         <button class="flow__step" role="tab" aria-selected="false" aria-controls="screen-3" id="step-3" data-step="3">
           <span class="flow__step-num">03</span>
           <span class="flow__step-text">
-            <span class="flow__step-tt">Recebe o prize pool no PIX</span>
-            <span class="flow__step-desc">Resultado validado, o prize pool cai na sua conta via PIX. Sem burocracia, sem espera.</span>
+            <span class="flow__step-tt">Receba o prize pool no PIX</span>
+            <span class="flow__step-desc"><span>Com o resultado validado, o prize pool cai direto na sua conta, via PIX. Sem burocracia e sem espera.</span></span>
           </span>
-          <span class="flow__step-bar" aria-hidden="true"><i></i></span>
         </button>
+      </div>
+
+      <!-- Indicador de progresso: o mesmo conceito da barra antiga, agora
+           segmentado por etapa. Puramente visual (aria-hidden): quem
+           navega por teclado já tem as etapas como controles. -->
+      <div class="flow__dots" aria-hidden="true">
+        <span class="flow__dot is-active"><i></i></span>
+        <span class="flow__dot"><i></i></span>
+        <span class="flow__dot"><i></i></span>
       </div>
 
       <!-- Prévia das telas -->
@@ -196,22 +220,22 @@
         <div class="screen is-active" id="screen-1" role="tabpanel" aria-labelledby="step-1" data-screen="1">
           <div class="screen__bar mono-tag"><span>PRAUS · LOBBY</span><span>BR-SE</span></div>
           <div class="screen__body">
-            <span class="screen__label mono-tag">MODALIDADE</span>
-            <div class="chips">
-              <button class="chip chip--on" type="button" tabindex="-1">CS2</button>
-              <button class="chip" type="button" tabindex="-1">DOTA 2</button>
+            <span class="screen__label mono-tag" id="rot-modalidade">MODALIDADE</span>
+            <div class="chips" role="radiogroup" aria-labelledby="rot-modalidade" data-grupo="jogo">
+              <button class="chip chip--on" type="button" role="radio" aria-checked="true"  data-valor="cs2">CS2</button>
+              <button class="chip"          type="button" role="radio" aria-checked="false" data-valor="dota2">DOTA 2</button>
             </div>
-            <span class="screen__label mono-tag">ENTRY FEE</span>
-            <div class="chips">
-              <button class="chip" type="button" tabindex="-1">R$ 25</button>
-              <button class="chip chip--on" type="button" tabindex="-1">R$ 50</button>
-              <button class="chip" type="button" tabindex="-1">R$ 100</button>
+            <span class="screen__label mono-tag" id="rot-entrada">ENTRY FEE</span>
+            <div class="chips" role="radiogroup" aria-labelledby="rot-entrada" data-grupo="entrada">
+              <button class="chip"          type="button" role="radio" aria-checked="false" data-valor="25">R$ 25</button>
+              <button class="chip chip--on" type="button" role="radio" aria-checked="true"  data-valor="50">R$ 50</button>
+              <button class="chip"          type="button" role="radio" aria-checked="false" data-valor="100">R$ 100</button>
             </div>
             <div class="screen__row">
               <span class="screen__label mono-tag">PRIZE POOL ESTIMADO</span>
-              <span class="screen__money">R$ 95</span>
+              <span class="screen__money" data-premio role="status">R$ 95</span>
             </div>
-            <div class="screen__cta">ENTRAR NA FILA →</div>
+            <a class="screen__cta" href="#waitlist">ENTRAR NA FILA<svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
           </div>
         </div>
 
@@ -237,14 +261,41 @@
         </div>
 
         <!-- TELA 3 — recebido no PIX -->
-        <div class="screen" id="screen-3" role="tabpanel" aria-labelledby="step-3" data-screen="3" hidden>
+        <div class="screen screen--vit" id="screen-3" role="tabpanel" aria-labelledby="step-3" data-screen="3" hidden>
           <div class="screen__bar mono-tag"><span class="screen__win">● VALIDADO</span><span>MATCH #A8F2</span></div>
-          <div class="screen__body screen__body--center">
-            <div class="screen__check" aria-hidden="true">✓</div>
-            <span class="screen__win-tt">VITÓRIA</span>
-            <span class="screen__money screen__money--xl">R$ 95</span>
-            <div class="screen__pix mono-tag">PAGO VIA PIX · AGORA</div>
-            <div class="screen__elo mono-tag">+24 ELO · GOLD III</div>
+          <!-- Portado de "Tela de Vitória.html". O arquivo é um painel de
+               1200x720; aqui as medidas viram proporção da largura, então a
+               composição sobrevive ao painel menor da landing. -->
+          <div class="vit">
+            <span class="vit__brilho" aria-hidden="true"></span>
+            <span class="vit__fio" aria-hidden="true"></span>
+
+            <div class="vit__medalha">
+              <span class="vit__halo" aria-hidden="true"></span>
+              <span class="vit__disco" aria-hidden="true"></span>
+              <svg class="vit__trofeu" viewBox="0 0 64 64" fill="none" role="img" aria-label="Troféu">
+                <path d="M18 8h28v14c0 8.5-6 15.5-14 15.5S18 30.5 18 22V8z" fill="currentColor"/>
+                <path d="M18 13H10.5c-.8 0-1.5.7-1.5 1.5v3c0 6.5 4.5 11.5 10 12.3" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <path d="M46 13h7.5c.8 0 1.5.7 1.5 1.5v3c0 6.5-4.5 11.5-10 12.3" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <path d="M29 37h6v8h-6z" fill="currentColor"/>
+                <path d="M22 45h20a3 3 0 0 1 3 3v4H19v-4a3 3 0 0 1 3-3z" fill="currentColor"/>
+                <path d="M17 52h30v4H17z" fill="currentColor" opacity=".7"/>
+                <path d="M32 14l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L32 26.4l-5 2.8 1.2-5.6-4.2-3.8 5.6-.6L32 14z" fill="#141210" opacity=".75"/>
+              </svg>
+            </div>
+
+            <h3 class="vit__tt">VITÓRIA</h3>
+
+            <div class="vit__placa">
+              <span class="vit__moeda">+R$</span>
+              <span class="vit__valor">95</span>
+            </div>
+
+            <div class="vit__elo">
+              <span>+36 Elo</span>
+              <span class="vit__ponto" aria-hidden="true"></span>
+              <span class="vit__patente">Ouro III</span>
+            </div>
           </div>
         </div>
       </div>
@@ -256,17 +307,16 @@
 <section class="section" id="jogos">
   <div class="wrap">
     <header class="section__head reveal">
-      <span class="kicker mono-tag">03 / MODALIDADES</span>
-      <h2 class="section__title">COMECE A JOGAR VALENDO. </h2>
+      <h2 class="section__title">ESCOLHA SEU JOGO FAVORITO</h2>
       <p class="section__lead">
-        CS2 e Dota 2 ativos no beta. Valorant e Fortnite chegando. O
-        catálogo abre conforme a base cresce.
+        CS2 e Dota 2 já disponíveis no beta, Valorant e Fortnite chegando
+        em breve.
       </p>
     </header>
 
     <div class="games">
       <!-- ATIVOS -->
-      <article class="game card reveal" style="--accent:#f0a020">
+      <article class="game card reveal">
         <div class="game__cover">
           <img src="assets/games/cs2.jpg" alt="Counter-Strike 2" loading="lazy" />
           <span class="badge badge--live mono-tag">ATIVO</span>
@@ -277,7 +327,7 @@
         </div>
       </article>
 
-      <article class="game card reveal" style="--accent:#c0392b">
+      <article class="game card reveal">
         <div class="game__cover">
           <img src="assets/games/dota2.jpg" alt="Dota 2" loading="lazy" />
           <span class="badge badge--live mono-tag">ATIVO</span>
@@ -289,7 +339,7 @@
       </article>
 
       <!-- EM BREVE -->
-      <article class="game game--soon card reveal" style="--accent:#ff4655">
+      <article class="game game--soon card reveal">
         <div class="game__cover">
           <img src="assets/games/valorant.jpg" alt="Valorant" loading="lazy" />
           <span class="badge badge--soon mono-tag">EM BREVE</span>
@@ -300,7 +350,7 @@
         </div>
       </article>
 
-      <article class="game game--soon card reveal" style="--accent:#4a90e2">
+      <article class="game game--soon card reveal">
         <div class="game__cover">
           <img src="assets/games/fortnite.jpg" alt="Fortnite" loading="lazy" />
           <span class="badge badge--soon mono-tag">EM BREVE</span>
@@ -314,157 +364,61 @@
   </div>
 </section>
 
-<!-- ============ 5. RANKING ============ -->
-<!-- Mesma função da seção de rankings do FACEIT: mostrar a escada competitiva
-     e dar ao visitante um lugar concreto para se projetar. Como a PRAUS está
-     em pré-launch, os dados são ilustrativos e a tabela é apresentada como
-     prévia do produto (mesma linguagem visual das telas de "Como funciona"). -->
-<section class="section section--edge" id="ranking">
-  <div class="wrap">
-    <header class="section__head reveal">
-      <span class="kicker mono-tag">04 / RANKING</span>
-      <h2 class="section__title">SUBA A ESCADA. PROVE SEU NÍVEL.</h2>
-      <p class="section__lead">
-        Cada partida validada move seu ELO. Escale as patentes sozinho ou com
-        seu time e veja exatamente onde você aparece entre os competidores do
-        seu jogo.
-      </p>
-    </header>
-
-    <div class="rank reveal">
-      <div class="rank__bar mono-tag">
-        <span>PRAUS · RANKING</span>
-        <span>TEMPORADA 01 · CS2</span>
-      </div>
-
-      <div class="rank__tabs" role="tablist" aria-label="Ranking por categoria">
-        <button type="button" class="rank__tab is-active" role="tab" aria-selected="true"
-                aria-controls="rank-jogadores" id="rank-tab-jogadores">JOGADORES</button>
-        <button type="button" class="rank__tab" role="tab" aria-selected="false" tabindex="-1"
-                aria-controls="rank-times" id="rank-tab-times">TIMES</button>
-      </div>
-
-      <div class="rank__panel" id="rank-jogadores" role="tabpanel" aria-labelledby="rank-tab-jogadores" tabindex="0">
-        <table class="rank__table">
-          <caption class="rank__cap mono-tag">Prévia do sistema de ranking · jogadores · dados ilustrativos</caption>
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Jogador</th>
-              <th scope="col">Patente</th>
-              <th scope="col">ELO</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td class="rank__pos">1</td><td class="rank__nick">zk1nho</td><td class="rank__tier">Challenger</td><td class="rank__elo">3.412</td></tr>
-            <tr><td class="rank__pos">2</td><td class="rank__nick">dracco</td><td class="rank__tier">Challenger</td><td class="rank__elo">3.298</td></tr>
-            <tr><td class="rank__pos">3</td><td class="rank__nick">mth4us</td><td class="rank__tier">Challenger</td><td class="rank__elo">3.180</td></tr>
-            <tr><td class="rank__pos">4</td><td class="rank__nick">p4vvn</td><td class="rank__tier">Diamante I</td><td class="rank__elo">3.121</td></tr>
-            <tr><td class="rank__pos">5</td><td class="rank__nick">rex0ne</td><td class="rank__tier">Diamante I</td><td class="rank__elo">3.064</td></tr>
-            <tr><td class="rank__pos">6</td><td class="rank__nick">lucao_</td><td class="rank__tier">Diamante II</td><td class="rank__elo">2.998</td></tr>
-            <tr><td class="rank__pos">7</td><td class="rank__nick">k1ng.br</td><td class="rank__tier">Diamante II</td><td class="rank__elo">2.945</td></tr>
-            <tr><td class="rank__pos">8</td><td class="rank__nick">vnzz</td><td class="rank__tier">Platina I</td><td class="rank__elo">2.877</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="rank__panel" id="rank-times" role="tabpanel" aria-labelledby="rank-tab-times" tabindex="0" hidden>
-        <table class="rank__table">
-          <caption class="rank__cap mono-tag">Prévia do sistema de ranking · times · dados ilustrativos</caption>
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Time</th>
-              <th scope="col">Patente</th>
-              <th scope="col">ELO</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td class="rank__pos">1</td><td class="rank__nick">Cangaço</td><td class="rank__tier">Challenger</td><td class="rank__elo">3.355</td></tr>
-            <tr><td class="rank__pos">2</td><td class="rank__nick">Matilha</td><td class="rank__tier">Challenger</td><td class="rank__elo">3.240</td></tr>
-            <tr><td class="rank__pos">3</td><td class="rank__nick">Pantanal</td><td class="rank__tier">Challenger</td><td class="rank__elo">3.156</td></tr>
-            <tr><td class="rank__pos">4</td><td class="rank__nick">Garoa</td><td class="rank__tier">Diamante I</td><td class="rank__elo">3.088</td></tr>
-            <tr><td class="rank__pos">5</td><td class="rank__nick">Vórtex</td><td class="rank__tier">Diamante I</td><td class="rank__elo">3.011</td></tr>
-            <tr><td class="rank__pos">6</td><td class="rank__nick">Caatinga</td><td class="rank__tier">Diamante II</td><td class="rank__elo">2.960</td></tr>
-            <tr><td class="rank__pos">7</td><td class="rank__nick">Maré Alta</td><td class="rank__tier">Diamante II</td><td class="rank__elo">2.902</td></tr>
-            <tr><td class="rank__pos">8</td><td class="rank__nick">Sertão</td><td class="rank__tier">Platina I</td><td class="rank__elo">2.845</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="rank__you">
-        <p class="rank__you-txt">Sua posição entra aqui depois da primeira partida validada.</p>
-        <a href="#waitlist" class="btn btn--sm btn--primary">DISPUTAR MINHA VAGA <span aria-hidden="true">→</span></a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 6. LANCES (teaser da PRAUS) ============ -->
-<section class="section section--alt" id="lances">
-  <div class="wrap">
-    <header class="section__head reveal">
-      <span class="kicker mono-tag">05 / TEASER</span>
-      <h2 class="section__title">O CLUTCH QUE VALE O POTE.</h2>
-      <p class="section__lead">
-        A tensão de quem tem dinheiro na linha não se explica — se sente.
-        Vinte e três segundos do que a PRAUS está construindo.
-      </p>
-    </header>
-
-    <div class="clip reveal">
-      <div class="clip__frame">
-        <!-- preload="none": o arquivo de 23 MB só é baixado se a pessoa der
-             play. O poster é uma imagem de 107 KB extraída do próprio teaser,
-             então a seção não custa quase nada a quem só passa rolando. -->
-        <video
-          class="clip__video"
-          controls
-          preload="none"
-          playsinline
-          poster="assets/video/teaser-poster.jpg"
-          width="1920" height="1080">
-          <source src="assets/video/TeaserLanding.mp4" type="video/mp4" />
-          Seu navegador não reproduz este vídeo.
-          <a href="assets/video/TeaserLanding.mp4">Baixe o teaser</a>.
-        </video>
-      </div>
-      <p class="clip__cap mono-tag">PRAUS · TEASER OFICIAL</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 7. SEGURANÇA / CREDIBILIDADE ============ -->
+<!-- ============ 5. SEGURANÇA / CREDIBILIDADE ============ -->
 <section class="section" id="seguranca">
   <div class="wrap">
     <header class="section__head reveal">
-      <span class="kicker mono-tag">06 / SEGURANÇA E INTEGRIDADE</span>
-      <h2 class="section__title">O DINHEIRO É SEU. A ESTRUTURA TAMBÉM.</h2>
+      <h2 class="section__title">ESTRUTURA TRANSPARENTE</h2>
       <p class="section__lead">
-        Competir vale a pena quando o resultado é justo e o pagamento é
-        garantido. KYC e escrow em cada partida — com parceiros que dão
-        lastro técnico e legal.
+        Onde está o seu dinheiro em cada momento, do depósito ao saque.
       </p>
     </header>
 
-    <div class="partners reveal">
-      <div class="partner">
-        <span class="partner__name">Asaas</span>
-        <span class="partner__role">PIX e escrow</span>
-      </div>
-      <div class="partner">
-        <span class="partner__name">Idwall</span>
-        <span class="partner__role">KYC automático</span>
-      </div>
-    </div>
-  </div>
+    <!-- Trilho de custódia. Substitui a tira de dois cards com nome+cargo, que
+         era indistinguível de um strip de logos B2B — na seção que o PRODUCT.md
+         declara ser a prioridade nº1. A objeção do público não é "quem são os
+         parceiros", é "onde está o meu dinheiro agora". Isto responde isso em
+         sequência e prende cada parceiro à etapa em que ele age. Sem caixas:
+         Vantagens já é um 4-up de cards; repetir o formato seria mesmice. -->
+    <ol class="custodia reveal">
+      <li class="custodia__etapa">
+        <span class="custodia__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.2" y="4.8" width="17.6" height="14.4" rx="1.6"/><circle cx="9.4" cy="10.6" r="2.2"/><path d="M6 16.6c.6-1.7 1.9-2.5 3.4-2.5s2.8.8 3.4 2.5M16 10h2.6M16 13h2.6"/></svg>
+        </span>
+        <h3 class="custodia__tt">Identidade verificada</h3>
+        <p class="custodia__txt">Antes de disputar, a verificação de identidade é automática.</p>
+        <span class="custodia__quem mono-tag">Idwall</span>
+      </li>
+      <li class="custodia__etapa">
+        <span class="custodia__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4.4" y="10.6" width="15.2" height="9.2" rx="1.4"/><path d="M8 10.6V8a4 4 0 018 0v2.6M12 14.4v2"/></svg>
+        </span>
+        <h3 class="custodia__tt">Prêmio retido</h3>
+        <p class="custodia__txt">O valor da partida fica numa conta-garantia enquanto vocês jogam.</p>
+        <span class="custodia__quem mono-tag">Asaas</span>
+      </li>
+      <li class="custodia__etapa">
+        <span class="custodia__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.2"/><path d="M8.4 12.2l2.6 2.6 4.6-5.2"/></svg>
+        </span>
+        <h3 class="custodia__tt">Resultado validado</h3>
+        <p class="custodia__txt">Nada é liberado antes de o resultado da partida ser validado.</p>
+      </li>
+      <li class="custodia__etapa">
+        <span class="custodia__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13.4 4.8H5.6A1.6 1.6 0 004 6.4v11.2a1.6 1.6 0 001.6 1.6h7.8"/><path d="M15.6 12h4.8M18 9.4l2.4 2.6-2.4 2.6"/></svg>
+        </span>
+        <h3 class="custodia__tt">Saque no PIX</h3>
+        <p class="custodia__txt">O prize pool cai direto na sua conta, sem burocracia.</p>
+        <span class="custodia__quem mono-tag">Asaas</span>
+      </li>
+    </ol>
 </section>
 
-<!-- ============ 8. CTA FINAL ============ -->
+<!-- ============ 6. CTA FINAL ============ -->
 <section class="cta-final" id="waitlist">
   <div class="cta-final__glow" aria-hidden="true"></div>
   <div class="wrap cta-final__inner">
-    <span class="kicker mono-tag reveal">FILA ABERTA · VAGAS DO BETA</span>
     <h2 class="cta-final__title reveal">SEJA O PRIMEIRO A TER ACESSO.<br/></h2>
     <p class="cta-final__sub reveal">
       Garanta seu acesso ao beta. Quando abrir pra você, é só escolher o
@@ -482,7 +436,7 @@
                  placeholder="Digite o seu e-mail" aria-label="Seu e-mail" required />
         </div>
         <button type="submit" class="btn btn--primary">
-          GARANTIR MEU ACESSO <span aria-hidden="true">→</span>
+          GARANTIR MEU ACESSO <span class="btn__arrow" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span>
         </button>
       </div>
       <p class="waitlist__micro">Entrada na fila do beta, sem custo. É só o e-mail.</p>
@@ -494,14 +448,13 @@
   </div>
 </section>
 
-<!-- ============ 9. FAQ ============ -->
+<!-- ============ 7. FAQ ============ -->
 <!-- section--alt: com o CTA agora acima, o FAQ precisa contrastar com ele.
      Segue a mesma alternância de fundo que corre pela página inteira. -->
 <section class="section section--alt" id="faq">
   <div class="wrap wrap--narrow">
     <header class="section__head reveal">
-      <span class="kicker mono-tag">07 / PERGUNTAS DIRETAS</span>
-      <h2 class="section__title">SEM RODEIO.</h2>
+      <h2 class="section__title">DÚVIDAS FREQUENTES</h2>
     </header>
 
     <div class="faq reveal">
@@ -538,16 +491,16 @@
   <div class="footer__cta">
     <div class="wrap footer__cta-inner">
       <p class="footer__cta-txt">Tirou as dúvidas? A fila do beta está aberta.</p>
-      <a href="#waitlist" class="btn btn--sm btn--primary">ENTRAR NA FILA <span class="btn__arrow" aria-hidden="true">→</span></a>
+      <a href="#waitlist" class="btn btn--sm btn--primary">ENTRAR NA FILA <span class="btn__arrow" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></a>
     </div>
   </div>
 
   <div class="wrap footer__inner">
     <div class="footer__brand"> <img class="wordmark__full wordmark--footer" src="assets/brand/praus-logo-full.png" alt="PRAUS" loading="lazy" decoding="async" /> </div>
     <nav class="footer__links" aria-label="Documentos">
-      <a href="#" class="footer__link">Termos de Uso</a>
-      <a href="#" class="footer__link">Regras da Plataforma</a>
-      <a href="#" class="footer__link">Política de Privacidade</a>
+      <a href="termos.html" class="footer__link">Termos de Uso</a>
+      <a href="regras.html" class="footer__link">Regras da Plataforma</a>
+      <a href="privacidade.html" class="footer__link">Política de Privacidade</a>
     </nav>
     <p class="footer__note">
       Documentos disponibilizados como minuta em consolidação — versões em
