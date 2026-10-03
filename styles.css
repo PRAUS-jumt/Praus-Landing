@@ -14,9 +14,9 @@
   --ink:   #F4EFEA;
 
   /* Laranja — a regra (brasa) */
-  --orange:      #FF7A00;
-  --orange-hot:  #FF9233;
-  --orange-deep: #C95A00;
+  --orange:      #F85000;  /* alinhado à logo (cavalo) */
+  --orange-hot:  #FF702C;
+  --orange-deep: #C54000;
 
   /* Semânticos */
   --win:  #B8E04A;
@@ -140,16 +140,12 @@ em {
      gap acima ser o espaçamento real entre o letreiro e a marca */
   margin-right: -0.26em;
 }
-/* O PNG carrega ~7,7% de margem transparente na direita, então a caixa da
-   imagem termina depois da tinta. Com as caixas iguais dos dois lados, o vão
-   VISUAL saía 220px à esquerda contra 206px à direita — o botão é bloco
-   sólido e não tem essa folga. A margem negativa desconta exatamente essa
-   sobra. Em em, não px: assim acompanha o corpo do logo se ele mudar.
-   (Largura = 1.45em x 819/305 = 3,893em; 7,7% disso = 0,3em.) */
-.wordmark__full { height: 1.45em; width: auto; display: block; flex: none; }
-/* respiro vertical dá ao link da nav um alvo de toque confortável */
-.nav .wordmark { padding-block: 8px; margin-right: -0.3em; }
-.wordmark--footer { font-size: 48px; }
+/* Marca do cavalo: recortada justa, sem margem fantasma — por isso a
+   compensação negativa antiga saiu. Altura fixa (marca vertical, ratio ~0.84),
+   centralizada na nav de 64px. */
+.wordmark__full { height: 40px; width: auto; display: block; flex: none; }
+.nav .wordmark { padding-block: 8px; }
+.wordmark--footer { height: 60px; }
 
 /* ---------- Botões (chanfros, mono uppercase) ---------- */
 .btn {
@@ -175,7 +171,7 @@ em {
 .btn:hover .btn__arrow { opacity: 1; max-width: 20px; transform: translateX(4px); margin-left: 4px; }
 .btn:active { transform: translateY(1px); }
 .btn--primary { background: var(--orange); color: #000; }
-.btn--primary:hover { background: var(--orange-hot); box-shadow: 0 0 28px rgba(255,122,0,.35); }
+.btn--primary:hover { background: var(--orange-hot); box-shadow: 0 0 28px rgba(248,80,0,.35); }
 .btn--primary:active { background: var(--orange-deep); }
 .btn--sm { font-size: 12px; padding: 11px 16px; --c: 7px; }
 
@@ -210,7 +206,7 @@ em {
   transition: color .15s ease;  
   position: relative;
 }
-.nav__menu a::after { content: ''; position: absolute; left: 0; bottom: -6px; width: 100%; height: 2px; background: #EF8232; transform: scaleX(0); transform-origin: left; transition: transform .25s ease; } .nav__menu a:hover::after { transform: scaleX(1); }
+.nav__menu a::after { content: ''; position: absolute; left: 0; bottom: -6px; width: 100%; height: 2px; background: #F85000; transform: scaleX(0); transform-origin: left; transition: transform .25s ease; } .nav__menu a:hover::after { transform: scaleX(1); }
 .nav__menu a:hover { color: var(--ink); }
 .nav__cta { flex: none; }
 @media (min-width: 880px) { .nav__menu { display: flex; } }
@@ -297,7 +293,7 @@ em {
   display: flex; flex-direction: column; gap: 0;
   border-radius: 12px; overflow: hidden;
   border: 1.5px solid var(--orange);
-  box-shadow: 0 0 0 3px rgba(255,122,0,.12), 0 0 26px rgba(255,122,0,.35);
+  box-shadow: 0 0 0 3px rgba(248,80,0,.12), 0 0 26px rgba(248,80,0,.35);
   background: rgba(34,29,25,.92);
   transition: box-shadow .25s ease, border-color .25s ease;
 }
@@ -476,7 +472,7 @@ em {
   padding: 28px; display: flex; flex-direction: column;
   transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
-.feat:hover { transform: translateY(-3px); border-color: rgba(255,122,0,.4); }
+.feat:hover { transform: translateY(-3px); border-color: rgba(248,80,0,.4); }
 .feat__idx { color: var(--orange); display: block; margin-bottom: 16px; }
 .feat__title {
   font-family: var(--f-money); font-weight: 600; font-size: 20px;
@@ -487,11 +483,11 @@ em {
 
 /* ---- Tile HUD ---- */
 .feat--hud { padding: 0; overflow: hidden; }
-.feat--hud:hover { box-shadow: 0 0 50px rgba(255,122,0,.12); }
+.feat--hud:hover { box-shadow: 0 0 50px rgba(248,80,0,.12); }
 .hud {
   padding: 26px 26px 24px; display: flex; flex-direction: column; gap: 20px;
   background:
-    radial-gradient(120% 80% at 85% 0%, rgba(255,122,0,.1), transparent 55%),
+    radial-gradient(120% 80% at 85% 0%, rgba(248,80,0,.1), transparent 55%),
     linear-gradient(180deg, var(--bg-3), var(--bg-2));
   border-bottom: 1px solid var(--line);
 }
@@ -569,8 +565,8 @@ em {
   border-radius: 10px;
   transition: background-color .2s ease, border-color .2s ease, transform .1s ease;
 }
-.flow__step:hover { border-color: rgba(255,122,0,.4); }
-.flow__step.is-active { background: var(--bg-3); border-color: rgba(255,122,0,.55); }
+.flow__step:hover { border-color: rgba(248,80,0,.4); }
+.flow__step.is-active { background: var(--bg-3); border-color: rgba(248,80,0,.55); }
 .flow__step-num {
   grid-row: span 2; font-family: var(--f-num); font-size: 40px; line-height: .9;
   color: var(--ink-3); letter-spacing: .02em; transition: color .2s ease;
@@ -646,7 +642,7 @@ em {
               color var(--t-fast) var(--ease-ui),
               transform .08s var(--ease-ui);
 }
-.chip:hover { border-color: rgba(255,122,0,.55); background: var(--bg-3); }
+.chip:hover { border-color: rgba(248,80,0,.55); background: var(--bg-3); }
 .chip:active { transform: translateY(1px); }
 .chip:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
 .chip--on { background: var(--orange); color: #000; border-color: var(--orange); }
@@ -779,8 +775,8 @@ em {
 }
 .game:hover {
   transform: translateY(-4px);
-  border-color: rgba(255,122,0,.6);
-  box-shadow: 0 16px 36px -20px rgba(255,122,0,.6);
+  border-color: rgba(248,80,0,.6);
+  box-shadow: 0 16px 36px -20px rgba(248,80,0,.6);
 }
 .game--soon:hover {
   border-color: rgba(134,162,184,.55);
@@ -813,7 +809,7 @@ em {
 
 /* ATIVO tem presença: preenchido e pulsando. */
 .badge--live {
-  color: #FFCFA0; background: rgba(120,44,0,.88); border: 1px solid rgba(255,122,0,.65);
+  color: #FFCFA0; background: rgba(120,44,0,.88); border: 1px solid rgba(248,80,0,.65);
 }
 .badge--live::before {
   background: var(--orange); box-shadow: 0 0 9px var(--orange);
@@ -885,13 +881,13 @@ em {
 .custodia__mark {
   position: absolute; left: 0; top: 0; width: 40px; height: 40px; border-radius: 50%;
   display: grid; place-items: center; color: var(--orange);
-  background: var(--bg-2); border: 1px solid rgba(255,122,0,.35);
+  background: var(--bg-2); border: 1px solid rgba(248,80,0,.35);
 }
 .custodia__mark svg { width: 21px; height: 21px; }
 /* O trilho: liga o marcador desta etapa ao da próxima. */
 .custodia__etapa:not(:last-child)::before {
   content: ""; position: absolute; left: 20px; top: 44px; bottom: -30px;
-  width: 1px; background: linear-gradient(180deg, rgba(255,122,0,.4), rgba(255,122,0,.08));
+  width: 1px; background: linear-gradient(180deg, rgba(248,80,0,.4), rgba(248,80,0,.08));
 }
 .custodia__tt {
   font-family: var(--f-hero); font-weight: 400; font-size: 22px; letter-spacing: .01em;
@@ -900,7 +896,7 @@ em {
 .custodia__txt { font-family: var(--f-read); font-size: 14.5px; line-height: 1.5; color: var(--ink-3); margin: 0; }
 .custodia__quem {
   display: inline-block; margin-top: 9px; color: var(--orange);
-  border: 1px solid rgba(255,122,0,.3); border-radius: 999px; padding: 3px 10px; letter-spacing: .12em;
+  border: 1px solid rgba(248,80,0,.3); border-radius: 999px; padding: 3px 10px; letter-spacing: .12em;
 }
 
 @media (min-width: 860px) {
@@ -909,7 +905,7 @@ em {
   .custodia__mark { top: 0; left: 0; }
   .custodia__etapa:not(:last-child)::before {
     left: 48px; right: -30px; top: 20px; bottom: auto; width: auto; height: 1px;
-    background: linear-gradient(90deg, rgba(255,122,0,.4), rgba(255,122,0,.08));
+    background: linear-gradient(90deg, rgba(248,80,0,.4), rgba(248,80,0,.08));
   }
   .custodia__tt { margin-top: 0; }
 }
@@ -962,7 +958,7 @@ em {
 @media (min-width: 768px) { .cta-final { padding-block: 140px; } }
 .cta-final__glow {
   position: absolute; inset: 0;
-  background: radial-gradient(1040px 560px at 50% 118%, rgba(255,122,0,.32), transparent 68%);
+  background: radial-gradient(1040px 560px at 50% 118%, rgba(248,80,0,.32), transparent 68%);
   pointer-events: none;
 }
 .cta-final__inner { position: relative; }
@@ -1071,8 +1067,8 @@ em {
    abre um documento legal precisa saber do status antes de ler o conteúdo. */
 .doc__minuta {
   font-family: var(--f-read); font-size: 14.5px; line-height: 1.6; color: var(--ink);
-  border: 1px solid rgba(255,122,0,.35); border-radius: 12px;
-  background: rgba(255,122,0,.06); padding: 16px 18px; margin-bottom: 18px;
+  border: 1px solid rgba(248,80,0,.35); border-radius: 12px;
+  background: rgba(248,80,0,.06); padding: 16px 18px; margin-bottom: 18px;
 }
 .doc__minuta strong { color: var(--orange); }
 .doc__meta { color: var(--ink-3); margin-bottom: 46px; }
@@ -1108,7 +1104,7 @@ em {
     color: var(--ink); cursor: pointer;
     transition: border-color var(--t-fast) var(--ease-ui);
   }
-  .nav__abrir:hover { border-color: rgba(255,122,0,.5); }
+  .nav__abrir:hover { border-color: rgba(248,80,0,.5); }
   .nav__abrir:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
   .nav__abrir svg { width: 20px; height: 20px; }
   /* as duas barras viram X quando aberto — desenhadas, não glifo */
