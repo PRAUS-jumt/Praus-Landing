@@ -16,7 +16,7 @@ RUN cd server && npm ci --omit=dev --no-audit --no-fund
 COPY server/src ./server/src
 
 # estáticos numa pasta isolada: o processo nunca enxerga server/.env
-COPY index.html styles.css script.js favicon.ico ./public/
+COPY index.html termos.html regras.html privacidade.html styles.css script.js favicon.ico ./public/
 COPY assets ./public/assets
 
 ENV NODE_ENV=production \

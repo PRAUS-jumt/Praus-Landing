@@ -7,17 +7,17 @@
 <meta name="robots" content="noindex" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter+Tight:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<meta name="theme-color" content="#14110F" />
+<link rel="icon" type="image/png" href="assets/brand/icon-praus.png" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-<header class="nav" id="topo">
+<header class="nav doc-nav" id="topo">
   <div class="wrap nav__inner">
-    <a class="wordmark" href="index.html" aria-label="PRAUS — página inicial">
-      <img class="wordmark__full" src="assets/brand/praus-logo-full.png" alt="PRAUS" />
-    </a>
-    <a href="index.html#waitlist" class="btn btn--sm btn--primary nav__cta">ENTRAR NA FILA</a>
+    <a class="wordmark" href="index.html" aria-label="PRAUS — página inicial"><span class="wordmark__logo" aria-hidden="true"></span></a>
+    <a href="index.html#waitlist" class="btn btn--primary nav__cta">Entrar na fila <span aria-hidden="true">↗</span></a>
   </div>
 </header>
 
@@ -75,13 +75,10 @@
 </main>
 
 <footer class="footer">
-  <div class="wrap footer__inner">
-    <nav class="footer__links" aria-label="Documentos">
-      <a href="termos.html" class="footer__link">Termos de Uso</a>
-      <a href="regras.html" class="footer__link">Regras da Plataforma</a>
-      <a href="privacidade.html" class="footer__link">Política de Privacidade</a>
-    </nav>
-    <p class="footer__copy mono-tag">© 2026 PRAUS</p>
+  <div class="wrap">
+    <div class="footer__top"><a class="wordmark" href="index.html" aria-label="PRAUS — início"><span class="wordmark__logo" aria-hidden="true"></span></a><span class="footer__tagline">Seu jogo. Sua skill. Sua recompensa.</span></div>
+    <div class="footer__bottom"><p class="mono">© 2026 PRAUS · FEITO NO BRASIL</p><nav class="footer__links" aria-label="Documentos"><a href="termos.html">Termos de Uso</a><a href="regras.html">Regras da Plataforma</a><a href="privacidade.html">Privacidade</a></nav></div>
+    <p class="footer__note">Documentos preliminares em consolidação. A versão final será disponibilizada antes da abertura do beta.</p>
   </div>
 </footer>
 

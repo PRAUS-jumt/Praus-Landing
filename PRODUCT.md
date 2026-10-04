@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-HTML, CSS e JavaScript puros (sem build, sem framework) para o front. Fontes via Google Fonts; vídeo de fundo do herói e embed do YouTube para o clipe de campeonato. Back-end em Node/Express (`server/`), PostgreSQL para os e-mails da waitlist, Resend para notificação por e-mail. Em produção, nginx serve os estáticos e faz proxy de `/api` no mesmo domínio.
+HTML, CSS e JavaScript puros (sem build, sem framework) para o front. Fontes via Google Fonts, vídeos originais na hero e prévias ilustrativas em HTML/CSS. Identidade adaptada do handoff do painel: base escura, acento laranja, Space Grotesk, Inter Tight e Geist Mono. Back-end em Node/Express (`server/`), PostgreSQL para os e-mails da waitlist, Resend para notificação por e-mail. Em produção, nginx serve os estáticos e faz proxy de `/api` no mesmo domínio.
 
 ## Users
 
@@ -26,7 +26,7 @@ O diferencial é a combinação de confiança e segurança financeira, matchmaki
 
 ## Operating Context
 
-Produto pré-lançamento (fase de captação de waitlist para o beta). Ranking exibido na landing é ilustrativo até o beta. Jogos ativos hoje: CS2 e Dota2; Valorant e Fortnite estão "em breve".
+Produto pré-lançamento (fase de captação de waitlist para o beta). As telas e valores da landing são ilustrativos. Jogos previstos no beta: CS2 e Dota2; Valorant e Fortnite estão "em breve".
 
 ## Capabilities and Constraints
 
@@ -40,7 +40,7 @@ Produto pré-lançamento (fase de captação de waitlist para o beta). Ranking e
 ## Evidence on Hand
 
 - `README.md` do projeto descreve estrutura, stack e seções atuais da landing.
-- Ranking/leaderboard existente no site: dados ilustrativos, não reais.
+- Demonstração das etapas da partida: dados ilustrativos, não reais.
 - Seção de segurança cobre KYC e escrow (Asaas para PIX/escrow, Idwall para KYC); a antiga terceira entrada de parceiro ("Árbitro PRAUS") foi removida.
 
 ## Product Principles
