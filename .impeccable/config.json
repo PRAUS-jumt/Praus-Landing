@@ -2,6 +2,22 @@
   "detector": {
     "ignoreRules": [],
     "ignoreFiles": [],
-    "ignoreValues": []
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "space grotesk",
+        "createdAt": "2026-10-05T17:20:58.145Z",
+        "reason": "brand system v0.1: Space Grotesk é a secundária --f-money, pré-existente no link de fontes e usada em todo o site"
+      },
+      {
+        "rule": "layout-transition",
+        "value": "*",
+        "files": [
+          "styles.css"
+        ],
+        "createdAt": "2026-10-05T17:21:35.434Z",
+        "reason": "escolha deliberada do dono, documentada em styles.css L170-173: revelação do .btn__arrow no hover, ultimo item da linha, sem reflow perceptivel"
+      }
+    ]
   }
 }
