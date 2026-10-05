@@ -105,7 +105,7 @@ a { color: inherit; text-decoration: none; }
    negrito sintético do navegador (que engrossa desigual e empasta a contraforma),
    um filete de contorno na própria cor engrossa as hastes de modo uniforme. */
 .hero__title, .section__title, .cta-final__title, .doc__titulo,
-.game__name, .custodia__tt, .doc__h2, .screen__money {
+.jogo-hero__name, .modo__num, .custodia__tt, .doc__h2, .screen__money {
   -webkit-text-stroke: 1px currentColor;
   paint-order: stroke fill;
 }
@@ -630,7 +630,7 @@ em {
 .screen__body { padding: 24px; display: flex; flex-direction: column; gap: 14px; min-height: 268px; }
 .screen__body--center { align-items: center; justify-content: center; text-align: center; gap: 10px; }
 .screen__label { color: var(--ink-3); }
-.screen__money { font-family: var(--f-hero); font-weight: 400; font-size: 34px; letter-spacing: .01em; color: var(--orange); font-variant-numeric: tabular-nums; line-height: 1; }
+.screen__money { font-family: var(--f-hero); font-weight: 400; font-size: 34px; letter-spacing: .01em; color: var(--win); font-variant-numeric: tabular-nums; line-height: 1; }
 .screen__row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 4px; }
 
 /* Apoio dos painéis na secundária. Seletor com a tela na frente para vencer
@@ -742,118 +742,75 @@ em {
 /* ============================================================
    4. JOGOS
    ============================================================ */
-/* Jogo principal: texto à esquerda, card à direita. */
-.jogo-split { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: center; }
-@media (min-width: 860px) {
-  .jogo-split { grid-template-columns: 1fr 360px; gap: 56px; }
+/* --- Modos: cards que expandem no hover (CSS puro) --- */
+.modos { display: flex; gap: 10px; height: 460px; }
+.modo {
+  position: relative; flex: 1 1 0; min-width: 0; overflow: hidden;
+  border: 1px solid var(--line); border-radius: 14px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  transition: flex-grow var(--t-move) var(--ease-move), border-color var(--t-ui) var(--ease-ui);
 }
-.jogo-split__texto { max-width: 560px; }
-.jogo-split__lead {
-  font-family: var(--f-money); font-size: clamp(17px, 2vw, 21px); line-height: 1.5;
-  color: var(--ink); margin: 18px 0 16px;
-}
-.jogo-split__corpo {
-  font-family: var(--f-read); font-size: 16px; line-height: 1.65; color: var(--ink-3);
-  margin: 0 0 24px; max-width: 52ch;
-}
-.jogo-split__fatos { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-.jogo-split__fatos li {
-  font-family: var(--f-read); font-size: 15px; color: var(--ink);
-  display: flex; gap: 12px; align-items: baseline;
-  border-top: 1px solid var(--line); padding-top: 10px;
-}
-.jogo-split__fatos span {
-  font-family: var(--f-tag); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--ink-3); min-width: 72px; flex: none;
-}
-.jogo-split__card .game { width: 100%; max-width: 360px; }
-@media (min-width: 860px) { .jogo-split__card { justify-self: end; } }
-
-/* Contorno por STATUS, não por marca do jogo. Antes cada card trazia um
-   --accent inline com a cor do título (laranja CS2, vermelho Dota, vermelho
-   Valorant, azul Fortnite) — quatro cores que não diziam nada sobre poder
-   jogar ou não. Agora: laranja da marca = jogável agora; azul-aço frio =
-   ainda não. Dois sinais, legíveis sem legenda. */
-.game {
-  padding: 0; overflow: hidden; border-radius: 16px;
-  transition: transform var(--t-ui) var(--ease-move),
-              border-color var(--t-ui) var(--ease-ui),
-              box-shadow var(--t-ui) var(--ease-ui);
-}
-.game:hover {
-  transform: translateY(-4px);
-  border-color: rgba(233,119,53,.6);
-  box-shadow: 0 16px 36px -20px rgba(233,119,53,.6);
-}
-.game--soon:hover {
-  border-color: rgba(134,162,184,.55);
-  box-shadow: 0 16px 36px -20px rgba(134,162,184,.45);
+.modo:hover { flex-grow: 1.9; border-color: var(--orange); }
+.modo__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.modo__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,17,15,0) 30%, rgba(20,17,15,.72) 68%, rgba(20,17,15,.97) 100%); }
+.modo__body { position: relative; padding: 26px; display: flex; flex-direction: column; gap: 7px; }
+.modo__num { font-family: var(--f-hero); font-weight: 400; font-size: 72px; line-height: .82; letter-spacing: .01em; color: var(--orange); }
+.modo__name { font-family: var(--f-money); font-weight: 700; font-size: 19px; color: var(--ink); }
+.modo__desc { font-family: var(--f-read); font-size: 13.5px; line-height: 1.5; color: var(--ink-3); max-width: 42ch; }
+.modo__fmt { margin-top: 6px; display: inline-flex; align-items: center; gap: 10px; color: var(--ink-3); }
+.modo__fmt i { width: 26px; height: 3px; border-radius: 2px; background: var(--orange); flex: none; }
+@media (max-width: 760px) {
+  .modos { flex-direction: column; height: auto; }
+  .modo { flex: none; min-height: 230px; }
+  .modo:hover { flex-grow: 0; }
 }
 
-.game__cover { position: relative; aspect-ratio: 3/4; overflow: hidden; background: var(--bg-3); }
-.game__cover img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--t-slow) var(--ease-move); }
-.game:hover .game__cover img { transform: scale(1.05); }
-.game__cover::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 48%, rgba(20,17,15,.72) 78%, var(--bg-2) 100%);
-}
+/* --- Jogos: CS2 em destaque + grid "em breve" --- */
+.jogos { display: grid; grid-template-columns: 1fr; gap: 20px; }
+@media (min-width: 900px) { .jogos { grid-template-columns: 1.3fr 1fr; align-items: stretch; } }
 
-/* O selo passa a ser pílula com desfoque de fundo. Não é vidro decorativo:
-   ele pousa sobre capa fotográfica de brilho imprevisível — na capa laranja
-   do CS2 a caixa escura antiga ficava ilegível. O desfoque garante o
-   contraste em qualquer capa. */
-.badge {
-  position: absolute; top: 12px; left: 12px; z-index: 2;
-  display: inline-flex; align-items: center; gap: 7px;
-  font-family: var(--f-tag); font-size: 11px; letter-spacing: .12em;
-  text-transform: uppercase; font-weight: 700; line-height: 1;
-  padding: 7px 12px; border-radius: 999px;
-  -webkit-backdrop-filter: blur(12px) saturate(.75);
-  backdrop-filter: blur(12px) saturate(.75);
-  box-shadow: 0 3px 14px -6px rgba(0,0,0,.8);
+.jogo-hero {
+  position: relative; min-height: 420px; overflow: hidden; border-radius: 18px;
+  border: 1px solid rgba(233,119,53,.4);
+  display: flex; flex-direction: column; justify-content: flex-end;
 }
-.badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; flex: none; }
+.jogo-hero__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 28%; }
+.jogo-hero__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,17,15,.1) 30%, rgba(20,17,15,.92) 100%); }
+.jogo-hero__badge {
+  position: absolute; top: 20px; left: 20px; display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 12px; border-radius: 8px; background: var(--orange); color: #000;
+  font-weight: 700; letter-spacing: .1em;
+}
+.jogo-hero__badge i { width: 6px; height: 6px; border-radius: 50%; background: #000; flex: none; }
+.jogo-hero__body { position: relative; padding: 32px; display: flex; flex-direction: column; gap: 8px; }
+.jogo-hero__name { font-family: var(--f-hero); font-weight: 400; font-size: clamp(34px, 5vw, 54px); line-height: .9; letter-spacing: .01em; text-transform: uppercase; color: var(--ink); }
+.jogo-hero__mode { color: var(--ink-3); letter-spacing: .12em; }
 
-/* ATIVO tem presença: preenchido e pulsando. */
-.badge--live {
-  color: #FFCFA0; background: rgba(120,44,0,.88); border: 1px solid rgba(233,119,53,.65);
+.embreve { display: flex; flex-direction: column; gap: 12px; }
+.embreve__label { color: var(--ink-3); letter-spacing: .18em; }
+.embreve__grid { flex: 1; display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: minmax(116px, 1fr); gap: 12px; }
+.embreve__item {
+  position: relative; overflow: hidden; border-radius: 14px; border: 1px solid var(--line);
+  display: flex; align-items: flex-end; min-height: 116px;
+  transition: border-color var(--t-ui) var(--ease-ui);
 }
-.badge--live::before {
-  background: var(--orange); box-shadow: 0 0 9px var(--orange);
-  animation: pulse 1.6s var(--ease-ui) infinite;
+.embreve__item--wide { grid-column: 1 / -1; }
+.embreve__item img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(.85) brightness(.55); transition: filter var(--t-ui) var(--ease-ui);
 }
+.embreve__item:hover { border-color: rgba(233,119,53,.5); }
+.embreve__item:hover img { filter: grayscale(.4) brightness(.72); }
+.embreve__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,17,15,0) 35%, rgba(20,17,15,.85) 100%); }
+.embreve__name {
+  position: relative; padding: 14px 16px; font-family: var(--f-hero); font-weight: 400;
+  font-size: 22px; letter-spacing: .02em; text-transform: uppercase; color: var(--ink-3);
+  transition: color var(--t-ui) var(--ease-ui);
+}
+.embreve__item:hover .embreve__name { color: var(--ink); }
+
+/* pulse ainda é referenciado por CSS legado (.hud__live); mantido. */
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
-
-/* EM BREVE recua: contorno frio e ponto VAZADO — anel em vez de disco.
-   A diferença de preenchimento carrega o sentido sem precisar de ícone. */
-.badge--soon {
-  color: #A8C0D2; background: rgba(20,25,31,.88); border: 1px solid rgba(134,162,184,.42);
-}
-.badge--soon::before { border: 1.5px solid #A8C0D2; opacity: .9; }
-
-.game__meta { padding: 15px 17px 18px; }
-/* Bebas é condensada: tracking negativo em corpo pequeno fecha os vãos e
-   embola as letras. Aqui vai levemente positivo. */
-.game__name {
-  font-family: var(--f-hero); font-weight: 400; font-size: clamp(19px,2.3vw,25px);
-  text-transform: uppercase; letter-spacing: .015em; line-height: 1; margin-bottom: 8px;
-  color: var(--ink);
-}
-/* Tracking medido, não escolhido no olho: "5V5 · COMPETITIVO" é o rótulo mais
-   longo e a coluna mais estreita dá 122px. A .15em pedia 127,5px e quebrava em
-   duas linhas só nesse card, desalinhando a caixa em relação aos vizinhos. */
-.game__mode { color: var(--ink-3); font-size: 11px; letter-spacing: .02em; }
-@media (max-width: 400px) { .game__mode { letter-spacing: 0; } }
-
-/* Em breve — capa real, levemente esmaecida para os ATIVO se destacarem */
-.game--soon .game__cover img { filter: saturate(.72) brightness(.8); }
-.game--soon:hover .game__cover img { filter: saturate(.95) brightness(.94); }
-.game--soon .game__name { color: #B6C6D2; }
-.game--soon .game__mode { color: #7B8FA0; }
-
-@media (prefers-reduced-motion: reduce) {
-  .badge--live::before { animation: none; }
-}
 
 /* Divisória entre seções de mesmo fundo — mesmo recurso que .cta-final usa. */
 .section--edge { border-top: 1px solid var(--line); }
@@ -1147,5 +1104,4 @@ em {
   .hero { padding-block: 84px 72px; }
   .cta-final { padding-block: 64px; }
   .section__head { margin-bottom: 32px; }
-  .jogo-split { gap: 28px; }
 }

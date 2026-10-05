@@ -316,25 +316,23 @@
     var grupos = Array.prototype.slice.call(tela.querySelectorAll(".chips[data-grupo]"));
     if (!grupos.length) return;
 
-    /* PROVISÓRIO — aguardando a tabela real de retorno por valor.
-       Os números abaixo apenas estendem, na mesma proporção, o único dado que
-       o design já trazia (R$ 50 → R$ 95, ou seja 1,9x). Não são uma promessa
-       comercial verificada: trocar aqui quando a tabela definitiva chegar, que
-       é o único lugar do código onde esses valores existem. */
-    var PREMIO_POR_ENTRADA = {
-      "25":  "R$ 47,50",
-      "50":  "R$ 95",
-      "100": "R$ 190"
+    /* Retorno real por MODALIDADE × ENTRY FEE. Único lugar do código com esses
+       valores — trocar aqui quando a tabela mudar. */
+    var PREMIO = {
+      "1v1": { "10": "R$16,40", "25": "R$44", "50": "R$88" },
+      "2v2": { "10": "R$17",    "25": "R$45", "50": "R$90" },
+      "5v5": { "10": "R$17,60", "25": "R$46", "50": "R$92" }
     };
 
-    function entradaAtual() {
-      var g = tela.querySelector('.chips[data-grupo="entrada"] .chip--on');
-      return g ? g.getAttribute("data-valor") : null;
+    function valorGrupo(nome) {
+      var c = tela.querySelector('.chips[data-grupo="' + nome + '"] .chip--on');
+      return c ? c.getAttribute("data-valor") : null;
     }
 
     function atualizaPremio() {
       if (!saidaPremio) return;
-      var v = PREMIO_POR_ENTRADA[entradaAtual()];
+      var porEntrada = PREMIO[valorGrupo("jogo")];
+      var v = porEntrada && porEntrada[valorGrupo("entrada")];
       if (v) saidaPremio.textContent = v;
     }
 

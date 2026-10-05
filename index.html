@@ -169,13 +169,13 @@
             </div>
             <span class="screen__label mono-tag" id="rot-entrada">ENTRY FEE</span>
             <div class="chips" role="radiogroup" aria-labelledby="rot-entrada" data-grupo="entrada">
-              <button class="chip"          type="button" role="radio" aria-checked="false" data-valor="25">R$ 25</button>
-              <button class="chip chip--on" type="button" role="radio" aria-checked="true"  data-valor="50">R$ 50</button>
-              <button class="chip"          type="button" role="radio" aria-checked="false" data-valor="100">R$ 100</button>
+              <button class="chip"          type="button" role="radio" aria-checked="false" data-valor="10">R$10</button>
+              <button class="chip"          type="button" role="radio" aria-checked="false" data-valor="25">R$25</button>
+              <button class="chip chip--on" type="button" role="radio" aria-checked="true"  data-valor="50">R$50</button>
             </div>
             <div class="screen__row">
               <span class="screen__label mono-tag">PRIZE POOL ESTIMADO</span>
-              <span class="screen__money" data-premio role="status">R$ 95</span>
+              <span class="screen__money" data-premio role="status">R$92</span>
             </div>
             <a class="screen__cta" href="#waitlist">ENTRAR NA FILA<svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
           </div>
@@ -236,41 +236,86 @@
   </div>
 </section>
 
-<!-- ============ 4. JOGOS ============ -->
-<section class="section" id="jogos">
+<!-- ============ 4. MODOS ============ -->
+<section class="section" id="modos">
   <div class="wrap">
-    <!-- Duas colunas: texto explicando o jogo principal à esquerda, card à
-         direita — preenche o vazio que sobrava com um card solto. -->
-    <div class="jogo-split reveal">
-      <div class="jogo-split__texto">
-        <h2 class="section__title">NOSSO JOGO PRINCIPAL</h2>
-        <p class="jogo-split__lead">
-          Counter-Strike 2 é o coração do PRAUS — o FPS tático mais competitivo
-          do mundo, agora valendo dinheiro de verdade.
-        </p>
-        <p class="jogo-split__corpo">
-          Monte sua partida 5v5, defina o valor da disputa e enfrente rivais do
-          seu nível. O prêmio fica retido em conta-garantia e cai no seu PIX
-          assim que o resultado é validado — sem calote, sem espera.
-        </p>
-        <ul class="jogo-split__fatos">
-          <li><span>Formato</span> 5v5 competitivo</li>
-          <li><span>Status</span> Já disponível no beta</li>
-          <li><span>Saque</span> Direto via PIX</li>
-        </ul>
-      </div>
+    <header class="section__head reveal">
+      <h2 class="section__title">ESCOLHA O SEU MODO</h2>
+      <p class="section__lead">
+        Duelo, dupla ou time completo. Você define a entrada e a fila encontra
+        adversários do seu nível — nada é debitado até a partida começar.
+      </p>
+    </header>
 
-      <div class="jogo-split__card">
-        <article class="game card">
-          <div class="game__cover">
-            <img src="assets/games/cs2.jpg" alt="Counter-Strike 2" loading="lazy" />
-            <span class="badge badge--live mono-tag">ATIVO</span>
-          </div>
-          <div class="game__meta">
-            <h3 class="game__name">COUNTER-STRIKE 2</h3>
-            <p class="game__mode mono-tag">5V5 · COMPETITIVO</p>
-          </div>
-        </article>
+    <!-- Cards expandem no hover (CSS puro); viram coluna no mobile. -->
+    <div class="modos reveal">
+      <article class="modo">
+        <img class="modo__img" src="assets/modos/1v1.webp" alt="" loading="lazy" decoding="async" />
+        <span class="modo__scrim" aria-hidden="true"></span>
+        <div class="modo__body">
+          <span class="modo__num">1v1</span>
+          <h3 class="modo__name">Duelo 1v1</h3>
+          <p class="modo__desc">Mira contra mira em aim maps da comunidade. Melhor de 16 rounds, sem troca de lado.</p>
+          <span class="modo__fmt mono-tag"><i aria-hidden="true"></i>MD16 · AIM MAPS</span>
+        </div>
+      </article>
+      <article class="modo">
+        <img class="modo__img" src="assets/modos/2v2.webp" alt="" loading="lazy" decoding="async" />
+        <span class="modo__scrim" aria-hidden="true"></span>
+        <div class="modo__body">
+          <span class="modo__num">2v2</span>
+          <h3 class="modo__name">Wingman 2v2</h3>
+          <p class="modo__desc">Formato Wingman em mapas menores. Chame um parceiro e entrem juntos na fila.</p>
+          <span class="modo__fmt mono-tag"><i aria-hidden="true"></i>MR8 · WINGMAN</span>
+        </div>
+      </article>
+      <article class="modo">
+        <img class="modo__img" src="assets/modos/5v5.webp" alt="" loading="lazy" decoding="async" />
+        <span class="modo__scrim" aria-hidden="true"></span>
+        <div class="modo__body">
+          <span class="modo__num">5v5</span>
+          <h3 class="modo__name">Competitivo 5v5</h3>
+          <p class="modo__desc">MR12 competitivo com veto de mapas e overtime. A partida completa, valendo.</p>
+          <span class="modo__fmt mono-tag"><i aria-hidden="true"></i>MR12 · COMPETITIVO</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. JOGOS ============ -->
+<section class="section section--alt" id="jogos">
+  <div class="wrap">
+    <header class="section__head reveal">
+      <h2 class="section__title">CS2 ABRE O BETA</h2>
+      <p class="section__lead">
+        Novos jogos entram conforme a base cresce. Na fila, você escolhe por
+        qual quer começar.
+      </p>
+    </header>
+
+    <div class="jogos reveal">
+      <!-- Jogo principal -->
+      <article class="jogo-hero">
+        <img class="jogo-hero__img" src="assets/games/cs2-destaque.jpg" alt="Counter-Strike 2" loading="lazy" decoding="async" />
+        <span class="jogo-hero__scrim" aria-hidden="true"></span>
+        <span class="jogo-hero__badge mono-tag"><i aria-hidden="true"></i>NO BETA</span>
+        <div class="jogo-hero__body">
+          <h3 class="jogo-hero__name">COUNTER-STRIKE 2</h3>
+          <p class="jogo-hero__mode mono-tag">1v1 · 2v2 · 5v5 · TORNEIOS RÁPIDOS</p>
+        </div>
+      </article>
+
+      <!-- Em breve -->
+      <div class="embreve">
+        <span class="embreve__label mono-tag">EM BREVE</span>
+        <div class="embreve__grid">
+          <article class="embreve__item"><img src="assets/games/valorant-alt.jpg" alt="Valorant" loading="lazy" decoding="async" /><span class="embreve__scrim" aria-hidden="true"></span><span class="embreve__name">Valorant</span></article>
+          <article class="embreve__item"><img src="assets/games/dota2-alt.jpg" alt="Dota 2" loading="lazy" decoding="async" /><span class="embreve__scrim" aria-hidden="true"></span><span class="embreve__name">Dota 2</span></article>
+          <article class="embreve__item"><img src="assets/games/eafc-alt.jpg" alt="EA FC" loading="lazy" decoding="async" /><span class="embreve__scrim" aria-hidden="true"></span><span class="embreve__name">EA FC</span></article>
+          <article class="embreve__item"><img src="assets/games/nba2k-alt.jpg" alt="NBA 2K" loading="lazy" decoding="async" /><span class="embreve__scrim" aria-hidden="true"></span><span class="embreve__name">NBA 2K</span></article>
+          <article class="embreve__item embreve__item--wide"><img src="assets/games/rocketleague-alt.jpg" alt="Rocket League" loading="lazy" decoding="async" /><span class="embreve__scrim" aria-hidden="true"></span><span class="embreve__name">Rocket League</span></article>
+        </div>
       </div>
     </div>
   </div>
@@ -383,7 +428,7 @@
       </details>
       <details class="faq__item">
         <summary class="faq__q">Quais jogos posso disputar?</summary>
-        <p class="faq__a">No beta, o CS2 entra ativo. O catálogo vai crescer com o tempo, conforme a base aumenta.</p>
+        <p class="faq__a">No beta, o CS2 entra ativo, com modos 1v1, 2v2 e 5v5. Valorant, Dota 2, EA FC, NBA 2K e Rocket League chegam depois, conforme a base cresce.</p>
       </details>
       <details class="faq__item">
         <summary class="faq__q">Quando o beta abre?</summary>
