@@ -87,7 +87,7 @@
       if (!EMAIL_RE.test(value)) {
         input.classList.add("invalid");
         input.focus();
-        mostraErro("Confere o e-mail — parece que falta alguma coisa.");
+        mostraErro("Confere o e-mail, parece que falta alguma coisa.");
         return;
       }
 

@@ -14,9 +14,9 @@
   --ink:   #F4EFEA;
 
   /* Laranja — a regra (brasa) */
-  --orange:      #F85000;  /* alinhado à logo (cavalo) */
-  --orange-hot:  #FF702C;
-  --orange-deep: #C54000;
+  --orange:      #E97735;  /* suavizado: #F85000 cansava o olho */
+  --orange-hot:  #EE9663;
+  --orange-deep: #D35C17;
 
   /* Semânticos */
   --win:  #B8E04A;
@@ -100,6 +100,15 @@ a { color: inherit; text-decoration: none; }
 .wrap { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: 22px; }
 .wrap--narrow { max-width: 760px; }
 .section { padding-block: 84px; }
+
+/* Bebas Neue só vem no peso 400. Para deixá-la um pouco mais encorpada sem o
+   negrito sintético do navegador (que engrossa desigual e empasta a contraforma),
+   um filete de contorno na própria cor engrossa as hastes de modo uniforme. */
+.hero__title, .section__title, .cta-final__title, .doc__titulo,
+.game__name, .custodia__tt, .doc__h2, .screen__money {
+  -webkit-text-stroke: 1px currentColor;
+  paint-order: stroke fill;
+}
 .section--alt { background: var(--bg-2); }
 @media (min-width: 768px) { .section { padding-block: 124px; } }
 
@@ -143,9 +152,9 @@ em {
 /* Marca do cavalo: recortada justa, sem margem fantasma — por isso a
    compensação negativa antiga saiu. Altura fixa (marca vertical, ratio ~0.84),
    centralizada na nav de 64px. */
-.wordmark__full { height: 40px; width: auto; display: block; flex: none; }
-.nav .wordmark { padding-block: 8px; }
-.wordmark--footer { height: 60px; }
+.wordmark__full { height: 52px; width: auto; display: block; flex: none; }
+.nav .wordmark { padding-block: 6px; }
+.wordmark--footer { height: 68px; }
 
 /* ---------- Botões (chanfros, mono uppercase) ---------- */
 .btn {
@@ -171,9 +180,12 @@ em {
 .btn:hover .btn__arrow { opacity: 1; max-width: 20px; transform: translateX(4px); margin-left: 4px; }
 .btn:active { transform: translateY(1px); }
 .btn--primary { background: var(--orange); color: #000; }
-.btn--primary:hover { background: var(--orange-hot); box-shadow: 0 0 28px rgba(248,80,0,.35); }
+.btn--primary:hover { background: var(--orange-hot); box-shadow: 0 0 28px rgba(233,119,53,.35); }
 .btn--primary:active { background: var(--orange-deep); }
 .btn--sm { font-size: 12px; padding: 11px 16px; --c: 7px; }
+/* Botão de voltar das páginas legais: contorno discreto, não é um CTA. */
+.nav__voltar { background: transparent; color: var(--ink-3); border: 1px solid var(--line); margin-left: 28px; }
+.nav__voltar:hover { color: var(--ink); border-color: var(--orange); background: var(--bg-2); box-shadow: none; }
 
 /* ---------- Card (cantos arredondados — mesmo raio dos botões) ---------- */
 .card {
@@ -186,7 +198,7 @@ em {
    NAV
    ============================================================ */
 .nav {
-  position: fixed; inset: 0 0 auto 0; z-index: 60; height: 64px;
+  position: fixed; inset: 0 0 auto 0; z-index: 60; padding-top: 20px;
   background: rgba(20,17,15,0); backdrop-filter: blur(0px);
   transition: background-color .25s ease, backdrop-filter .25s ease, border-color .25s ease;
   border-bottom: 1px solid transparent;
@@ -200,16 +212,21 @@ em {
    havia no .nav__cta é o que quebrava isso: empurrava o botão para a borda e
    deixava um vão arbitrário depois do FAQ. */
 .nav__inner { display: flex; align-items: center; gap: 0; height: 64px; }
-.nav__menu { display: none; gap: 104px; margin-inline: auto; }  /* Y=104 -> X=206, o dobro exato */
+.nav__menu { display: none; }
+/* Espaçadores da nav: escondidos no mobile; no desktop crescem na razão --g. */
+.nav-sp { display: none; }
+.nav__cta { flex: none; }
 .nav__menu a {
   font-family: var(--f-money); font-size: 15px; color: var(--ink-3); font-weight: 600; 
   transition: color .15s ease;  
   position: relative;
 }
-.nav__menu a::after { content: ''; position: absolute; left: 0; bottom: -6px; width: 100%; height: 2px; background: #F85000; transform: scaleX(0); transform-origin: left; transition: transform .25s ease; } .nav__menu a:hover::after { transform: scaleX(1); }
+.nav__menu a::after { content: ''; position: absolute; left: 0; bottom: -6px; width: 100%; height: 2px; background: #E97735; transform: scaleX(0); transform-origin: left; transition: transform .25s ease; } .nav__menu a:hover::after { transform: scaleX(1); }
 .nav__menu a:hover { color: var(--ink); }
-.nav__cta { flex: none; }
-@media (min-width: 880px) { .nav__menu { display: flex; } }
+@media (min-width: 880px) {
+  .nav__menu { display: contents; }
+  .nav-sp { display: block; flex-grow: var(--g); flex-basis: 0; min-width: 0; }
+}
 
 /* ============================================================
    1. HERÓI — vídeo de fundo nítido
@@ -241,12 +258,9 @@ em {
 .hero__inner { position: relative; z-index: 2; }
 
 .hero__title {
-  /* Bebas Neue só existe em 400. Pedir 600 fazia o navegador fabricar um
-     negrito sintético — hastes engrossadas de forma desigual, contraforma
-     empastada. É o que dava a impressão de "fonte errada" na manchete. */
   font-family: var(--f-hero); font-weight: 400; text-transform: uppercase;
   letter-spacing: -0.01em; line-height: 0.9;
-  font-size: clamp(48px, 9.4vw, 116px); margin-bottom: 24px; max-width: 14ch;
+  font-size: clamp(48px, 9.4vw, 116px); margin-bottom: 10px; max-width: 14ch;
   text-shadow: 0 4px 40px rgba(0,0,0,.5);
 }
 /* Linha de confiança do herói. Sobre vídeo a razão de contraste fixa não é
@@ -268,7 +282,7 @@ em {
 
 .hero__sub {
   font-family: var(--f-money); font-size: clamp(16px, 2.2vw, 20px); line-height: 1.55;
-  color: #e7e0d8; max-width: 54ch; margin-bottom: 34px;
+  font-weight: 600; color: #e7e0d8; max-width: 54ch; margin-bottom: 34px;
   text-shadow: 0 2px 18px rgba(0,0,0,.55);
 }
 
@@ -293,7 +307,7 @@ em {
   display: flex; flex-direction: column; gap: 0;
   border-radius: 12px; overflow: hidden;
   border: 1.5px solid var(--orange);
-  box-shadow: 0 0 0 3px rgba(248,80,0,.12), 0 0 26px rgba(248,80,0,.35);
+  box-shadow: 0 0 0 3px rgba(233,119,53,.12), 0 0 26px rgba(233,119,53,.35);
   background: rgba(34,29,25,.92);
   transition: box-shadow .25s ease, border-color .25s ease;
 }
@@ -472,7 +486,7 @@ em {
   padding: 28px; display: flex; flex-direction: column;
   transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
-.feat:hover { transform: translateY(-3px); border-color: rgba(248,80,0,.4); }
+.feat:hover { transform: translateY(-3px); border-color: rgba(233,119,53,.4); }
 .feat__idx { color: var(--orange); display: block; margin-bottom: 16px; }
 .feat__title {
   font-family: var(--f-money); font-weight: 600; font-size: 20px;
@@ -483,11 +497,11 @@ em {
 
 /* ---- Tile HUD ---- */
 .feat--hud { padding: 0; overflow: hidden; }
-.feat--hud:hover { box-shadow: 0 0 50px rgba(248,80,0,.12); }
+.feat--hud:hover { box-shadow: 0 0 50px rgba(233,119,53,.12); }
 .hud {
   padding: 26px 26px 24px; display: flex; flex-direction: column; gap: 20px;
   background:
-    radial-gradient(120% 80% at 85% 0%, rgba(248,80,0,.1), transparent 55%),
+    radial-gradient(120% 80% at 85% 0%, rgba(233,119,53,.1), transparent 55%),
     linear-gradient(180deg, var(--bg-3), var(--bg-2));
   border-bottom: 1px solid var(--line);
 }
@@ -565,8 +579,8 @@ em {
   border-radius: 10px;
   transition: background-color .2s ease, border-color .2s ease, transform .1s ease;
 }
-.flow__step:hover { border-color: rgba(248,80,0,.4); }
-.flow__step.is-active { background: var(--bg-3); border-color: rgba(248,80,0,.55); }
+.flow__step:hover { border-color: rgba(233,119,53,.4); }
+.flow__step.is-active { background: var(--bg-3); border-color: rgba(233,119,53,.55); }
 .flow__step-num {
   grid-row: span 2; font-family: var(--f-num); font-size: 40px; line-height: .9;
   color: var(--ink-3); letter-spacing: .02em; transition: color .2s ease;
@@ -575,9 +589,11 @@ em {
 /* Fonte principal dos painéis: Bebas Neue. Ela é toda em caixa-alta e mais
    estreita que a Manrope, então precisa de corpo maior para o mesmo peso
    ótico — 16,5px em Bebas ficaria miúdo. */
+/* Título do passo em caixa de sentença: Bebas Neue é só caixa-alta, então o
+   título vai na secundária (Space Grotesk), que tem minúsculas. */
 .flow__step-tt {
-  display: block; font-family: var(--f-hero); font-weight: 400; font-size: 21px;
-  letter-spacing: .015em; color: var(--ink); line-height: 1.12;
+  display: block; font-family: var(--f-money); font-weight: 700; font-size: 17px;
+  letter-spacing: -0.01em; color: var(--ink); line-height: 1.25;
 }
 /* Fonte secundária dos painéis: Space Grotesk (a mesma do subtítulo do herói). */
 /* Abria animando max-height E margin-top. Além do custo de layout, o
@@ -611,9 +627,6 @@ em {
   padding: 13px 18px; background: rgba(13,11,10,.5); border-bottom: 1px solid var(--line);
   color: var(--ink-3); letter-spacing: .14em;
 }
-.screen__live, .screen__win { display: inline-flex; align-items: center; gap: 7px; color: var(--orange); }
-.screen__live i { width: 7px; height: 7px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 8px var(--orange); animation: pulse 1.6s infinite; }
-.screen__win { color: var(--win); }
 .screen__body { padding: 24px; display: flex; flex-direction: column; gap: 14px; min-height: 268px; }
 .screen__body--center { align-items: center; justify-content: center; text-align: center; gap: 10px; }
 .screen__label { color: var(--ink-3); }
@@ -642,7 +655,7 @@ em {
               color var(--t-fast) var(--ease-ui),
               transform .08s var(--ease-ui);
 }
-.chip:hover { border-color: rgba(248,80,0,.55); background: var(--bg-3); }
+.chip:hover { border-color: rgba(233,119,53,.55); background: var(--bg-3); }
 .chip:active { transform: translateY(1px); }
 .chip:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
 .chip--on { background: var(--orange); color: #000; border-color: var(--orange); }
@@ -659,108 +672,98 @@ em {
 .screen__cta:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 
 
-/* tela 2 — placar */
-.screen__score { display: flex; align-items: center; justify-content: center; gap: 22px; padding: 8px 0 4px; }
-.screen__team { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.screen__team-tag { color: var(--ink-3); }
-.screen__team-pts { font-family: var(--f-num); font-size: 64px; line-height: .9; color: var(--ink); font-variant-numeric: tabular-nums; }
-.screen__score-x { font-family: var(--f-num); font-size: 40px; color: var(--ink-3); }
-.screen__ref { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--bg-2); border: 1px solid var(--line); }
-.screen__ref-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--win); box-shadow: 0 0 8px var(--win); flex: none; }
-.screen__ref-txt { font-family: var(--f-read); font-size: 14px; color: var(--ink); }
-.screen__timer { color: var(--ink-3); margin-top: auto; }
-.screen__timer b { color: var(--ink); font-weight: 700; }
-
-/* tela 3 — vitória (portada de "Tela de Vitória.html") */
-/* O arquivo é um painel de 1200x720. As medidas em px viraram proporção da
-   largura (cqw) SOBRE A BASE DE 1200 do arquivo — converti antes contra 336
-   por engano e tudo saiu no dobro. Onde o proporcional ficaria ilegível no
-   painel menor (título e valor), entra um piso em px. --vit reconciliado com o --win do site (#B8E04A); antes era o #B8FF39
-   que o --win do site; fica escopado a esta tela para não brigar com o resto. */
-.screen--vit { --vit: #B8E04A; container-type: inline-size; }
-.screen--vit .screen__win { color: var(--vit); }
-
-.vit {
-  position: relative; overflow: hidden;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 5cqw 4cqw 5.5cqw; text-align: center;
-  background: linear-gradient(180deg, #1A1816 0%, #141210 100%);
+/* === Prévias (telas 2 e 3): cabeçalho com migalha + selo PRÉVIA === */
+.screen__crumb { color: var(--ink-3); letter-spacing: .14em; }
+.screen__crumb i { font-style: normal; color: var(--ink-3); opacity: .5; margin: 0 .35em; }
+.screen__previa {
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: .2em; line-height: 1;
+  color: var(--orange); border: 1px solid rgba(233,119,53,.45);
+  background: rgba(233,119,53,.08); padding: 5px 9px; border-radius: 6px;
 }
-.vit__brilho {
-  position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(ellipse 46% 60% at 50% 42%, rgba(184,224,74,.13), rgba(184,224,74,0) 70%);
-}
-.vit__fio {
-  position: absolute; left: 0; right: 0; bottom: 0; height: 1px; pointer-events: none;
-  background: linear-gradient(90deg, rgba(184,224,74,0), rgba(184,224,74,.5), rgba(184,224,74,0));
+.screen__eyebrow { color: var(--ink-3); letter-spacing: .22em; font-size: 11px; }
+.screen__note {
+  margin: 4px 0 0; font-family: var(--f-read); font-size: 12px; line-height: 1.45;
+  color: var(--ink-3); max-width: 34ch;
 }
 
-/* Medalha: halo pulsante, disco e troféu — três camadas, como no arquivo. */
-.vit__medalha {
-  position: relative; width: 9.33cqw; aspect-ratio: 1; flex: none;
+/* tela 2 — dentro da arena */
+.screen__score { display: flex; align-items: center; justify-content: center; gap: 28px; padding: 2px 0; }
+.screen__team { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.screen__team-tag { color: var(--ink-3); letter-spacing: .18em; }
+.screen__team-pts { font-family: var(--f-num); font-size: 72px; line-height: .85; color: var(--ink); font-variant-numeric: tabular-nums; }
+.screen__score-x { font-family: var(--f-num); font-size: 46px; color: var(--ink-3); transform: translateY(8px); }
+.arena__guard {
+  display: flex; align-items: center; gap: 13px; width: 100%;
+  padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--bg-2); text-align: left;
+}
+.arena__guard-icon { width: 24px; height: 24px; flex: none; color: var(--orange); }
+.arena__guard-txt { display: flex; flex-direction: column; gap: 2px; font-family: var(--f-read); font-size: 13px; line-height: 1.4; color: var(--ink-3); }
+.arena__guard-txt b { font-weight: 600; font-size: 15px; color: var(--ink); }
+
+/* tela 3 — recompensa liberada */
+.reward { container-type: inline-size; }
+.reward__trofeu {
   display: flex; align-items: center; justify-content: center;
-  animation: vitPop .7s cubic-bezier(.2,.8,.2,1) both;
+  width: 78px; height: 78px; border-radius: 50%; flex: none;
+  color: var(--orange); background: var(--bg-3); border: 1px solid rgba(233,119,53,.35);
+  box-shadow: 0 0 34px rgba(233,119,53,.22), inset 0 1px 0 rgba(255,255,255,.04);
 }
-.vit__halo {
-  position: absolute; inset: -22%; border-radius: 50%;
-  background: radial-gradient(circle, rgba(184,224,74,.35), rgba(184,224,74,0) 68%);
-  animation: vitPulsa 3s ease-in-out infinite;
+.reward__trofeu svg { width: 40px; height: 40px; }
+/* VITÓRIA: display em Bebas, grande, com filete (bold) e brilho laranja pulsante. */
+.reward__tt {
+  font-family: var(--f-hero); font-weight: 400; font-size: clamp(44px, 15cqw, 66px);
+  letter-spacing: .04em; line-height: 1; color: #F7F3EC; margin: 6px 0 2px;
+  -webkit-text-stroke: 1px currentColor; paint-order: stroke fill;
+  text-shadow: 0 0 40px rgba(233,119,53,.5), 0 0 16px rgba(233,119,53,.34), 0 2px 0 rgba(0,0,0,.35);
+  animation: rewardGlow 2.8s ease-in-out infinite;
 }
-.vit__disco {
-  position: absolute; inset: 0; border-radius: 50%;
-  background: #1E1C19; border: 1px solid rgba(184,224,74,.45);
-  box-shadow: 0 0 36px rgba(184,224,74,.25), inset 0 1px 0 rgba(255,255,255,.05);
+@keyframes rewardGlow {
+  0%,100% { text-shadow: 0 0 32px rgba(233,119,53,.36), 0 0 13px rgba(233,119,53,.26), 0 2px 0 rgba(0,0,0,.35); }
+  50%     { text-shadow: 0 0 54px rgba(233,119,53,.62), 0 0 20px rgba(233,119,53,.44), 0 2px 0 rgba(0,0,0,.35); }
 }
-.vit__trofeu {
-  position: relative; width: 48%; height: auto; color: var(--vit);
-  filter: drop-shadow(0 0 12px rgba(184,224,74,.6));
+@media (prefers-reduced-motion: reduce) { .reward__tt { animation: none; } }
+.reward__valor {
+  font-family: var(--f-money); font-weight: 700; font-size: 46px; line-height: 1;
+  letter-spacing: -0.01em; color: var(--orange); font-variant-numeric: tabular-nums;
 }
-
-.vit__tt {
-  position: relative; margin: 2.5cqw 0 0;
-  font-family: var(--f-hero); font-weight: 400; font-size: max(38px, 11.33cqw);
-  line-height: 1; letter-spacing: .06em; text-indent: .06em; color: #F7F3EC;
-  text-shadow: 0 0 40px rgba(184,224,74,.18), 0 2px 0 rgba(0,0,0,.4);
-  animation: vitSobe .6s .2s ease-out both;
-}
-
-.vit__placa {
-  position: relative; margin-top: 2.83cqw;
-  display: flex; align-items: center; justify-content: center; gap: 1.17cqw;
-  padding: 1.17cqw 3.67cqw; border-radius: 14px;
-  border: 1.5px solid rgba(184,224,74,.55);
-  background: linear-gradient(180deg, rgba(184,224,74,.10), rgba(184,224,74,.03));
-  box-shadow: 0 0 40px rgba(184,224,74,.22), inset 0 0 24px rgba(184,224,74,.06);
-  font-family: var(--f-hero); font-size: max(26px, 7.33cqw); line-height: 1;
-  letter-spacing: .02em; color: var(--vit);
-  text-shadow: 0 0 22px rgba(184,224,74,.5);
-  animation: vitSobe .6s .45s ease-out both;
-}
-.vit__valor { font-variant-numeric: tabular-nums; }
-
-.vit__elo {
-  position: relative; margin-top: 2.17cqw;
-  display: flex; align-items: center; gap: 1cqw;
-  font-family: var(--f-money); font-size: max(11px, 1.33cqw); font-weight: 600;
-  letter-spacing: .24em; text-transform: uppercase; color: #9A948B;
-  animation: vitSobe .6s .7s ease-out both;
-}
-.vit__ponto { width: 4px; height: 4px; border-radius: 50%; background: var(--vit); flex: none; }
-.vit__patente { color: #E3B341; }
-
-@keyframes vitPop   { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
-@keyframes vitSobe  { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-@keyframes vitPulsa { 0%,100% { opacity: .55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.07); } }
-
-@media (prefers-reduced-motion: reduce) {
-  .vit__medalha, .vit__halo, .vit__tt, .vit__placa, .vit__elo { animation: none; }
+.reward__valor span { margin-right: 2px; }
+.reward__pill {
+  display: inline-flex; align-items: center; gap: 7px; margin-top: 2px;
+  font-family: var(--f-money); font-weight: 600; font-size: 13.5px;
+  color: var(--win); background: rgba(184,224,74,.1);
+  border: 1px solid rgba(184,224,74,.3); border-radius: 8px; padding: 8px 14px;
 }
 
 /* ============================================================
    4. JOGOS
    ============================================================ */
-.games { display: grid; gap: 16px; grid-template-columns: repeat(2,1fr); }
-@media (min-width: 900px) { .games { grid-template-columns: repeat(4,1fr); } }
+/* Jogo principal: texto à esquerda, card à direita. */
+.jogo-split { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: center; }
+@media (min-width: 860px) {
+  .jogo-split { grid-template-columns: 1fr 360px; gap: 56px; }
+}
+.jogo-split__texto { max-width: 560px; }
+.jogo-split__lead {
+  font-family: var(--f-money); font-size: clamp(17px, 2vw, 21px); line-height: 1.5;
+  color: var(--ink); margin: 18px 0 16px;
+}
+.jogo-split__corpo {
+  font-family: var(--f-read); font-size: 16px; line-height: 1.65; color: var(--ink-3);
+  margin: 0 0 24px; max-width: 52ch;
+}
+.jogo-split__fatos { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.jogo-split__fatos li {
+  font-family: var(--f-read); font-size: 15px; color: var(--ink);
+  display: flex; gap: 12px; align-items: baseline;
+  border-top: 1px solid var(--line); padding-top: 10px;
+}
+.jogo-split__fatos span {
+  font-family: var(--f-tag); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-3); min-width: 72px; flex: none;
+}
+.jogo-split__card .game { width: 100%; max-width: 360px; }
+@media (min-width: 860px) { .jogo-split__card { justify-self: end; } }
 
 /* Contorno por STATUS, não por marca do jogo. Antes cada card trazia um
    --accent inline com a cor do título (laranja CS2, vermelho Dota, vermelho
@@ -775,8 +778,8 @@ em {
 }
 .game:hover {
   transform: translateY(-4px);
-  border-color: rgba(248,80,0,.6);
-  box-shadow: 0 16px 36px -20px rgba(248,80,0,.6);
+  border-color: rgba(233,119,53,.6);
+  box-shadow: 0 16px 36px -20px rgba(233,119,53,.6);
 }
 .game--soon:hover {
   border-color: rgba(134,162,184,.55);
@@ -809,7 +812,7 @@ em {
 
 /* ATIVO tem presença: preenchido e pulsando. */
 .badge--live {
-  color: #FFCFA0; background: rgba(120,44,0,.88); border: 1px solid rgba(248,80,0,.65);
+  color: #FFCFA0; background: rgba(120,44,0,.88); border: 1px solid rgba(233,119,53,.65);
 }
 .badge--live::before {
   background: var(--orange); box-shadow: 0 0 9px var(--orange);
@@ -881,13 +884,13 @@ em {
 .custodia__mark {
   position: absolute; left: 0; top: 0; width: 40px; height: 40px; border-radius: 50%;
   display: grid; place-items: center; color: var(--orange);
-  background: var(--bg-2); border: 1px solid rgba(248,80,0,.35);
+  background: var(--bg-2); border: 1px solid rgba(233,119,53,.35);
 }
 .custodia__mark svg { width: 21px; height: 21px; }
 /* O trilho: liga o marcador desta etapa ao da próxima. */
 .custodia__etapa:not(:last-child)::before {
   content: ""; position: absolute; left: 20px; top: 44px; bottom: -30px;
-  width: 1px; background: linear-gradient(180deg, rgba(248,80,0,.4), rgba(248,80,0,.08));
+  width: 1px; background: linear-gradient(180deg, rgba(233,119,53,.4), rgba(233,119,53,.08));
 }
 .custodia__tt {
   font-family: var(--f-hero); font-weight: 400; font-size: 22px; letter-spacing: .01em;
@@ -896,7 +899,7 @@ em {
 .custodia__txt { font-family: var(--f-read); font-size: 14.5px; line-height: 1.5; color: var(--ink-3); margin: 0; }
 .custodia__quem {
   display: inline-block; margin-top: 9px; color: var(--orange);
-  border: 1px solid rgba(248,80,0,.3); border-radius: 999px; padding: 3px 10px; letter-spacing: .12em;
+  border: 1px solid rgba(233,119,53,.3); border-radius: 999px; padding: 3px 10px; letter-spacing: .12em;
 }
 
 @media (min-width: 860px) {
@@ -905,7 +908,7 @@ em {
   .custodia__mark { top: 0; left: 0; }
   .custodia__etapa:not(:last-child)::before {
     left: 48px; right: -30px; top: 20px; bottom: auto; width: auto; height: 1px;
-    background: linear-gradient(90deg, rgba(248,80,0,.4), rgba(248,80,0,.08));
+    background: linear-gradient(90deg, rgba(233,119,53,.4), rgba(233,119,53,.08));
   }
   .custodia__tt { margin-top: 0; }
 }
@@ -958,7 +961,7 @@ em {
 @media (min-width: 768px) { .cta-final { padding-block: 140px; } }
 .cta-final__glow {
   position: absolute; inset: 0;
-  background: radial-gradient(1040px 560px at 50% 118%, rgba(248,80,0,.32), transparent 68%);
+  background: radial-gradient(1040px 560px at 50% 118%, rgba(233,119,53,.32), transparent 68%);
   pointer-events: none;
 }
 .cta-final__inner { position: relative; }
@@ -997,17 +1000,27 @@ em {
   border-bottom: 1px solid transparent; transition: color .15s ease, border-color .15s ease;
 }
 .footer__link:hover { color: var(--ink); border-color: var(--orange); }
+/* Redes sociais: ícones puros, como na referência; clicáveis abrem o perfil. */
+.footer__social { display: flex; gap: 18px; align-items: center; }
+.footer__social-link {
+  display: inline-flex; color: var(--ink-3);
+  transition: color .15s ease, transform .15s ease;
+}
+.footer__social-link:hover { color: var(--orange); transform: translateY(-1px); }
+.footer__social-link:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 4px; }
+.footer__social-link svg { width: 28px; height: 28px; display: block; }
 .footer__note { font-family: var(--f-read); font-size: 13px; color: var(--ink-3); max-width: 64ch; line-height: 1.5; }
-.footer__copy { color: var(--ink-3); }
+.footer__copy { font-family: var(--f-hero); font-size: 19px; letter-spacing: .07em; color: var(--ink-3); }
 @media (min-width: 768px) {
   .footer__inner {
     display: grid; grid-template-columns: 1fr auto;
-    grid-template-areas: "brand links" "note note" "copy copy";
-    align-items: start; gap: 28px 40px;
+    grid-template-areas: "brand links" "brand social" "note note" "copy copy";
+    align-items: start; gap: 20px 40px;
   }
   .footer__brand { grid-area: brand; }
   .footer__links { grid-area: links; justify-content: flex-end; }
-  .footer__note { grid-area: note; }
+  .footer__social { grid-area: social; justify-self: end; }
+  .footer__note { grid-area: note; margin-top: 8px; }
   .footer__copy { grid-area: copy; }
 }
 
@@ -1053,12 +1066,6 @@ em {
    ============================================================ */
 .doc { padding: 120px 0 90px; }
 .doc__wrap { max-width: 760px; }
-.doc__voltar { margin-bottom: 34px; }
-.doc__voltar a {
-  font-family: var(--f-read); font-size: 14px; color: var(--ink-3);
-  transition: color var(--t-fast) var(--ease-ui);
-}
-.doc__voltar a:hover { color: var(--orange); }
 .doc__titulo {
   font-family: var(--f-hero); font-weight: 400; font-size: clamp(38px, 6vw, 64px);
   line-height: .95; text-transform: uppercase; color: var(--ink); margin: 0 0 26px;
@@ -1067,8 +1074,8 @@ em {
    abre um documento legal precisa saber do status antes de ler o conteúdo. */
 .doc__minuta {
   font-family: var(--f-read); font-size: 14.5px; line-height: 1.6; color: var(--ink);
-  border: 1px solid rgba(248,80,0,.35); border-radius: 12px;
-  background: rgba(248,80,0,.06); padding: 16px 18px; margin-bottom: 18px;
+  border: 1px solid rgba(233,119,53,.35); border-radius: 12px;
+  background: rgba(233,119,53,.06); padding: 16px 18px; margin-bottom: 18px;
 }
 .doc__minuta strong { color: var(--orange); }
 .doc__meta { color: var(--ink-3); margin-bottom: 46px; }
@@ -1104,7 +1111,7 @@ em {
     color: var(--ink); cursor: pointer;
     transition: border-color var(--t-fast) var(--ease-ui);
   }
-  .nav__abrir:hover { border-color: rgba(248,80,0,.5); }
+  .nav__abrir:hover { border-color: rgba(233,119,53,.5); }
   .nav__abrir:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
   .nav__abrir svg { width: 20px; height: 20px; }
   /* as duas barras viram X quando aberto — desenhadas, não glifo */
@@ -1115,7 +1122,7 @@ em {
   /* O painel é fixed e sobrepõe o conteúdo, então não precisa colapsar altura:
      opacidade e transform bastam, e nenhuma propriedade de layout é animada. */
   .nav__menu {
-    display: block !important; position: fixed; inset: 64px 0 auto 0;
+    display: block !important; position: fixed; inset: 84px 0 auto 0;
     background: rgba(20,17,15,.97); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--line);
     padding: 8px 20px 18px;
@@ -1125,5 +1132,16 @@ em {
   .nav__menu.aberto { opacity: 1; pointer-events: auto; transform: none; }
   .nav__menu a { display: block; padding: 14px 2px; border-bottom: 1px solid var(--line); }
   .nav__menu a:last-child { border-bottom: 0; }
+  .nav__cta { margin-left: auto; }
 }
 
+/* Mobile: espaçamentos proporcionais à tela pequena — 84px por seção e o
+   padding alto do herói sobravam muito no 375px, dando a sensação de
+   desajuste e vazios grandes. */
+@media (max-width: 760px) {
+  .section { padding-block: 52px; }
+  .hero { padding-block: 84px 72px; }
+  .cta-final { padding-block: 64px; }
+  .section__head { margin-bottom: 32px; }
+  .jogo-split { gap: 28px; }
+}
