@@ -381,7 +381,7 @@ em {
 }
 .section__lead {
   font-family: var(--f-read); font-size: 17px; line-height: 1.6;
-  color: #cfc7bf; margin-top: 22px; max-width: 58ch;
+  color: #cfc7bf; margin-top: 14px; max-width: 58ch;
 }
 
 /* ============================================================
@@ -726,6 +726,10 @@ em {
 .reward__valor {
   font-family: var(--f-money); font-weight: 700; font-size: 46px; line-height: 1;
   letter-spacing: -0.01em; color: var(--orange); font-variant-numeric: tabular-nums;
+  /* Bebas não tem descendente: sobra ~13px vazios abaixo de VITÓRIA. Puxa o
+     valor para cima e devolve o mesmo embaixo, deixando-o visualmente no meio
+     entre o título e o botão (sem mover o botão). */
+  margin: -6px 0 6px;
 }
 .reward__valor span { margin-right: 2px; }
 .reward__pill {
@@ -880,23 +884,23 @@ em {
    argumento — o dinheiro percorre um caminho, e cada ponto diz onde ele está.
    No desktop o trilho é horizontal; no mobile, vertical. */
 .custodia { list-style: none; padding: 0; margin: 0; display: grid; gap: 26px; position: relative; }
-.custodia__etapa { position: relative; padding-left: 56px; }
+.custodia__etapa { position: relative; padding-left: 62px; }
 .custodia__mark {
-  position: absolute; left: 0; top: 0; width: 40px; height: 40px; border-radius: 50%;
+  position: absolute; left: 0; top: 0; width: 46px; height: 46px; border-radius: 50%;
   display: grid; place-items: center; color: var(--orange);
   background: var(--bg-2); border: 1px solid rgba(233,119,53,.35);
 }
-.custodia__mark svg { width: 21px; height: 21px; }
+.custodia__mark svg { width: 24px; height: 24px; }
 /* O trilho: liga o marcador desta etapa ao da próxima. */
 .custodia__etapa:not(:last-child)::before {
-  content: ""; position: absolute; left: 20px; top: 44px; bottom: -30px;
+  content: ""; position: absolute; left: 23px; top: 50px; bottom: -30px;
   width: 1px; background: linear-gradient(180deg, rgba(233,119,53,.4), rgba(233,119,53,.08));
 }
 .custodia__tt {
-  font-family: var(--f-hero); font-weight: 400; font-size: 22px; letter-spacing: .01em;
+  font-family: var(--f-hero); font-weight: 400; font-size: 24px; letter-spacing: .01em;
   color: var(--ink); margin: 8px 0 5px; text-transform: uppercase;
 }
-.custodia__txt { font-family: var(--f-read); font-size: 14.5px; line-height: 1.5; color: var(--ink-3); margin: 0; }
+.custodia__txt { font-family: var(--f-read); font-size: 15.5px; line-height: 1.5; color: var(--ink-3); margin: 0; }
 .custodia__quem {
   display: inline-block; margin-top: 9px; color: var(--orange);
   border: 1px solid rgba(233,119,53,.3); border-radius: 999px; padding: 3px 10px; letter-spacing: .12em;
@@ -904,10 +908,10 @@ em {
 
 @media (min-width: 860px) {
   .custodia { grid-template-columns: repeat(4, 1fr); gap: 30px; }
-  .custodia__etapa { padding-left: 0; padding-top: 56px; }
+  .custodia__etapa { padding-left: 0; padding-top: 62px; }
   .custodia__mark { top: 0; left: 0; }
   .custodia__etapa:not(:last-child)::before {
-    left: 48px; right: -30px; top: 20px; bottom: auto; width: auto; height: 1px;
+    left: 54px; right: -30px; top: 23px; bottom: auto; width: auto; height: 1px;
     background: linear-gradient(90deg, rgba(233,119,53,.4), rgba(233,119,53,.08));
   }
   .custodia__tt { margin-top: 0; }
@@ -1010,7 +1014,7 @@ em {
 .footer__social-link:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 4px; }
 .footer__social-link svg { width: 28px; height: 28px; display: block; }
 .footer__note { font-family: var(--f-read); font-size: 13px; color: var(--ink-3); max-width: 64ch; line-height: 1.5; }
-.footer__copy { font-family: var(--f-hero); font-size: 19px; letter-spacing: .07em; color: var(--ink-3); }
+.footer__copy { font-family: var(--f-money); font-size: 12.5px; letter-spacing: .14em; color: var(--ink-3); }
 @media (min-width: 768px) {
   .footer__inner {
     display: grid; grid-template-columns: 1fr auto;
