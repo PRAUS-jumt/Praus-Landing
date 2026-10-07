@@ -256,7 +256,7 @@ input::placeholder { color: var(--ink-4); }
 }
 .waitlist__success[hidden] { display: none; }
 .waitlist--stack .waitlist__field { flex-direction: column; }
-.waitlist--stack .waitlist__field input { height: 54px; background: var(--surface-2); border-color: var(--line-3); backdrop-filter: none; }
+.waitlist--stack .waitlist__field input { flex: none; height: 64px; padding: 0 18px; font-size: 15px; background: var(--surface-2); border-color: var(--line-3); backdrop-filter: none; }
 .waitlist--stack .waitlist__field .btn { height: 54px; width: 100%; }
 .waitlist--stack { max-width: none; }
 .waitlist__label { font-size: 15px; font-weight: 500; }
@@ -682,6 +682,7 @@ input::placeholder { color: var(--ink-4); }
   .hero__strip { flex-wrap: wrap; justify-content: center; text-align: center; }
   .faq-sec__grid, .cta__grid { grid-template-columns: 1fr; gap: 48px; }
   .waitlist__field { flex-direction: column; }
+  .waitlist__field input { flex: none; }
   .waitlist__field .btn { width: 100%; }
 }
 
