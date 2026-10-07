@@ -464,6 +464,30 @@ input::placeholder { color: var(--ink-4); }
 .podium__emblem--2 { width: 96px; height: 96px; }
 .podium__emblem--3 { width: 84px; height: 84px; }
 .podium__nick { font-size: 13px; font-weight: 600; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.podium__nick--open { color: var(--ink-2); }
+/* vaga aberta: silhueta tracejada no lugar do emblema */
+.podium__slot {
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.24);
+  background: rgba(10, 9, 8, 0.55);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.16);
+}
+.podium__slot svg { display: block; width: 78%; height: 78%; }
+.podium__slot--1 { width: 128px; height: 128px; }
+.podium__slot--2 { width: 96px; height: 96px; }
+.podium__slot--3 { width: 84px; height: 84px; }
+.podium__step--open {
+  border-style: dashed;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  background: var(--surface) !important;
+}
+.podium__step--open .podium__pos { color: var(--ink-4); }
+.lastmatch__segs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
+.lastmatch__segs span { height: 6px; border-radius: 3px; background: var(--line-2); }
 .podium__rr { font-size: 11px; color: var(--ink-3); font-variant-numeric: tabular-nums; transition: color 0.6s ease; }
 .podium__rr.up { color: var(--green); }
 .podium__rr.down { color: var(--red); }
