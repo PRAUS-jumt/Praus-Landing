@@ -198,7 +198,7 @@ em {
    NAV
    ============================================================ */
 .nav {
-  position: fixed; inset: 0 0 auto 0; z-index: 60; padding-top: 20px;
+  position: fixed; inset: 0 0 auto 0; z-index: 60; padding-top: 12px;
   background: rgba(20,17,15,0); backdrop-filter: blur(0px);
   transition: background-color .25s ease, backdrop-filter .25s ease, border-color .25s ease;
   border-bottom: 1px solid transparent;
@@ -217,8 +217,8 @@ em {
 .nav-sp { display: none; }
 .nav__cta { flex: none; }
 .nav__menu a {
-  font-family: var(--f-money); font-size: 15px; color: var(--ink-3); font-weight: 600; 
-  transition: color .15s ease;  
+  font-family: var(--f-money); font-size: 15px; color: #CFC7BF; font-weight: 600;
+  transition: color .15s ease;
   position: relative;
 }
 .nav__menu a::after { content: ''; position: absolute; left: 0; bottom: -6px; width: 100%; height: 2px; background: #E97735; transform: scaleX(0); transform-origin: left; transition: transform .25s ease; } .nav__menu a:hover::after { transform: scaleX(1); }
@@ -812,6 +812,62 @@ em {
 /* pulse ainda é referenciado por CSS legado (.hud__live); mantido. */
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
 
+/* --- Ranking (ilustrativo): pódio + feed --- */
+.section__head--center { margin-left: auto; margin-right: auto; text-align: center; }
+.section__head--center .section__lead { margin-left: auto; margin-right: auto; }
+#ranking { position: relative; overflow: hidden; }
+.ranking__glow {
+  position: absolute; left: 50%; top: 44%; width: min(760px, 90%); height: 440px;
+  transform: translate(-50%,-50%); pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse at center, rgba(233,119,53,.16), rgba(233,119,53,0) 68%);
+}
+#ranking .wrap { position: relative; z-index: 1; }
+.ranking__eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--orange); letter-spacing: .18em; }
+.ranking__eyebrow i { width: 7px; height: 7px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 8px var(--orange); animation: pulse 1.6s infinite; flex: none; }
+
+.podio { display: flex; justify-content: center; align-items: flex-end; gap: 14px; max-width: 720px; margin: 8px auto 0; }
+.podio__col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 5px; }
+.podio__badge { width: 62px; height: 62px; object-fit: contain; flex: none; filter: drop-shadow(0 6px 16px rgba(0,0,0,.5)); }
+.podio__col--1 .podio__badge { width: 88px; height: 88px; filter: drop-shadow(0 8px 22px rgba(233,119,53,.35)); }
+.podio__nome { font-family: var(--f-money); font-weight: 700; font-size: 15px; color: var(--ink); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.podio__rr { font-family: var(--f-money); font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.podio__rr--win { color: var(--win); }
+.podio__base {
+  margin-top: 8px; width: 100%; box-sizing: border-box;
+  border: 1px solid var(--line); border-bottom: none; border-radius: 14px 14px 0 0;
+  background: var(--bg-2); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+}
+.podio__col--1 .podio__base { height: 150px; background: linear-gradient(180deg, rgba(233,119,53,.16), rgba(233,119,53,.03)); border-color: rgba(233,119,53,.5); }
+.podio__col--2 .podio__base { height: 114px; }
+.podio__col--3 .podio__base { height: 90px; }
+.podio__pos { font-family: var(--f-hero); font-weight: 400; font-size: 30px; line-height: 1; letter-spacing: .02em; color: var(--ink); }
+.podio__col--1 .podio__pos { color: var(--orange); font-size: 36px; }
+.podio__premio { font-family: var(--f-money); font-weight: 700; font-size: 14px; color: var(--win); font-variant-numeric: tabular-nums; }
+
+.ranking__feed { display: flex; align-items: center; gap: 14px; max-width: 720px; margin: 20px auto 0; padding: 14px 16px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; }
+.ranking__feed-badge { width: 40px; height: 40px; object-fit: contain; flex: none; }
+.ranking__feed-txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ranking__feed-top { font-family: var(--f-money); font-weight: 700; font-size: 14px; color: var(--ink); display: inline-flex; align-items: baseline; gap: 8px; }
+.ranking__feed-pos { color: var(--orange); font-size: 12px; }
+.ranking__feed-sub { font-family: var(--f-read); font-size: 12.5px; color: var(--ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ranking__feed-rr { margin-left: auto; font-family: var(--f-money); font-weight: 700; font-size: 14px; color: var(--win); white-space: nowrap; }
+
+.ranking__rodape { display: flex; flex-direction: column; align-items: center; gap: 18px; margin-top: 28px; text-align: center; }
+.ranking__nota { font-family: var(--f-read); font-size: 14px; color: var(--ink); line-height: 1.6; margin: 0; max-width: 56ch; }
+.ranking__nota b { color: var(--win); }
+.ranking__nota span { color: var(--ink-3); font-size: 12.5px; }
+
+@media (max-width: 560px) {
+  .podio { gap: 8px; }
+  .podio__badge { width: 48px; height: 48px; }
+  .podio__col--1 .podio__badge { width: 64px; height: 64px; }
+  .podio__nome { font-size: 12.5px; }
+  .podio__col--1 .podio__base { height: 128px; }
+  .podio__col--2 .podio__base { height: 100px; }
+  .podio__col--3 .podio__base { height: 80px; }
+  .ranking__feed-sub { font-size: 11.5px; }
+}
+
 /* Divisória entre seções de mesmo fundo — mesmo recurso que .cta-final usa. */
 .section--edge { border-top: 1px solid var(--line); }
 
@@ -1079,7 +1135,7 @@ em {
   /* O painel é fixed e sobrepõe o conteúdo, então não precisa colapsar altura:
      opacidade e transform bastam, e nenhuma propriedade de layout é animada. */
   .nav__menu {
-    display: block !important; position: fixed; inset: 84px 0 auto 0;
+    display: block !important; position: fixed; inset: 76px 0 auto 0;
     background: rgba(20,17,15,.97); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--line);
     padding: 8px 20px 18px;
