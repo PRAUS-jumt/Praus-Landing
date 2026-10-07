@@ -284,12 +284,22 @@ input::placeholder { color: var(--ink-4); }
     linear-gradient(180deg, #0A0908 0%, rgba(10, 9, 8, 0.55) 22%, rgba(10, 9, 8, 0.55) 78%, #0A0908 100%);
   pointer-events: none;
 }
-.phones { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; }
-.phone { margin: 0; width: 264px; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+/* 4 celulares sempre lado a lado no desktop: a moldura encolhe junto
+   (aspect-ratio) em vez de quebrar a linha */
+.phones {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
+  max-width: 1128px;
+  margin: 0 auto;
+  justify-items: center;
+}
+.phone { margin: 0; width: 100%; max-width: 264px; display: flex; flex-direction: column; align-items: center; gap: 22px; }
 .phone__frame {
   position: relative;
-  width: 264px;
-  height: 571px;
+  width: 100%;
+  aspect-ratio: 264 / 571;
   border-radius: 22px;
   overflow: hidden;
   border: 1px solid var(--line-3);
@@ -673,6 +683,13 @@ input::placeholder { color: var(--ink-4); }
   .faq-sec__grid, .cta__grid { grid-template-columns: 1fr; gap: 48px; }
   .waitlist__field { flex-direction: column; }
   .waitlist__field .btn { width: 100%; }
+}
+
+@media (max-width: 760px) {
+  .phones { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 420px) {
+  .phones { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 640px) {
