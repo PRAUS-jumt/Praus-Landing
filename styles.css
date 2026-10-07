@@ -812,6 +812,39 @@ em {
 /* pulse ainda é referenciado por CSS legado (.hud__live); mantido. */
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
 
+/* --- Como funciona: telas reais da plataforma (mockups) --- */
+.telas {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+  margin-top: 10px;
+}
+.tela { margin: 0; display: flex; flex-direction: column; gap: 14px; }
+.tela__phone {
+  position: relative; aspect-ratio: 560 / 1212; border-radius: 20px; overflow: hidden;
+  background: var(--bg-2); border: 1px solid var(--line);
+  box-shadow: 0 18px 44px rgba(0,0,0,.45);
+}
+.tela__phone img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tela__cap {
+  display: flex; align-items: baseline; gap: 10px;
+  font-family: var(--f-read); font-size: 13.5px; line-height: 1.45; color: var(--ink);
+}
+.tela__num {
+  flex: none; font-family: var(--f-hero); font-weight: 400; font-size: 22px; line-height: 1;
+  letter-spacing: .02em; color: var(--orange);
+}
+.telas__nota {
+  margin: 26px auto 0; max-width: 60ch; text-align: center;
+  font-family: var(--f-read); font-size: 12.5px; color: var(--ink-3); line-height: 1.6;
+}
+@media (max-width: 820px) {
+  .telas { grid-template-columns: repeat(2, 1fr); gap: 22px 18px; }
+}
+@media (max-width: 420px) {
+  .telas { gap: 16px 12px; }
+  .tela__cap { font-size: 12.5px; gap: 8px; }
+  .tela__num { font-size: 19px; }
+}
+
 /* --- Ranking (ilustrativo): pódio + feed --- */
 .section__head--center { margin-left: auto; margin-right: auto; text-align: center; }
 .section__head--center .section__lead { margin-left: auto; margin-right: auto; }

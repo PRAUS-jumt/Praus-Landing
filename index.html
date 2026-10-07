@@ -118,125 +118,31 @@
 <!-- ============ 3. COMO FUNCIONA ============ -->
 <section class="section section--alt" id="como-funciona">
   <div class="wrap">
-    <header class="section__head reveal">
-      <h2 class="section__title">APENAS 3 PASSOS</h2>
+    <header class="section__head section__head--center reveal">
+      <h2 class="section__title">COMO FUNCIONA</h2>
+      <p class="section__lead">Do cadastro ao saque, em 4 passos — telas reais da plataforma.</p>
     </header>
 
-    <div class="flow reveal" data-autoplay="6000">
-      <!-- Passos (controles) -->
-      <div class="flow__steps" role="tablist" aria-label="Como funciona">
-        <button class="flow__step is-active" role="tab" aria-selected="true" aria-controls="screen-1" id="step-1" data-step="1">
-          <span class="flow__step-num">01</span>
-          <span class="flow__step-text">
-            <span class="flow__step-tt">Você escolhe o jogo e define o prêmio</span>
-            <span class="flow__step-desc"><span>Defina o seu jogo e o seu entry fee. Vamos lhe direcionar para um rival do seu nível.</span></span>
-          </span>
-        </button>
-
-        <button class="flow__step" role="tab" aria-selected="false" aria-controls="screen-2" id="step-2" data-step="2">
-          <span class="flow__step-num">02</span>
-          <span class="flow__step-text">
-            <span class="flow__step-tt">Jogue a partida enquanto a recompensa fica retida</span>
-            <span class="flow__step-desc"><span>O valor da partida fica retido em escrow — uma conta-garantia neutra — enquanto você joga. Após a partida, seu saldo é instantaneamente atualizado.</span></span>
-          </span>
-        </button>
-
-        <button class="flow__step" role="tab" aria-selected="false" aria-controls="screen-3" id="step-3" data-step="3">
-          <span class="flow__step-num">03</span>
-          <span class="flow__step-text">
-            <span class="flow__step-tt">Receba o dinheiro na hora</span>
-            <span class="flow__step-desc"><span>Com o resultado validado, seu saldo é atualizado instantaneamente e já fica disponível para saque.</span></span>
-          </span>
-        </button>
-      </div>
-
-      <!-- Indicador de progresso: o mesmo conceito da barra antiga, agora
-           segmentado por etapa. Puramente visual (aria-hidden): quem
-           navega por teclado já tem as etapas como controles. -->
-      <div class="flow__dots" aria-hidden="true">
-        <span class="flow__dot is-active"><i></i></span>
-        <span class="flow__dot"><i></i></span>
-        <span class="flow__dot"><i></i></span>
-      </div>
-
-      <!-- Prévia das telas -->
-      <div class="flow__screens">
-        <!-- TELA 1 — lobby / escolha -->
-        <div class="screen is-active" id="screen-1" role="tabpanel" aria-labelledby="step-1" data-screen="1">
-          <div class="screen__bar mono-tag"><span>PRAUS · LOBBY</span><span>BR-SE</span></div>
-          <div class="screen__body">
-            <span class="screen__label mono-tag" id="rot-modalidade">MODALIDADE</span>
-            <div class="chips" role="radiogroup" aria-labelledby="rot-modalidade" data-grupo="jogo">
-              <button class="chip"          type="button" role="radio" aria-checked="false" data-valor="1v1">1v1</button>
-              <button class="chip"          type="button" role="radio" aria-checked="false" data-valor="2v2">2v2</button>
-              <button class="chip chip--on" type="button" role="radio" aria-checked="true"  data-valor="5v5">5v5</button>
-            </div>
-            <span class="screen__label mono-tag" id="rot-entrada">ENTRY FEE</span>
-            <div class="chips" role="radiogroup" aria-labelledby="rot-entrada" data-grupo="entrada">
-              <button class="chip"          type="button" role="radio" aria-checked="false" data-valor="10">R$10</button>
-              <button class="chip"          type="button" role="radio" aria-checked="false" data-valor="25">R$25</button>
-              <button class="chip chip--on" type="button" role="radio" aria-checked="true"  data-valor="50">R$50</button>
-            </div>
-            <div class="screen__row">
-              <span class="screen__label mono-tag">PRIZE POOL ESTIMADO</span>
-              <span class="screen__money" data-premio role="status">R$92</span>
-            </div>
-            <a class="screen__cta" href="#waitlist">ENTRAR NA FILA<svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
-          </div>
-        </div>
-
-        <!-- TELA 2 — dentro da arena (prévia) -->
-        <div class="screen" id="screen-2" role="tabpanel" aria-labelledby="step-2" data-screen="2" hidden>
-          <div class="screen__bar">
-            <span class="screen__crumb mono-tag">PRAUS <i>/</i> PARTIDA</span>
-            <span class="screen__previa">PRÉVIA</span>
-          </div>
-          <div class="screen__body screen__body--center">
-            <span class="screen__eyebrow mono-tag">DENTRO DA ARENA</span>
-            <div class="screen__score">
-              <div class="screen__team"><span class="screen__team-tag mono-tag">VOCÊ</span><span class="screen__team-pts">07</span></div>
-              <span class="screen__score-x">:</span>
-              <div class="screen__team"><span class="screen__team-tag mono-tag">RIVAL</span><span class="screen__team-pts">05</span></div>
-            </div>
-            <div class="arena__guard">
-              <svg class="arena__guard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M12 2.75l6.6 2.45v5.05c0 4.3-2.85 7.5-6.6 8.65-3.75-1.15-6.6-4.35-6.6-8.65V5.2L12 2.75z"/>
-                <path d="M8.9 11.7l2.15 2.15 4.3-4.45"/>
-              </svg>
-              <span class="arena__guard-txt">
-                <b>Prêmio protegido</b>
-                Retido até a validação do resultado.
-              </span>
-            </div>
-            <p class="screen__note">Você foca na partida. A estrutura cuida do resto.</p>
-          </div>
-        </div>
-
-        <!-- TELA 3 — recompensa liberada (prévia) -->
-        <div class="screen" id="screen-3" role="tabpanel" aria-labelledby="step-3" data-screen="3" hidden>
-          <div class="screen__bar">
-            <span class="screen__crumb mono-tag">PRAUS <i>/</i> RECOMPENSA</span>
-            <span class="screen__previa">PRÉVIA</span>
-          </div>
-          <div class="screen__body screen__body--center reward">
-            <span class="reward__trofeu" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/>
-                <path d="M7 6H4.5v1.5A3.5 3.5 0 0 0 8 11M17 6h2.5v1.5A3.5 3.5 0 0 1 16 11"/>
-                <path d="M12 13v3M9 20h6M10 20v-1.5a2 2 0 0 1 4 0V20"/>
-              </svg>
-            </span>
-            <h3 class="reward__tt">VITÓRIA</h3>
-            <div class="reward__valor"><span>+</span>R$95</div>
-            <span class="reward__pill">
-              <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 5"/></svg>
-              Resultado validado
-            </span>
-            <p class="screen__note">Prêmio liberado e disponível para saque.</p>
-          </div>
-        </div>
-      </div>
+    <div class="telas reveal">
+      <figure class="tela">
+        <div class="tela__phone"><img src="assets/telas/cadastro.webp" alt="Tela de cadastro da PRAUS" loading="lazy" decoding="async" /></div>
+        <figcaption class="tela__cap"><span class="tela__num">01</span>Crie sua conta em menos de um minuto</figcaption>
+      </figure>
+      <figure class="tela">
+        <div class="tela__phone"><img src="assets/telas/deposito.webp" alt="Tela de deposito via PIX" loading="lazy" decoding="async" /></div>
+        <figcaption class="tela__cap"><span class="tela__num">02</span>Deposite via PIX e receba bonus no primeiro deposito</figcaption>
+      </figure>
+      <figure class="tela">
+        <div class="tela__phone"><img src="assets/telas/modos.webp" alt="Tela de selecao de modo" loading="lazy" decoding="async" /></div>
+        <figcaption class="tela__cap"><span class="tela__num">03</span>Escolha o modo e o valor da partida</figcaption>
+      </figure>
+      <figure class="tela">
+        <div class="tela__phone"><img src="assets/telas/resultado.webp" alt="Tela de resultado da partida" loading="lazy" decoding="async" /></div>
+        <figcaption class="tela__cap"><span class="tela__num">04</span>Venceu? O premio cai na carteira. Saque via PIX</figcaption>
+      </figure>
     </div>
+
+    <p class="telas__nota">Telas reais da plataforma, com dados de exemplo. Valores sujeitos a ajustes ate a abertura do beta.</p>
   </div>
 </section>
 
@@ -365,17 +271,8 @@
       </article>
     </div>
 
-    <div class="ranking__feed reveal">
-      <img class="ranking__feed-badge" src="assets/ranks/elite.webp" alt="" loading="lazy" decoding="async" />
-      <div class="ranking__feed-txt">
-        <span class="ranking__feed-top"><b>fallenzin</b><span class="ranking__feed-pos">#1</span></span>
-        <span class="ranking__feed-sub">Venceu uma partida Competitivo 5v5 · Global Elite · 2.489 RR</span>
-      </div>
-      <span class="ranking__feed-rr">+15 RR</span>
-    </div>
-
     <div class="ranking__rodape reveal">
-      <p class="ranking__nota">Top 10 da temporada leva prêmio — o 1º lugar leva <b>R$15.000</b>.<br><span>Ranking ilustrativo, com dados de exemplo, até o beta validar as primeiras partidas.</span></p>
+      <p class="ranking__nota">O primeiro lugar da temporada leva <b>R$15.000</b> para casa.<br><span>Ranking ilustrativo, com dados de exemplo, até o beta validar as primeiras partidas.</span></p>
       <a href="#waitlist" class="btn btn--sm btn--primary" data-perto>ENTRAR NA FILA <span class="btn__arrow" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></a>
     </div>
   </div>
