@@ -1,4 +1,4 @@
-/* PRAUS — landing redesign v2 (handoff Mateus Meira) */
+﻿/* PRAUS â€” landing redesign v2 (handoff Mateus Meira) */
 
 /* ---------- Tokens ---------- */
 :root {
@@ -47,7 +47,7 @@ input::placeholder { color: var(--ink-4); }
 @keyframes floatY   { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 @keyframes pulseDot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-/* ---------- Peças comuns ---------- */
+/* ---------- PeÃ§as comuns ---------- */
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -486,8 +486,6 @@ input::placeholder { color: var(--ink-4); }
   background: var(--surface) !important;
 }
 .podium__step--open .podium__pos { color: var(--ink-4); }
-.lastmatch__segs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
-.lastmatch__segs span { height: 6px; border-radius: 3px; background: var(--line-2); }
 .podium__rr { font-size: 11px; color: var(--ink-3); font-variant-numeric: tabular-nums; transition: color 0.6s ease; }
 .podium__rr.up { color: var(--green); }
 .podium__rr.down { color: var(--red); }
@@ -515,37 +513,6 @@ input::placeholder { color: var(--ink-4); }
 .podium__prize { font-size: 11px; font-weight: 600; color: var(--green); }
 
 .rankv2__tail { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 18px; margin-top: -26px; }
-.lastmatch {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  background: rgba(10, 9, 8, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 12px;
-  padding: 14px 16px;
-  text-align: left;
-  transition: border-color 0.6s ease;
-}
-.lastmatch.up { border-color: rgba(38, 224, 127, 0.45); }
-.lastmatch.down { border-color: rgba(255, 94, 94, 0.4); }
-.lastmatch__emblem {
-  width: 48px;
-  height: 48px;
-  flex-shrink: 0;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
-}
-.lastmatch__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 9px; }
-.lastmatch__top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
-.lastmatch__nick { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.lastmatch__tag { font-size: 11px; font-weight: 600; color: var(--orange); }
-.lastmatch__right { font-size: 12px; font-weight: 600; white-space: nowrap; color: var(--ink); }
-.lastmatch__right.up { color: var(--green); }
-.lastmatch__right.down { color: var(--red); }
-.lastmatch__right i { font-style: normal; font-weight: 400; color: var(--ink-3); }
-.lastmatch__line { font-size: 11px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .rankv2__prize-note { margin: 0; font-size: 13px; color: var(--ink-2); line-height: 1.6; text-align: center; }
 .rankv2__prize-note b { color: var(--ink); font-weight: 600; }
 .rankv2__actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
@@ -610,7 +577,7 @@ input::placeholder { color: var(--ink-4); }
 }
 .gcard__sub { font-size: 10px; letter-spacing: 0.1em; color: var(--ink-2); }
 
-/* ---------- Dúvidas ---------- */
+/* ---------- DÃºvidas ---------- */
 .faq-sec { background: rgba(255, 255, 255, 0.02); }
 .faq-sec__grid {
   display: grid;
@@ -647,7 +614,7 @@ input::placeholder { color: var(--ink-4); }
 .cta__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 80px; align-items: center; }
 .cta__intro { display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
 
-/* ---------- Rodapé ---------- */
+/* ---------- RodapÃ© ---------- */
 .footer { padding: 40px 0 28px; border-top: 1px solid var(--line); background: var(--bg-footer); }
 .footer__inner { display: flex; flex-direction: column; gap: 22px; }
 .footer__row { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
