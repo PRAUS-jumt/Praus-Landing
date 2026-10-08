@@ -36,6 +36,18 @@ app.use((req, res, next) => {
 });
 
 /* ---------------------------------------------------------------------------
+   Link curto de parceiro: praus.online/p/<slug> redireciona para a landing
+   com UTMs preenchidas — o cadastro sai vinculado ao parceiro nas colunas
+   utm_* da waitlist. Slug inválido cai na home sem UTM.
+   --------------------------------------------------------------------------- */
+app.get("/p/:parceiro", (req, res) => {
+  const slug = String(req.params.parceiro || "").toLowerCase();
+  if (!/^[a-z0-9][a-z0-9_-]{0,59}$/.test(slug)) return res.redirect(302, "/");
+  const q = new URLSearchParams({ utm_source: slug, utm_medium: "parceiro", utm_campaign: "beta" });
+  res.redirect(302, "/?" + q.toString() + "#waitlist");
+});
+
+/* ---------------------------------------------------------------------------
    Arquivos estáticos da landing.
    Este mesmo processo serve o site e a API: o container fica autossuficiente e
    o Caddy só precisa terminar TLS e fazer proxy para um alvo. Em produção o
