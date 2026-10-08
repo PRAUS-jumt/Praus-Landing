@@ -9,13 +9,27 @@
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   var API = document.documentElement.getAttribute("data-api") || "/api";
 
-  /* Repassa as UTMs da URL para a API, para saber de onde veio o lead. */
-  function utms() {
+  /* Repassa as UTMs da URL para a API, para saber de onde veio o lead.
+     Captura no carregamento e guarda na sessão: se o visitante passear
+     pelas páginas legais e voltar, o vínculo com o parceiro não se perde. */
+  var UTMS = (function () {
     var q = new URLSearchParams(location.search);
+    var u = {};
+    ["utm_source", "utm_medium", "utm_campaign"].forEach(function (k) {
+      var v = q.get(k);
+      if (v) u[k] = v.slice(0, 120);
+    });
+    try {
+      if (Object.keys(u).length) sessionStorage.setItem("praus_utms", JSON.stringify(u));
+      else u = JSON.parse(sessionStorage.getItem("praus_utms")) || {};
+    } catch (e) { /* storage bloqueado: segue só com a URL */ }
+    return u;
+  })();
+  function utms() {
     return {
-      utm_source: q.get("utm_source") || undefined,
-      utm_medium: q.get("utm_medium") || undefined,
-      utm_campaign: q.get("utm_campaign") || undefined,
+      utm_source: UTMS.utm_source || undefined,
+      utm_medium: UTMS.utm_medium || undefined,
+      utm_campaign: UTMS.utm_campaign || undefined,
     };
   }
 
