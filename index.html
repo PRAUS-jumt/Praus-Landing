@@ -120,7 +120,7 @@
   <div class="wrap">
     <header class="section__head section__head--center reveal">
       <h2 class="section__title">COMO FUNCIONA</h2>
-      <p class="section__lead">Do cadastro ao saque, em 4 passos — telas reais da plataforma.</p>
+      <p class="section__lead">Do cadastro ao saque, em 4 passos.</p>
     </header>
 
     <div class="telas reveal">
@@ -152,8 +152,9 @@
     <header class="section__head reveal">
       <h2 class="section__title">ESCOLHA O SEU MODO</h2>
       <p class="section__lead">
-        Duelo, dupla ou time completo. Você define a entrada e a fila encontra
-        adversários do seu nível — nada é debitado até a partida começar.
+        Duelos em 1v1, 2v2 ou 5v5. Você define quantas pessoas quer na sua equipe
+        e o valor de entrada e a fila encontra adversários do seu nível
+        automaticamente pelo nosso sistema de matchmaking.
       </p>
     </header>
 
@@ -163,30 +164,48 @@
         <img class="modo__img" src="assets/modos/1v1.webp" alt="" loading="lazy" decoding="async" />
         <span class="modo__scrim" aria-hidden="true"></span>
         <div class="modo__body">
-          <span class="modo__num">1v1</span>
-          <h3 class="modo__name">Duelo 1v1</h3>
-          <p class="modo__desc">Mira contra mira em aim maps da comunidade. Melhor de 16 rounds, sem troca de lado.</p>
-          <span class="modo__fmt mono-tag"><i aria-hidden="true"></i>MD16 · AIM MAPS</span>
+          <span class="modo__tipo">MODO RÁPIDO</span>
+          <h3 class="modo__name">DUELO 1X1</h3>
         </div>
       </article>
       <article class="modo">
         <img class="modo__img" src="assets/modos/2v2.webp" alt="" loading="lazy" decoding="async" />
         <span class="modo__scrim" aria-hidden="true"></span>
         <div class="modo__body">
-          <span class="modo__num">2v2</span>
-          <h3 class="modo__name">Wingman 2v2</h3>
-          <p class="modo__desc">Formato Wingman em mapas menores. Chame um parceiro e entrem juntos na fila.</p>
-          <span class="modo__fmt mono-tag"><i aria-hidden="true"></i>MR8 · WINGMAN</span>
+          <span class="modo__tipo">MODO RÁPIDO</span>
+          <h3 class="modo__name">WINGMAN 2X2</h3>
         </div>
       </article>
       <article class="modo">
         <img class="modo__img" src="assets/modos/5v5.webp" alt="" loading="lazy" decoding="async" />
         <span class="modo__scrim" aria-hidden="true"></span>
         <div class="modo__body">
-          <span class="modo__num">5v5</span>
-          <h3 class="modo__name">Competitivo 5v5</h3>
-          <p class="modo__desc">MR12 competitivo com veto de mapas e overtime. A partida completa, valendo.</p>
-          <span class="modo__fmt mono-tag"><i aria-hidden="true"></i>MR12 · COMPETITIVO</span>
+          <span class="modo__tipo">MODO RÁPIDO</span>
+          <h3 class="modo__name">COMPETITIVO 5X5</h3>
+        </div>
+      </article>
+      <article class="modo">
+        <img class="modo__img" src="assets/modos/torneio-caixao.webp" alt="" loading="lazy" decoding="async" />
+        <span class="modo__scrim" aria-hidden="true"></span>
+        <div class="modo__body">
+          <span class="modo__tipo">TORNEIO RÁPIDO</span>
+          <h3 class="modo__name">CAIXÃO E VELA PRETA</h3>
+        </div>
+      </article>
+      <article class="modo">
+        <img class="modo__img" src="assets/modos/torneio-gato.webp" alt="" loading="lazy" decoding="async" />
+        <span class="modo__scrim" aria-hidden="true"></span>
+        <div class="modo__body">
+          <span class="modo__tipo">TORNEIO RÁPIDO</span>
+          <h3 class="modo__name">GATO DE 2 VIDAS</h3>
+        </div>
+      </article>
+      <article class="modo">
+        <img class="modo__img" src="assets/modos/torneio-roleta.webp" alt="" loading="lazy" decoding="async" />
+        <span class="modo__scrim" aria-hidden="true"></span>
+        <div class="modo__body">
+          <span class="modo__tipo">TORNEIO RÁPIDO</span>
+          <h3 class="modo__name">RODA A ROLETA</h3>
         </div>
       </article>
     </div>
@@ -236,34 +255,36 @@
   <span class="ranking__glow" aria-hidden="true"></span>
   <div class="wrap">
     <header class="section__head section__head--center reveal">
-      <span class="ranking__eyebrow mono-tag"><i aria-hidden="true"></i>SEASON 01 · PRÉVIA</span>
       <h2 class="section__title">O PÓDIO ESTÁ EM DISPUTA</h2>
       <p class="section__lead">Cada partida valendo conta pontos de rating (RR). Sete divisões, pódio da temporada e premiação pra quem fica no topo.</p>
     </header>
 
     <div class="podio reveal">
       <article class="podio__col podio__col--2">
-        <img class="podio__badge" src="assets/ranks/elite.webp" alt="" loading="lazy" decoding="async" />
-        <span class="podio__nome">coldzera_br</span>
-        <span class="podio__rr">2.418 RR</span>
+        <div class="podio__vaga" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.2 3.6-6.4 8-6.4s8 2.2 8 6.4v1H4z"/></svg>
+        </div>
+        <span class="podio__nome podio__nome--vaga">Vaga aberta</span>
         <div class="podio__base">
           <span class="podio__pos">2º</span>
           <span class="podio__premio">R$9.000</span>
         </div>
       </article>
       <article class="podio__col podio__col--1">
-        <img class="podio__badge" src="assets/ranks/elite.webp" alt="" loading="lazy" decoding="async" />
-        <span class="podio__nome">fallenzin</span>
-        <span class="podio__rr podio__rr--win">2.489 RR</span>
+        <div class="podio__vaga" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.2 3.6-6.4 8-6.4s8 2.2 8 6.4v1H4z"/></svg>
+        </div>
+        <span class="podio__nome podio__nome--vaga">Vaga aberta</span>
         <div class="podio__base">
           <span class="podio__pos">1º</span>
           <span class="podio__premio podio__premio--win">R$15.000</span>
         </div>
       </article>
       <article class="podio__col podio__col--3">
-        <img class="podio__badge" src="assets/ranks/elite.webp" alt="" loading="lazy" decoding="async" />
-        <span class="podio__nome">meira67</span>
-        <span class="podio__rr">2.328 RR</span>
+        <div class="podio__vaga" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.2 3.6-6.4 8-6.4s8 2.2 8 6.4v1H4z"/></svg>
+        </div>
+        <span class="podio__nome podio__nome--vaga">Vaga aberta</span>
         <div class="podio__base">
           <span class="podio__pos">3º</span>
           <span class="podio__premio">R$6.000</span>
